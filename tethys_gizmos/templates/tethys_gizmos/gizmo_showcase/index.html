@@ -1,18 +1,10 @@
-{% load staticfiles %}
-
 {% extends "page.html" %}
 
-{% block styles %}
-  {{ super() }}
-  <link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_apps.css' %}" type="text/css" />
-  <link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/prism/prism.css' %}" type="text/css" />
-{% endblock %}
+{% load staticfiles tethys_gizmos %}
 
-{% block header %}
-  {{ super() }}
-  <div id="snippet-banner">
-    
-  </div>
+{% block styles %}
+  {{ block.super }}
+  <link href="{% static 'tethys_gizmos/vendor/prism/prism.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block primary_content %}
@@ -37,21 +29,21 @@
         
         <div class="example">
           <div class="demo">
-          {% gizmo "button_group" single_button %}
-          {% gizmo "button_group" horizontal_buttons %}
-          {% gizmo "button_group" vertical_buttons %}
+          {% gizmo button_group single_button %}
+          {% gizmo button_group horizontal_buttons %}
+          {% gizmo button_group vertical_buttons %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-single_button = {'buttons': [
+c.single_button = {'buttons': [
                                {'display_text': 'Click Me',
                                 'name': 'click_me_name',
                                 'attributes': 'onclick=alert(this.name);',
                                 'type': 'submit'}
                                ]}
 
-horizontal_buttons = {'buttons': [
+c.horizontal_buttons = {'buttons': [
                   {'display_text': 'Add',
                                    'icon': 'icon-plus',
                                    'style': 'success'},
@@ -61,7 +53,7 @@ horizontal_buttons = {'buttons': [
                                    'style': 'danger'}
                                   ]}
 
-vertical_buttons = {'buttons': [
+c.vertical_buttons = {'buttons': [
                                  {'display_text': 'Edit',
                                   'icon': 'icon-wrench',
                                   'style': 'warning',
@@ -78,7 +70,7 @@ vertical_buttons = {'buttons': [
                      'vertical': True}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% gizmo "button_group" single_button %&#125;
+&#123;% gizmo button_group.html single_button %&#125;
 ...</code></pre>
           </div>
         </div>
@@ -174,13 +166,13 @@ vertical_buttons = {'buttons': [
         
         <div class="example">
           <div class="demo">
-        {% gizmo "date_picker" date_picker %}
-        {% gizmo "date_picker" date_picker_error %}
+        {% gizmo date_picker date_picker %}
+        {% gizmo date_picker date_picker_error %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-date_picker = {'display_text': 'Date',
+c.date_picker = {'display_text': 'Date',
                  'name': 'date1',
                  'autoclose': True,
                  'format': 'MM d, yyyy',
@@ -189,14 +181,14 @@ date_picker = {'display_text': 'Date',
                  'today_button': True,
                  'initial': 'February 15, 2014'}
         
-date_picker_error = {'display_text': 'Date',
+c.date_picker_error = {'display_text': 'Date',
                        'name': 'date2',
                        'initial': '10/2/2013',
                        'disabled': True,
                        'error': 'Here is my error text'}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% gizmo "date_picker" date_picker %&#125;
+&#123;% gizmo date_picker date_picker %&#125;
 ...</code></pre>
           </div>
         </div>
@@ -331,19 +323,19 @@ date_picker_error = {'display_text': 'Date',
         
         <div class="example">
           <div class="demo">
-        {% gizmo "range_slider" slider1 %}
-        {% gizmo "range_slider" slider2 %}
+        {% gizmo range_slider slider1 %}
+        {% gizmo range_slider slider2 %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-slider1 = {'display_text': 'Slider 1',
+c.slider1 = {'display_text': 'Slider 1',
              'name': 'slider1',
              'min': 0,
              'max': 100,
              'initial': 50,
              'step': 1}
-slider2 = {'display_text': 'Slider 2',
+c.slider2 = {'display_text': 'Slider 2',
              'name': 'slider2',
              'min': 0,
              'max': 1,
@@ -353,7 +345,7 @@ slider2 = {'display_text': 'Slider 2',
              'error': 'Incorrect, please choose another value.'}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% gizmo "range_slider" sliders %&#125;
+&#123;% gizmo range_slider sliders %&#125;
 ...</code></pre>
           </div>
         </div>
@@ -426,25 +418,25 @@ slider2 = {'display_text': 'Slider 2',
         
         <div class="example">
           <div class="demo">
-        {% gizmo "select_input" select_input %}
-        {% gizmo "select_input" select_input_multiple %}
-        {% gizmo "select_input" select_input_error %}
+        {% gizmo select_input select_input %}
+        {% gizmo select_input select_input_multiple %}
+        {% gizmo select_input select_input_error %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-select_input = {'display_text': 'Select',
+c.select_input = {'display_text': 'Select',
                   'name': 'select1',
                   'multiple': False,
                   'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
                   'initial': ['Two']}
 
-select_input_multiple = {'display_text': 'Select Multiple',
+c.select_input_multiple = {'display_text': 'Select Multiple',
                            'name': 'select2',
                            'multiple': True,
                            'options': [('One', '1'), ('Two', '2'), ('Three', '3')]}
 
-select_input_error = {'display_text': 'Select Disabled',
+c.select_input_error = {'display_text': 'Select Disabled',
                         'name': 'select3',
                         'multiple': False,
                         'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
@@ -452,7 +444,7 @@ select_input_error = {'display_text': 'Select Disabled',
                         'error': 'Here is my error text'}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% gizmo "select_input" select_input %&#125;
+&#123;% gizmo select_input select_input %&#125;
 ...</code></pre>
           </div>
         </div>
@@ -513,18 +505,18 @@ select_input_error = {'display_text': 'Select Disabled',
         
         <div class="example">
           <div class="demo">
-        {% gizmo "text_input" text_input %}
-        {% gizmo "text_input" text_error_input %}
+        {% gizmo text_input text_input %}
+        {% gizmo text_input text_error_input %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-text_input = {'display_text': 'Text',
+c.text_input = {'display_text': 'Text',
                 'name': 'inputAmount',
                 'placeholder': 'e.g.: 10.00',
                 'prepend': '$'}
         
-text_error_input = {'display_text': 'Text Error',
+c.text_error_input = {'display_text': 'Text Error',
                       'name': 'inputEmail',
                       'initial': 'bob@example.com',
                       'disabled': True,
@@ -532,8 +524,8 @@ text_error_input = {'display_text': 'Text Error',
                       'error': 'Here is my error text'}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% gizmo "text_input" text_input %&#125;
-&#123;% gizmo "text_input" text_error_input %&#125;
+&#123;% gizmo text_input text_input %&#125;
+&#123;% gizmo text_input text_error_input %&#125;
 </code></pre>
           </div>
         </div>
@@ -618,17 +610,17 @@ text_error_input = {'display_text': 'Text Error',
         
         <div class="example">
           <div class="demo">
-        {% gizmo "toggle_switch" toggle_switch %}
-        {% gizmo "toggle_switch" toggle_switch_styled %}
-        {% gizmo "toggle_switch" toggle_switch_disabled %}
+        {% gizmo toggle_switch toggle_switch %}
+        {% gizmo toggle_switch toggle_switch_styled %}
+        {% gizmo toggle_switch toggle_switch_disabled %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-toggle_switch = {'display_text': 'Defualt Toggle',
+c.toggle_switch = {'display_text': 'Defualt Toggle',
                    'name': 'toggle1'}
   
-toggle_switch_styled = {'display_text': 'Styled Toggle',
+c.toggle_switch_styled = {'display_text': 'Styled Toggle',
                           'name': 'toggle2',
                           'on_label': 'Yes',
                           'off_label': 'No',
@@ -637,7 +629,7 @@ toggle_switch_styled = {'display_text': 'Styled Toggle',
                           'initial': True,
                           'size': 'large'}
         
-toggle_switch_disabled = {'display_text': 'Disabled Toggle',
+c.toggle_switch_disabled = {'display_text': 'Disabled Toggle',
                             'name': 'toggle3',
                             'on_label': 'On',
                             'off_label': 'Off',
@@ -649,7 +641,7 @@ toggle_switch_disabled = {'display_text': 'Disabled Toggle',
                             'error': 'Here is my error text'}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% gizmo "toggle_switch" toggle_switch %&#125;
+&#123;% gizmo toggle_switch toggle_switch %&#125;
 ...</code></pre>
           </div>
         </div>
@@ -728,17 +720,17 @@ toggle_switch_disabled = {'display_text': 'Disabled Toggle',
       
       <div id="table_view_docs">
         <h2>Table View</h2>
-        <p>Table views can be used to display tabular data. The table snippet can be configured to have
+        <p>Table views can be used to display tabular data. The table gizmo can be configured to have
           columns that are editable. When used in this capacity, embed the table view in a form.</p>
         <div class="example">
         <div class="demo">
-        {% gizmo "table_view" table_view %}
-        {% gizmo "table_view" table_view_edit %}
+        {% gizmo table_view table_view %}
+        {% gizmo table_view table_view_edit %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-table_view = {'column_names': ('Name', 'Age', 'Job'), 
+c.table_view = {'column_names': ('Name', 'Age', 'Job'), 
                 'rows': [('Bill', 30, 'contractor'),
                          ('Fred', 18, 'programmer'),
                          ('Bob', 26, 'boss')],
@@ -747,7 +739,7 @@ table_view = {'column_names': ('Name', 'Age', 'Job'),
                 'bordered': False,
                 'condensed': False}
                 
-table_view_edit = {'column_names': ('Name', 'Age', 'Job'), 
+c.table_view_edit = {'column_names': ('Name', 'Age', 'Job'), 
                      'rows': [('Bill', 30, 'contractor'),
                               ('Fred', 18, 'programmer'),
                               ('Bob', 26, 'boss')],
@@ -759,7 +751,7 @@ table_view_edit = {'column_names': ('Name', 'Age', 'Job'),
                      'row_ids': [21, 25, 31]}</code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% gizmo "table_view" table_view %&#125;
+&#123;% gizmo table_view table_view %&#125;
 ...</code></pre>
         </div>
     </div>
@@ -830,12 +822,12 @@ table_view_edit = {'column_names': ('Name', 'Age', 'Job'),
       <div id="plot_view_docs">
         <h2>Plot View</h2>
         <p>
-          Plot views can be used to generate interactive plots of tabular data. All of the plots available through this snippet
+          Plot views can be used to generate interactive plots of tabular data. All of the plots available through this gizmo
           are powered by the <a href="http://www.highcharts.com/" target="_blank">Highcharts</a> JavaScript library.
         </p>
         <div class="example">
         <div class="demo">
-        {% gizmo "highcharts_plot_view" line_plot_view %}
+        {% gizmo highcharts_plot_view line_plot_view %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
@@ -892,18 +884,18 @@ highcharts_object = {
                    [50, -2.5], [60, -27.7], [70, -55.7], [80, -76.5]]}
       ]}
   
-line_plot_view = {'highcharts_object': highcharts_object,
+c.line_plot_view = {'highcharts_object': highcharts_object,
                     'width': '500px',
                     'height': '500px'}                
           </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% gizmo "highcharts_plot_view" line_plot_view %&#125;</code></pre>
+&#123;% gizmo highcharts_plot_view line_plot_view %&#125;</code></pre>
         </div>
     </div>
     <div class="example">
         <div class="demo">
-        {% gizmo "highcharts_plot_view" web_plot %}
+        {% gizmo highcharts_plot_view web_plot %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
@@ -943,18 +935,18 @@ web_plot_object = {
         }
         ]}
 
-web_plot = {'highcharts_object': web_plot_object,
+c.web_plot = {'highcharts_object': web_plot_object,
               'width': '500px',
               'height': '500px'}                  
           </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% gizmo "highcharts_plot_view" web_plot %&#125;</pre></code>
+&#123;% gizmo highcharts_plot_view web_plot %&#125;</pre></code>
         </div>
     </div>
     <div class="example">
         <div class="demo">
-        {% gizmo "highcharts_plot_view" timeseries_plot %}
+        {% gizmo highcharts_plot_view timeseries_plot %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
@@ -1017,13 +1009,13 @@ timeseries_plot_object = {
     }]
 }
 
-timeseries_plot = {'highcharts_object': timeseries_plot_object,
+c.timeseries_plot = {'highcharts_object': timeseries_plot_object,
                      'width': '500px',
                      'height': '500px'}                  
           </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% gizmo "highcharts_plot_view" timeseries_plot %&#125;</code></pre>
+&#123;% gizmo highcharts_plot_view timeseries_plot %&#125;</code></pre>
         </div>
     </div>
     <h4>Plot View Options</h4>
@@ -1064,7 +1056,7 @@ timeseries_plot = {'highcharts_object': timeseries_plot_object,
         The recommended strategy for creating plots using the Highcharts Plot View is to find a similar example
         from the <a href="http://www.highcharts.com/demo/" target="_blank">Highcharts demos</a> page. Use the 
         <i>Edit in jsFiddle</i> link to see the source code. Note that the JavaScript and CSS imports are automatically
-        handled by the snippet. Use the JavaScript source of the example to construct the equivilent in Python, following
+        handled by the gizmo. Use the JavaScript source of the example to construct the equivilent in Python, following
         the guidelines discussed in the previous paragraphs.
       </p>
       </div>
@@ -1074,13 +1066,13 @@ timeseries_plot = {'highcharts_object': timeseries_plot_object,
     
     <div class="example">
         <div class="demo">
-          <a href="#{{ message_box.name }}" role="button" class="btn btn-success" data-toggle="modal">Show Message Box</a>
-        {% gizmo "message_box" message_box %}
+          <a href="#{{ c.message_box.name }}" role="button" class="btn btn-success" data-toggle="modal">Show Message Box</a>
+        {% gizmo message_box message_box %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-message_box = {'name': 'sampleModal',
+c.message_box = {'name': 'sampleModal',
                  'title': 'Message Box Title',
                  'message': 'Congratulations! This is a message box',
                  'dismiss_button': 'Nevermind',
@@ -1090,12 +1082,12 @@ message_box = {'name': 'sampleModal',
           <p class="muted">HTML</p>
         <pre><code class="language-python">
 &lt;!-- Trigger Button --&gt;
-&lt;a href="#{{ message_box.name }}" class="btn btn-success" data-toggle="modal"&gt;
+&lt;a href="#{{ c.message_box.name }}" class="btn btn-success" data-toggle="modal"&gt;
   Show Message Box
 &lt;/a&gt;
 
 &lt;!-- Message Box --&gt;
-&#123;% gizmo "message_box" message_box %&#125;</code></pre>
+&#123;% gizmo message_box message_box %&#125;</code></pre>
         </div>
     </div>
     
@@ -1168,7 +1160,7 @@ message_box = {'name': 'sampleModal',
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-google_map = {'height': '500px',
+c.google_map = {'height': '500px',
                 'width': '100%',
                 'kml_service': '/apps/my-app/get-kml',
                 'maps_api_key':'S0mEaPIk3y'}
@@ -1187,7 +1179,7 @@ def get_kml(self):
 </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% gizmo "google_map" google_map %&#125;
+&#123;% gizmo google_map google_map %&#125;
 </code></pre>
         </div>
     </div>
@@ -1248,7 +1240,7 @@ def get_kml(self):
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-google_map = {'height': '500px',
+c.google_map = {'height': '500px',
                 'width': '100%',
                 'kml_service': '/apps/my-app/get-kml',
                 'maps_api_key':'S0mEaPIk3y'}
@@ -1267,7 +1259,7 @@ def get_kml(self):
 </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% gizmo "google_map" google_map %&#125;
+&#123;% gizmo google_map google_map %&#125;
 </code></pre>
         </div>
     </div>
@@ -1322,23 +1314,23 @@ def get_kml(self):
     <div class="example">
         <div class="demo">
         <!-- Flash Message -->
-          {% if flash_message %} 
+          {% if c.flash_message %} 
           <div class="alert alert-info">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <h5>JSON:</h5>
-            <p>{{ flash_message }}</p>
+            <p>{{ c.flash_message }}</p>
           </div>
           {% endif %}
           
           <form method="post">        
-          {% gizmo "editable_google_map" editable_google_map %}
+          {% gizmo editable_google_map editable_google_map %}
             <button class="btn btn-primary" type="submit" name="editable_map_submit">Submit</button>
           </form>
       </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-editable_map = {'height': '600px',
+c.editable_map = {'height': '600px',
                   'width': '100%', 
                  'reference_kml_action': '/apps/my-app/get-kml',
                   'maps_api_key': 'S0mEaPIk3y',
@@ -1360,7 +1352,7 @@ def get_kml(self):
 </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% gizmo "editable_google_map" editable_map %&#125;
+&#123;% gizmo editable_google_map editable_map %&#125;
 </code></pre>
         </div>
     </div>
@@ -1451,7 +1443,7 @@ geo_json = {'type':'WKTGeometryCollection',
                           ]
             }
 
-editable_google_map = {'height': '700px',
+c.editable_google_map = {'height': '700px',
                          'width': '100%',
                          'maps_api_key': 'S0mEaPIk3y',
                          'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
@@ -1474,7 +1466,7 @@ wkt_json = {"type":"GeometryCollection",
                           ]
             }
 
-editable_google_map = {'height': '700px',
+c.editable_google_map = {'height': '700px',
                          'width': '100%',
                          'maps_api_key': 'S0mEaPIk3y',
                          'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
@@ -1531,19 +1523,19 @@ editable_google_map = {'height': '700px',
     </div>
       <div id="fetchclimate_docs">
         <h2>FetchClimate</h2>
-        <p>This snippet can be used to get climate data based off of a bounding box over an area or a point. It is based off of Microsoft Research. See the <a href="http://research.microsoft.com/en-us/projects/fetchclimate/">FetchClimate page</a> for more info.</p>
+        <p>This gizmo can be used to get climate data based off of a bounding box over an area or a point. It is based off of Microsoft Research. See the <a href="http://research.microsoft.com/en-us/projects/fetchclimate/">FetchClimate page</a> for more info.</p>
         <p><strong>NOTE: Do not create more than one map on a page at any given time.</strong></p>
     <div class="example">
         <div class="demo">
           <h4>Fetchclimate With Map</h4>
           <p> Demo cannot be shown on this page because of the demo for the editable google map.
           Click on button below for live demo.</p>
-          <a class="btn btn-success" href="{% url_for 'snippet-showcase-action', action='fetchclimate_map' %}">Live Demo</a>
+          <a class="btn btn-success" href="{% url 'gizmos:fetchclimate_map' %}">Live Demo</a>
         </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-fetchclimate_with_map_plot = {
+c.fetchclimate_with_map_plot = {
               'serverUrl':'http://fetchclimate2.cloudapp.net',
               'variables': {
                 'prate':[423,432,426,424],
@@ -1566,17 +1558,17 @@ fetchclimate_with_map_plot = {
 </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% gizmo "fetchclimate" fetchclimate_with_map_plot %&#125;
+&#123;% gizmo fetchclimate fetchclimate_with_map_plot %&#125;
 </code></pre>
         </div>
         <div class="demo">
           <h4>Fetchclimate With Javascript API Output</h4>
-          {% gizmo "fetchclimate" fetchclimate_array %}
+          {% gizmo fetchclimate fetchclimate_array %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-fetchclimate_array = {
+c.fetchclimate_array = {
                 'serverUrl':'http://fetchclimate2.cloudapp.net',
                 'variables': {
                   'prate':[423,432,426,424],
@@ -1595,7 +1587,7 @@ fetchclimate_array = {
 </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% gizmo "fetchclimate" fetchclimate_array %&#125;
+&#123;% gizmo fetchclimate fetchclimate_array %&#125;
 </code></pre>
         </div>
     </div>
@@ -1695,7 +1687,7 @@ fetchclimate_array = {
         </tr>
         <tr>
           <td colspan="2">variables</td>
-          <td>dictionary -> 'string': [integer, integer, et.]</td>
+          <td>dictionary -> 'string': [integer, integer, etc..]</td>
           <td>'precip': [] </td>
           <td colspan="2">Must have variable defined. It is in the fomat {'variable_name' : [variable_id,variable_id,variable_id]}.</td>
         </tr>
@@ -1833,7 +1825,6 @@ jQuery('#fetchclimate_data')[0].addEventListener('fcOneDataRequestComplete', fun
 {% endblock %}
 
 {% block scripts %}
-  {{ super() }}
-  <script type="text/javascript" src="{% static 'tethys_gizmos/vendor/prism/prism.js' %}"></script>
-  <script type="text/javascript" src="{% static 'tethys_gizmos/js/tethys_apps.js' %}"></script>
+  {{ block.super }}
+  <script src="{% static 'tethys_gizmos/vendor/prism/prism.js' %}" type="text/javascript"></script>
 {% endblock %}

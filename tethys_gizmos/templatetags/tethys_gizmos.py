@@ -40,27 +40,25 @@ class TethysGizmoIncludeNode(template.Node):
 @register.tag()
 def gizmo(parser, token):
     """
-    Similar to the include tag, gizmo loads a template and renders it. However, the gizmo tag will not render the
-    template with the current context.
+    Similar to the include tag, gizmo loads special templates called gizmos that come with the django-tethys_gizmo
+    app. Gizmos provide tools for developing user interface elements with minimal code. Examples include date pickers,
+    maps, and interactive plots.
+
+    To insert a gizmo, use the "gizmo" tag and give it the name of a gizmo and a dictionary of configuration parameters.
 
     Example::
+        {% load tethys_gizmos %}
 
-        {% gizmo "foo/some_include" %}
-        {% gizmo "foo/some_include" with bar="BAZZ!" baz="BING!" %}
+        {% gizmo example_gizmo options %}
+        {% gizmo "example_gizmo" options %}
 
-    Use the ``only`` argument to exclude the current context when rendering
-    the included template::
-
-        {% gizmo "foo/some_include" only %}
-        {% gizmo "foo/some_include" with bar="1" only %}
+    NOTE: the "options" dictionary must be a template context variable.
     """
     try:
         tag_name, gizmo_name, options_literal = token.split_contents()
 
     except ValueError:
         raise template.TemplateSyntaxError('"%s" tag requires exactly two arguments' % token.contents.split()[0])
-
-    print(gizmo_name, options_literal)
 
     bits = token.split_contents()
     if len(bits) < 2:
