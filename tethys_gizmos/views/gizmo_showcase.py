@@ -130,8 +130,8 @@ def index(request):
 
     # Plot Views
     highcharts_object = {'chart': {
-                            'type': 'spline'
-                         },
+        'type': 'spline'
+    },
                          'title': {
                              'text': 'Plot Title'
                          },
@@ -317,7 +317,7 @@ def index(request):
     # Editable Google Map
     editable_google_map = {'height': '600px',
                            'width': '100%',
-                           'reference_kml_action': '', # TODO: Change this to the get_kml action url
+                           'reference_kml_action': '',  # TODO: Change this to the get_kml action url
                            'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws',
                            'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
                            'initial_drawing_mode': 'POINTS',
@@ -380,10 +380,11 @@ def index(request):
 
     return render(request, 'tethys_gizmos/gizmo_showcase/index.html', context)
 
+
 # @jsonify
 # def get_kml(self):
 # '''
-#     This action is used to pass the kml data to the google map. It must
+# This action is used to pass the kml data to the google map. It must
 #     return JSON with the key 'kml_link'.
 #     '''
 #     kml_links = ['http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/a656ecc5-5ddc-415a-ad12-aab50adc4818/download/elepolyterrain.kml']
@@ -424,78 +425,62 @@ def index(request):
 #                                    "properties":{"id":6,"value":7},"crs":{"type":"link","properties":{"href":"http://spatialreference.org/ref/epsg/4326/proj4/","type":"proj4"}}}]}
 #
 #     return {'overlay_json': overlay_json}
-#
-# def editable_map(self):
-#     '''
-#     Place to display editable google map in an isolated environment
-#     '''
-#     t = p.toolkit
-#     c = t.c
-#     _ = t._
-#
-#     # Editable Google Map
-# #         c.editable_google_map = {'height': '700px',
-# #                                  'width': '100%',
-# #                                  'reference_kml_action': h.url_for('snippet-showcase-action', action='get_kml'),
-# #                                  'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws',
-# #                                  'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
-# #                                  'initial_drawing_mode': 'POINTS',
-# #                                  'output_format': 'WKT',
-# #                                  'input_overlays': {'type':'WKTGeometryCollection',
-# #                                                     'geometries':[
-# #                                                                   {'type':'Point',
-# #                                                                    'wkt':'POINT(-111.5123462677002 40.629197012613545)',
-# #                                                                    'properties':{'id':1,'value':1}
-# #                                                                    },
-# #                                                                   {'type':'Polygon',
-# #                                                                    'wkt':'POLYGON((-111.50153160095215 40.63193284946615, -111.50101661682129 40.617210120505035, -111.48625373840332 40.623594711231775, -111.49123191833496 40.63193284946615, -111.50153160095215 40.63193284946615))',
-# #                                                                    'properties':{'id':2,'value':2}
-# #                                                                    },
-# #                                                                   {'type':'PolyLine',
-# #                                                                    'wkt':'POLYLINE(-111.49123191833496 40.65003865742191, -111.49088859558105 40.635319920747456, -111.48127555847168 40.64912697157757, -111.48024559020996 40.634668574229735)',
-# #                                                                    'properties':{'id':3,'value':3}
-# #                                                                    }
-# #                                                                   ]
-# #                                                     }
-# #                                  }
-#
-#     c.editable_google_map = {'height': '700px',
-#                              'width': '100%',
-#                              'reference_kml_action': h.url_for('snippet-showcase-action', action='get_kml'),
-#                              'maps_api_key': 'AIzaSyB-0nvmHhbOaaiYx6UN36145lWjUq5c2tg',
-#                              'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
-#                              'initial_drawing_mode': 'POINTS',
-#                              'input_overlays': {"type":"GeometryCollection",
-#                                                 "geometries":[
-#                                                               {"type":"Point",
-#                                                                "coordinates":[40.629197012613545,-111.5123462677002],
-#                                                                "properties":{"id":1,"value":1}},
-#                                                               {"type":"Polygon",
-#                                                                "coordinates":[[40.63193284946615,-111.50153160095215],[40.617210120505035,-111.50101661682129],[40.623594711231775,-111.48625373840332],[40.63193284946615,-111.49123191833496]],
-#                                                                "properties":{"id":2,"value":2}},
-#                                                               {"type":"LineString",
-#                                                                "coordinates":[[40.65003865742191,-111.49123191833496],[40.635319920747456,-111.49088859558105],[40.64912697157757,-111.48127555847168],[40.634668574229735,-111.48024559020996]],
-#                                                                "properties":{"id":3,"value":3}}
-#                                                 ]},
-#                              'color_ramp': {'1': '#ff0000',
-#                                             '2': '#ffff00',
-#                                             '3': '#00ff00',
-#                                             '4': '#0000ff'}
-#                              }
-#
-#     c.flash_message = ''
-#     print t.request.params
-#     if ('editable_map_submit' in t.request.params) and (t.request.params['geometry']):
-#         # Some example code showing how you can decode the JSON into python
-#         # data structures.
-#         geometry_string = t.request.params['geometry']
-#         geometry_json = json.loads(geometry_string)
-#         c.editable_google_map['input_overlays'] = geometry_json
-#
-#         # Display the JSON as flash message
-#         c.flash_message = geometry_string
-#
-#     return t.render('snippets_showcase/editable_map.html')
+
+
+def editable_map(request):
+    """
+    Place to display editable google map in an isolated environment
+    """
+
+    # Editable Google Map
+    editable_google_map = {'height': '700px',
+                           'width': '100%',
+                           'reference_kml_action': reverse('gizmos:get_kml'),
+                           'maps_api_key': 'AIzaSyB-0nvmHhbOaaiYx6UN36145lWjUq5c2tg',
+                           'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
+                           'initial_drawing_mode': 'POINTS',
+                           'input_overlays': {"type": "GeometryCollection",
+                                              "geometries": [
+                                                  {"type": "Point",
+                                                   "coordinates": [40.629197012613545, -111.5123462677002],
+                                                   "properties": {"id": 1, "value": 1}},
+                                                  {"type": "Polygon",
+                                                   "coordinates": [[40.63193284946615, -111.50153160095215],
+                                                                   [40.617210120505035, -111.50101661682129],
+                                                                   [40.623594711231775, -111.48625373840332],
+                                                                   [40.63193284946615, -111.49123191833496]],
+                                                   "properties": {"id": 2, "value": 2}},
+                                                  {"type": "LineString",
+                                                   "coordinates": [[40.65003865742191, -111.49123191833496],
+                                                                   [40.635319920747456, -111.49088859558105],
+                                                                   [40.64912697157757, -111.48127555847168],
+                                                                   [40.634668574229735, -111.48024559020996]],
+                                                   "properties": {"id": 3, "value": 3}}
+                                              ]},
+                           'color_ramp': {'1': '#ff0000',
+                                          '2': '#ffff00',
+                                          '3': '#00ff00',
+                                          '4': '#0000ff'
+                           }
+    }
+
+    flash_message = ''
+
+    if ('editable_map_submit' in request.params) and (request.params['geometry']):
+        # Some example code showing how you can decode the JSON into python
+        # data structures.
+        geometry_string = request.params['geometry']
+        geometry_json = json.loads(geometry_string)
+        editable_google_map['input_overlays'] = geometry_json
+
+        # Display the JSON as flash message
+        flash_message = geometry_string
+
+    context = {'editable_google_map': editable_google_map,
+               'flash_message': flash_message}
+
+    return render(request, 'tethys_gizmos/gizmo_showcase/editable_map.html', context)
+
 #
 # def google_map(self):
 #     '''
