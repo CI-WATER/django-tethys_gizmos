@@ -1,9 +1,11 @@
+{% load staticfiles %}
+
 {% extends "page.html" %}
 
 {% block styles %}
   {{ super() }}
-  {% resource 'ckanext_apps/css/tethys_apps.css' %}
-  {% resource 'ckanext_apps/vendor/prism/prism.css' %}
+  <link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_apps.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/prism/prism.css' %}" type="text/css" />
 {% endblock %}
 
 {% block header %}
@@ -35,21 +37,21 @@
         
         <div class="example">
           <div class="demo">
-          {% snippet "snippets/button_group.html", options=c.single_button %}
-          {% snippet "snippets/button_group.html", options=c.horizontal_buttons %}
-          {% snippet "snippets/button_group.html", options=c.vertical_buttons %}
+          {% gizmo "button_group" single_button %}
+          {% gizmo "button_group" horizontal_buttons %}
+          {% gizmo "button_group" vertical_buttons %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.single_button = {'buttons': [
+single_button = {'buttons': [
                                {'display_text': 'Click Me',
                                 'name': 'click_me_name',
                                 'attributes': 'onclick=alert(this.name);',
                                 'type': 'submit'}
                                ]}
 
-c.horizontal_buttons = {'buttons': [
+horizontal_buttons = {'buttons': [
                   {'display_text': 'Add',
                                    'icon': 'icon-plus',
                                    'style': 'success'},
@@ -59,7 +61,7 @@ c.horizontal_buttons = {'buttons': [
                                    'style': 'danger'}
                                   ]}
 
-c.vertical_buttons = {'buttons': [
+vertical_buttons = {'buttons': [
                                  {'display_text': 'Edit',
                                   'icon': 'icon-wrench',
                                   'style': 'warning',
@@ -76,7 +78,7 @@ c.vertical_buttons = {'buttons': [
                      'vertical': True}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% snippet "snippets/button_group.html", options=c.single_button %&#125;
+&#123;% gizmo "button_group" single_button %&#125;
 ...</code></pre>
           </div>
         </div>
@@ -172,13 +174,13 @@ c.vertical_buttons = {'buttons': [
         
         <div class="example">
           <div class="demo">
-        {% snippet "snippets/date_picker.html", options=c.date_picker %}
-        {% snippet "snippets/date_picker.html", options=c.date_picker_error %}
+        {% gizmo "date_picker" date_picker %}
+        {% gizmo "date_picker" date_picker_error %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.date_picker = {'display_text': 'Date',
+date_picker = {'display_text': 'Date',
                  'name': 'date1',
                  'autoclose': True,
                  'format': 'MM d, yyyy',
@@ -187,14 +189,14 @@ c.date_picker = {'display_text': 'Date',
                  'today_button': True,
                  'initial': 'February 15, 2014'}
         
-c.date_picker_error = {'display_text': 'Date',
+date_picker_error = {'display_text': 'Date',
                        'name': 'date2',
                        'initial': '10/2/2013',
                        'disabled': True,
                        'error': 'Here is my error text'}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% snippet "snippets/date_picker.html", options=c.date_picker %&#125;
+&#123;% gizmo "date_picker" date_picker %&#125;
 ...</code></pre>
           </div>
         </div>
@@ -329,19 +331,19 @@ c.date_picker_error = {'display_text': 'Date',
         
         <div class="example">
           <div class="demo">
-        {% snippet "snippets/range_slider.html", options=c.slider1 %}
-        {% snippet "snippets/range_slider.html", options=c.slider2 %}
+        {% gizmo "range_slider" slider1 %}
+        {% gizmo "range_slider" slider2 %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.slider1 = {'display_text': 'Slider 1',
+slider1 = {'display_text': 'Slider 1',
              'name': 'slider1',
              'min': 0,
              'max': 100,
              'initial': 50,
              'step': 1}
-c.slider2 = {'display_text': 'Slider 2',
+slider2 = {'display_text': 'Slider 2',
              'name': 'slider2',
              'min': 0,
              'max': 1,
@@ -351,7 +353,7 @@ c.slider2 = {'display_text': 'Slider 2',
              'error': 'Incorrect, please choose another value.'}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% snippet "snippets/range_slider.html", options=c.sliders %&#125;
+&#123;% gizmo "range_slider" sliders %&#125;
 ...</code></pre>
           </div>
         </div>
@@ -424,25 +426,25 @@ c.slider2 = {'display_text': 'Slider 2',
         
         <div class="example">
           <div class="demo">
-        {% snippet "snippets/select_input.html", options=c.select_input %}
-        {% snippet "snippets/select_input.html", options=c.select_input_multiple %}
-        {% snippet "snippets/select_input.html", options=c.select_input_error %}
+        {% gizmo "select_input" select_input %}
+        {% gizmo "select_input" select_input_multiple %}
+        {% gizmo "select_input" select_input_error %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.select_input = {'display_text': 'Select',
+select_input = {'display_text': 'Select',
                   'name': 'select1',
                   'multiple': False,
                   'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
                   'initial': ['Two']}
 
-c.select_input_multiple = {'display_text': 'Select Multiple',
+select_input_multiple = {'display_text': 'Select Multiple',
                            'name': 'select2',
                            'multiple': True,
                            'options': [('One', '1'), ('Two', '2'), ('Three', '3')]}
 
-c.select_input_error = {'display_text': 'Select Disabled',
+select_input_error = {'display_text': 'Select Disabled',
                         'name': 'select3',
                         'multiple': False,
                         'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
@@ -450,7 +452,7 @@ c.select_input_error = {'display_text': 'Select Disabled',
                         'error': 'Here is my error text'}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% snippet "snippets/select_input.html", options=c.select_input %&#125;
+&#123;% gizmo "select_input" select_input %&#125;
 ...</code></pre>
           </div>
         </div>
@@ -511,18 +513,18 @@ c.select_input_error = {'display_text': 'Select Disabled',
         
         <div class="example">
           <div class="demo">
-        {% snippet "snippets/text_input.html", options=c.text_input %}
-        {% snippet "snippets/text_input.html", options=c.text_error_input %}
+        {% gizmo "text_input" text_input %}
+        {% gizmo "text_input" text_error_input %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.text_input = {'display_text': 'Text',
+text_input = {'display_text': 'Text',
                 'name': 'inputAmount',
                 'placeholder': 'e.g.: 10.00',
                 'prepend': '$'}
         
-c.text_error_input = {'display_text': 'Text Error',
+text_error_input = {'display_text': 'Text Error',
                       'name': 'inputEmail',
                       'initial': 'bob@example.com',
                       'disabled': True,
@@ -530,8 +532,8 @@ c.text_error_input = {'display_text': 'Text Error',
                       'error': 'Here is my error text'}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% snippet "snippets/text_input.html", options=c.text_input %&#125;
-&#123;% snippet "snippets/text_input.html", options=c.text_error_input %&#125;
+&#123;% gizmo "text_input" text_input %&#125;
+&#123;% gizmo "text_input" text_error_input %&#125;
 </code></pre>
           </div>
         </div>
@@ -616,17 +618,17 @@ c.text_error_input = {'display_text': 'Text Error',
         
         <div class="example">
           <div class="demo">
-        {% snippet "snippets/toggle_switch.html", options=c.toggle_switch %}
-        {% snippet "snippets/toggle_switch.html", options=c.toggle_switch_styled %}
-        {% snippet "snippets/toggle_switch.html", options=c.toggle_switch_disabled %}
+        {% gizmo "toggle_switch" toggle_switch %}
+        {% gizmo "toggle_switch" toggle_switch_styled %}
+        {% gizmo "toggle_switch" toggle_switch_disabled %}
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.toggle_switch = {'display_text': 'Defualt Toggle',
+toggle_switch = {'display_text': 'Defualt Toggle',
                    'name': 'toggle1'}
   
-c.toggle_switch_styled = {'display_text': 'Styled Toggle',
+toggle_switch_styled = {'display_text': 'Styled Toggle',
                           'name': 'toggle2',
                           'on_label': 'Yes',
                           'off_label': 'No',
@@ -635,7 +637,7 @@ c.toggle_switch_styled = {'display_text': 'Styled Toggle',
                           'initial': True,
                           'size': 'large'}
         
-c.toggle_switch_disabled = {'display_text': 'Disabled Toggle',
+toggle_switch_disabled = {'display_text': 'Disabled Toggle',
                             'name': 'toggle3',
                             'on_label': 'On',
                             'off_label': 'Off',
@@ -647,7 +649,7 @@ c.toggle_switch_disabled = {'display_text': 'Disabled Toggle',
                             'error': 'Here is my error text'}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
-&#123;% snippet "snippets/toggle_switch.html", options=c.toggle_switch %&#125;
+&#123;% gizmo "toggle_switch" toggle_switch %&#125;
 ...</code></pre>
           </div>
         </div>
@@ -730,13 +732,13 @@ c.toggle_switch_disabled = {'display_text': 'Disabled Toggle',
           columns that are editable. When used in this capacity, embed the table view in a form.</p>
         <div class="example">
         <div class="demo">
-        {% snippet "snippets/table_view.html", options=c.table_view %}
-        {% snippet "snippets/table_view.html", options=c.table_view_edit %}
+        {% gizmo "table_view" table_view %}
+        {% gizmo "table_view" table_view_edit %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.table_view = {'column_names': ('Name', 'Age', 'Job'), 
+table_view = {'column_names': ('Name', 'Age', 'Job'), 
                 'rows': [('Bill', 30, 'contractor'),
                          ('Fred', 18, 'programmer'),
                          ('Bob', 26, 'boss')],
@@ -745,7 +747,7 @@ c.table_view = {'column_names': ('Name', 'Age', 'Job'),
                 'bordered': False,
                 'condensed': False}
                 
-c.table_view_edit = {'column_names': ('Name', 'Age', 'Job'), 
+table_view_edit = {'column_names': ('Name', 'Age', 'Job'), 
                      'rows': [('Bill', 30, 'contractor'),
                               ('Fred', 18, 'programmer'),
                               ('Bob', 26, 'boss')],
@@ -757,7 +759,7 @@ c.table_view_edit = {'column_names': ('Name', 'Age', 'Job'),
                      'row_ids': [21, 25, 31]}</code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% snippet "snippets/table_view.html", options=c.table_view %&#125;
+&#123;% gizmo "table_view" table_view %&#125;
 ...</code></pre>
         </div>
     </div>
@@ -833,7 +835,7 @@ c.table_view_edit = {'column_names': ('Name', 'Age', 'Job'),
         </p>
         <div class="example">
         <div class="demo">
-        {% snippet "snippets/highcharts_plot_view.html", options=c.line_plot_view %}
+        {% gizmo "highcharts_plot_view" line_plot_view %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
@@ -890,18 +892,18 @@ highcharts_object = {
                    [50, -2.5], [60, -27.7], [70, -55.7], [80, -76.5]]}
       ]}
   
-c.line_plot_view = {'highcharts_object': highcharts_object,
+line_plot_view = {'highcharts_object': highcharts_object,
                     'width': '500px',
                     'height': '500px'}                
           </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% snippet "snippets/highcharts_plot_view.html", options=c.line_plot_view %&#125;</code></pre>
+&#123;% gizmo "highcharts_plot_view" line_plot_view %&#125;</code></pre>
         </div>
     </div>
     <div class="example">
         <div class="demo">
-        {% snippet "snippets/highcharts_plot_view.html", options=c.web_plot %}
+        {% gizmo "highcharts_plot_view" web_plot %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
@@ -941,18 +943,18 @@ web_plot_object = {
         }
         ]}
 
-c.web_plot = {'highcharts_object': web_plot_object,
+web_plot = {'highcharts_object': web_plot_object,
               'width': '500px',
               'height': '500px'}                  
           </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% snippet "snippets/highcharts_plot_view.html", options=c.web_plot %&#125;</pre></code>
+&#123;% gizmo "highcharts_plot_view" web_plot %&#125;</pre></code>
         </div>
     </div>
     <div class="example">
         <div class="demo">
-        {% snippet "snippets/highcharts_plot_view.html", options=c.timeseries_plot %}
+        {% gizmo "highcharts_plot_view" timeseries_plot %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
@@ -1015,13 +1017,13 @@ timeseries_plot_object = {
     }]
 }
 
-c.timeseries_plot = {'highcharts_object': timeseries_plot_object,
+timeseries_plot = {'highcharts_object': timeseries_plot_object,
                      'width': '500px',
                      'height': '500px'}                  
           </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% snippet "snippets/highcharts_plot_view.html", options=c.timeseries_plot %&#125;</code></pre>
+&#123;% gizmo "highcharts_plot_view" timeseries_plot %&#125;</code></pre>
         </div>
     </div>
     <h4>Plot View Options</h4>
@@ -1072,13 +1074,13 @@ c.timeseries_plot = {'highcharts_object': timeseries_plot_object,
     
     <div class="example">
         <div class="demo">
-          <a href="#{{ c.message_box.name }}" role="button" class="btn btn-success" data-toggle="modal">Show Message Box</a>
-        {% snippet "snippets/message_box.html", options=c.message_box %}
+          <a href="#{{ message_box.name }}" role="button" class="btn btn-success" data-toggle="modal">Show Message Box</a>
+        {% gizmo "message_box" message_box %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.message_box = {'name': 'sampleModal',
+message_box = {'name': 'sampleModal',
                  'title': 'Message Box Title',
                  'message': 'Congratulations! This is a message box',
                  'dismiss_button': 'Nevermind',
@@ -1088,12 +1090,12 @@ c.message_box = {'name': 'sampleModal',
           <p class="muted">HTML</p>
         <pre><code class="language-python">
 &lt;!-- Trigger Button --&gt;
-&lt;a href="#{{ c.message_box.name }}" class="btn btn-success" data-toggle="modal"&gt;
+&lt;a href="#{{ message_box.name }}" class="btn btn-success" data-toggle="modal"&gt;
   Show Message Box
 &lt;/a&gt;
 
 &lt;!-- Message Box --&gt;
-&#123;% snippet "snippets/message_box.html", options=c.message_box %&#125;</code></pre>
+&#123;% gizmo "message_box" message_box %&#125;</code></pre>
         </div>
     </div>
     
@@ -1166,7 +1168,7 @@ c.message_box = {'name': 'sampleModal',
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.google_map = {'height': '500px',
+google_map = {'height': '500px',
                 'width': '100%',
                 'kml_service': '/apps/my-app/get-kml',
                 'maps_api_key':'S0mEaPIk3y'}
@@ -1185,7 +1187,7 @@ def get_kml(self):
 </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% snippet "snippets/google_map.html", options=c.google_map %&#125;
+&#123;% gizmo "google_map" google_map %&#125;
 </code></pre>
         </div>
     </div>
@@ -1246,7 +1248,7 @@ def get_kml(self):
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.google_map = {'height': '500px',
+google_map = {'height': '500px',
                 'width': '100%',
                 'kml_service': '/apps/my-app/get-kml',
                 'maps_api_key':'S0mEaPIk3y'}
@@ -1265,7 +1267,7 @@ def get_kml(self):
 </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% snippet "snippets/google_map.html", options=c.google_map %&#125;
+&#123;% gizmo "google_map" google_map %&#125;
 </code></pre>
         </div>
     </div>
@@ -1320,23 +1322,23 @@ def get_kml(self):
     <div class="example">
         <div class="demo">
         <!-- Flash Message -->
-          {% if c.flash_message %} 
+          {% if flash_message %} 
           <div class="alert alert-info">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <h5>JSON:</h5>
-            <p>{{ c.flash_message }}</p>
+            <p>{{ flash_message }}</p>
           </div>
           {% endif %}
           
           <form method="post">        
-          {% snippet "snippets/editable_google_map.html", options=c.editable_google_map %}
+          {% gizmo "editable_google_map" editable_google_map %}
             <button class="btn btn-primary" type="submit" name="editable_map_submit">Submit</button>
           </form>
       </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.editable_map = {'height': '600px',
+editable_map = {'height': '600px',
                   'width': '100%', 
                  'reference_kml_action': '/apps/my-app/get-kml',
                   'maps_api_key': 'S0mEaPIk3y',
@@ -1358,7 +1360,7 @@ def get_kml(self):
 </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% snippet "snippets/editable_google_map.html", options=c.editable_map %&#125;
+&#123;% gizmo "editable_google_map" editable_map %&#125;
 </code></pre>
         </div>
     </div>
@@ -1449,7 +1451,7 @@ geo_json = {'type':'WKTGeometryCollection',
                           ]
             }
 
-c.editable_google_map = {'height': '700px',
+editable_google_map = {'height': '700px',
                          'width': '100%',
                          'maps_api_key': 'S0mEaPIk3y',
                          'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
@@ -1472,7 +1474,7 @@ wkt_json = {"type":"GeometryCollection",
                           ]
             }
 
-c.editable_google_map = {'height': '700px',
+editable_google_map = {'height': '700px',
                          'width': '100%',
                          'maps_api_key': 'S0mEaPIk3y',
                          'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
@@ -1541,7 +1543,7 @@ c.editable_google_map = {'height': '700px',
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.fetchclimate_with_map_plot = {
+fetchclimate_with_map_plot = {
               'serverUrl':'http://fetchclimate2.cloudapp.net',
               'variables': {
                 'prate':[423,432,426,424],
@@ -1564,17 +1566,17 @@ c.fetchclimate_with_map_plot = {
 </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% snippet "snippets/fetchclimate.html", options=c.fetchclimate_with_map_plot %&#125;
+&#123;% gizmo "fetchclimate" fetchclimate_with_map_plot %&#125;
 </code></pre>
         </div>
         <div class="demo">
           <h4>Fetchclimate With Javascript API Output</h4>
-          {% snippet "snippets/fetchclimate.html", options=c.fetchclimate_array %}
+          {% gizmo "fetchclimate" fetchclimate_array %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.fetchclimate_array = {
+fetchclimate_array = {
                 'serverUrl':'http://fetchclimate2.cloudapp.net',
                 'variables': {
                   'prate':[423,432,426,424],
@@ -1593,7 +1595,7 @@ c.fetchclimate_array = {
 </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% snippet "snippets/fetchclimate.html", options=c.fetchclimate_array %&#125;
+&#123;% gizmo "fetchclimate" fetchclimate_array %&#125;
 </code></pre>
         </div>
     </div>
@@ -1693,7 +1695,7 @@ c.fetchclimate_array = {
         </tr>
         <tr>
           <td colspan="2">variables</td>
-          <td>dictionary -> 'string': [integer, integer, etc..]</td>
+          <td>dictionary -> 'string': [integer, integer, et.]</td>
           <td>'precip': [] </td>
           <td colspan="2">Must have variable defined. It is in the fomat {'variable_name' : [variable_id,variable_id,variable_id]}.</td>
         </tr>
@@ -1832,6 +1834,6 @@ jQuery('#fetchclimate_data')[0].addEventListener('fcOneDataRequestComplete', fun
 
 {% block scripts %}
   {{ super() }}
-  {% resource 'ckanext_apps/vendor/prism/prism.js' %}
-  {% resource 'ckanext_apps/js/tethys_apps.js' %}
+  <script type="text/javascript" src="{% static 'tethys_gizmos/vendor/prism/prism.js' %}"></script>
+  <script type="text/javascript" src="{% static 'tethys_gizmos/js/tethys_apps.js' %}"></script>
 {% endblock %}
