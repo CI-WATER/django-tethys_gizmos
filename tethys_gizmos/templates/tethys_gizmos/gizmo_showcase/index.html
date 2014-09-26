@@ -16,15 +16,15 @@
       <div id="form_elements_docs">
         <h2>Form Elements</h2>
         <p>
-          Snippets for common form elements are provided to aid in rapid development of work flows for apps.
+          Snippets for common form elements are provided to aid in rapid development of workflows for apps.
       </p>
       
         <div id="buttons_docs">
           <h3>Button Group</h3>
           <p>
-            The buttons gizmo can be used to generate a single button or a group of buttons. Groups of
+            The buttons snippet can be used to generate a single button or a group of buttons. Groups of
             buttons can be stacked horizontally or vertically. For a single button, specify a button group
-            with one button. This gizmo is a wrapper for Twitter Bootstrap buttons.
+            with one button. This snippet is a wrapper for Twitter Bootstrap buttons.
           </p>
         
         <div class="example">
@@ -64,7 +64,7 @@ c.vertical_buttons = {'buttons': [
                                   'attributes': 'name=info'},
                                  {'display_text': 'Apps',
                                   'icon': 'icon-home',
-                                  'href': '/apps',
+                                  'href': h.url_for('apps'),
                                   'style': 'primary'}
                                  ],
                      'vertical': True}</code></pre>
@@ -412,7 +412,7 @@ c.slider2 = {'display_text': 'Slider 2',
         <div id="select_input_docs">
           <h3>Select Input</h3>
           <p>
-            Select inputs are used to select values from an given set of values. Use this gizmo
+            Select inputs are used to select values from an given set of values. Use this snippet
             to create select inputs and multi select inputs.
           </p>
         
@@ -499,7 +499,7 @@ c.select_input_error = {'display_text': 'Select Disabled',
         <div id="text_input_docs">
           <h3>Text Input</h3>
           <p>
-            The text input gizmo makes it easy to add text inputs to your app
+            The text input snippet makes it easy to add text inputs to your app
            that are styled similarly to the other input snippets.
           </p>
         
@@ -1146,7 +1146,7 @@ c.message_box = {'name': 'sampleModal',
       
       <div id="google_map_docs">
         <h2>Google Map</h2>
-        <p>This gizmo can be used to generate map views of spatial data. By default the data will be shown using
+        <p>This snippet can be used to generate map views of spatial data. By default the data will be shown using
           Google Earth (3D globe). However, Google Earth requires a browser plugin that is not supported in all
           operating systems or browsers. For systems that don't support the Google Earth plugin, a Google Maps map (2D map) will be generated
           instead. Note that the link to the data must be publicly accessible to be shown on a Google Map</p>
@@ -1155,7 +1155,7 @@ c.message_box = {'name': 'sampleModal',
         <div class="demo">
           <p> Demo cannot be shown on this page because of the demo for the editable google map.
           Click on button below for live demo.</p>
-          <a class="btn btn-success" href="{% url 'gizmos:showcase' %}">Live Demo</a>
+          <a class="btn btn-success" href="{% url_for 'snippet-showcase-action', action='google_map' %}">Live Demo</a>
         </div>
         <div class="code">
           <p class="muted">Controller</p>
@@ -1226,7 +1226,7 @@ def get_kml(self):
     
     <div id="map_view_docs">
         <h2>Map View</h2>
-        <p>This gizmo can be used to generate map views of spatial data. By default the data will be shown using
+        <p>This snippet can be used to generate map views of spatial data. By default the data will be shown using
           Google Earth (3D globe). However, Google Earth requires a browser plugin that is not supported in all
           operating systems or browsers. For systems that don't support the Google Earth plugin, a Google Maps map (2D map) will be generated
           instead. Note that the link to the data must be publicly accessible to be shown on a Google Map</p>
@@ -1235,7 +1235,7 @@ def get_kml(self):
         <div class="demo">
           <p> Demo cannot be shown on this page because of the demo for the editable google map.
           Click on button below for live demo.</p>
-          <a class="btn btn-success" href="{% url 'gizmos:map_view' %}">Live Demo</a>
+          <a class="btn btn-success" href="{% url_for 'snippet-showcase-action', action='map_view' %}">Live Demo</a>
         </div>
         <div class="code">
           <p class="muted">Controller</p>
@@ -1306,11 +1306,11 @@ def get_kml(self):
     
     <div id="editable_google_map_docs">
         <h2>Editable Google Map</h2>
-    <p>The editable map gizmo uses Google Maps 3 with the drawing library enabled to allow geospatial user input.
+    <p>The editable map snippet uses Google Maps 3 with the drawing library enabled to allow geospatial user input.
       An optional background dataset can be specified for reference. Only the shapes drawn by the user are returned (see 
       <a href="#retrieving_shapes">Retrieving Shapes</a> section).</p>
     <p><strong>NOTE: Do not create more than one map on a page at any given time.</strong></p>
-    <p>Click <a href="{% url 'gizmos:editable_map' %}">here</a> for demo on a separate page.</p>
+    <p>Click <a href="{% url_for 'snippet-showcase-action', action='editable_map' %}">here</a> for demo on a separate page.</p>
     <div class="example">
         <div class="demo">
         <!-- Flash Message -->

@@ -1,16 +1,18 @@
+{% load staticfiles %}
+
 {% extends "page.html" %}
 
 {% block styles %}
 	{{ super() }}
-	{% resource 'ckanext_apps/css/tethys_apps.css' %}
-	{% resource 'ckanext_apps/vendor/prism/prism.css' %}
+	<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_apps.css' %}" type="text/css" />
+	<link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/prism/prism.css' %}" type="text/css" />
 {% endblock %}
 
 {% block primary_content %}
   <div class="module">
     <div class="module-content">
       <h1>Google Map</h1>
-      {% snippet "snippets/google_map.html", options=c.google_map %}
+      {% gizmo "google_map" google_map %}
     </div>
   </div>
 {% endblock %}

@@ -1,33 +1,3 @@
-{#
-Inserts a generic stepped progress indicators or stages. Each stage can
-have one of three states, "uncomplete", "complete" and "active". Elements
-that are complete become a submit button (wrap this in your form) with name
-save and value that the user set. This can be used to save data in one form
-and jump to another step. This is a modified version of the ckan snippet:
-package/snippets/stages.html
-
-stages - A list of stage attribute dictionaries
-states - A list of states for each of the stages. Missing stages default
-         to "uncomplete". See examples below.
-
-Example:
-
-    {% snippet 'package/snippets/stages.html', states=['active'] %}
-    {% snippet 'package/snippets/stages.html', states=['complete', 'active'] %}
-    {% snippet 'package/snippets/stages.html', states=['active', 'complete', 'complete'] %}
-    
-In controller define each state using dictionaries with the following keys:
-
-c.stages = [{'title': 'General',
-			 'go-to': 'general'},
-			{'title': 'Inflow Rates',
-			 'go-to': 'inflow'},
-			{'title': 'Demand Rates',
-			 'go-to': 'demand'},
-			{'title': 'Scenario',
-			 'go-to': 'scenario'}]
-#}
-
 {% set state1 = states[0] or 'active' %}
 {% set state2 = states[1] or 'uncomplete' %}
 {% set state3 = states[2] or 'uncomplete' %}

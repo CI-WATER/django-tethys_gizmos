@@ -2,15 +2,15 @@
 
 {% block styles %}
 	{{ super() }}
-	{% resource 'ckanext_apps/css/tethys_apps.css' %}
-	{% resource 'ckanext_apps/vendor/prism/prism.css' %}
+	<link rel="stylesheet" href="{% static 'tethys_gizmoscss/tethys_apps.css' %}" type="text/css" />
+	<link rel="stylesheet" href="{% static 'tethys_gizmosvendor/prism/prism.css' %}" type="text/css" />
 {% endblock %}
 
 {% block primary %}
   <div class="module">
     <div class="module-content">
       <h1>Map View</h1>
-      {% snippet "snippets/map_view.html", options=c.map_view %}
+      {% gizmo "map_view" map_view %}
     </div>
   </div>
 {% endblock %}
