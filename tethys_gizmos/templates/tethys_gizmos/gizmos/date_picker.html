@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 <link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/bootstrap_datepicker/css/datepicker.css' %}" type="text/css" />
-<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_snippets.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_gizmos.css' %}" type="text/css" />
 
 <div class="control-group {% if error %} error {% endif %}">
 	{% if display_text %}<label class="control-label" for="{{ name }}">{{ display_text }}</label>{% endif %}
@@ -32,4 +32,4 @@
 </div>
 
 <script type="text/javascript" src="{% static 'tethys_gizmos/vendor/bootstrap_datepicker/js/bootstrap_datepicker.js' %}"></script>
-<script type="text/javascript" src="{% static 'tethys_gizmos/js/tethys_snippets.js' %}"></script>
+<script type="text/javascript" src="{% static 'tethys_gizmos/js/tethys_gizmos.js' %}"></script>

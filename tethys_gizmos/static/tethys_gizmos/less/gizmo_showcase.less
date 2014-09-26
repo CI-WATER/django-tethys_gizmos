@@ -1,0 +1,82 @@
+#content {
+  margin: 0 50px;
+}
+
+#showcase_nav_list {
+    position: fixed;
+    top: 100px;
+	width: 192px;
+	margin: 0 -1px 0 -1px;
+}
+
+#showcase_nav_list a {
+	font-size: 14pt;
+	padding: 10px 15px;
+	border: solid 1px #dddddd;
+	margin-top: -1px;
+}
+
+#showcase_nav_list a.nav-list-sub {
+	font-size: 12pt;
+	padding: 10px 25px;
+}
+
+/* Demo and Code Example Styles */
+.example {
+	max-width: 750px;
+}
+.demo, .code {
+	position: relative;
+	padding: 40px 20px 20px 20px;
+	margin: 20px 0;
+	border: 1px solid #dddddd;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #fcfcfc;
+}
+
+.demo:after, .code:after {
+	position: absolute;
+	top: -1px;
+	left: -1px;
+	padding: 3px 7px;
+	font-size: 10pt;
+	font-weight: bold;
+	background-color: #efedea;
+	border: 1px solid #dddddd;
+	-webkit-border-radius: 5px 0 5px 0;
+	-moz-border-radius: 5px 0 5px 0;
+	border-radius: 5px 0 5px 0;
+}
+.code:after {
+	content: "Code";
+}
+.demo:after {
+	content: "Demo";
+}
+
+.example .demo {
+	-webkit-border-radius: 5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;
+	margin-bottom: 0;
+}
+
+.example .code {
+	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+	margin-top: -1px;
+	background-color: #f5f2f0;
+}
+
+.example .code:after {
+	-webkit-border-radius: 0 0 5px 0;
+	-moz-border-radius: 0 0 5px 0;
+	border-radius: 0 0 5px 0;
+}
+
+pre {
+  border: none;
+}

@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
-<link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/bootstrap_switch/build/css/bootstrap2/bootstrap_switch_min.css' %}" type="text/css" />
-<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_snippets.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/bootstrap_switch/build/css/bootstrap3/bootstrap-switch.min.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_gizmos.css' %}" type="text/css" />
 
 <div class="control-group {% if error %} error {% endif %}">
   {% if display_text %}<label class="control-label" for="{{ name }}">{{ display_text }}</label>{% endif %}
@@ -23,4 +23,4 @@
 </div>
 
 <script type="text/javascript" src="{% static 'tethys_gizmos/vendor/bootstrap_switch/build/js/bootstrap_switch_min.js' %}"></script>
-<script type="text/javascript" src="{% static 'tethys_gizmos/js/tethys_snippets.js' %}"></script>
+<script type="text/javascript" src="{% static 'tethys_gizmos/js/tethys_gizmos.js' %}"></script>

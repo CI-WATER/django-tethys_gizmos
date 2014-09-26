@@ -1,6 +1,6 @@
 {% load staticfiles tethys_gizmos %}
 
-<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_snippets.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_gizmos.css' %}" type="text/css" />
 
 <div class="highcharts-plot"
   {% if highcharts_object|isstring %}
@@ -14,4 +14,4 @@
 <script type="text/javascript" src="{% static 'tethys_gizmos/vendor/highcharts/js/highcharts.js' %}"></script>
 <script type="text/javascript" src="{% static 'tethys_gizmos/vendor/highcharts/js/highcharts-more.js' %}"></script>
 <script type="text/javascript" src="{% static 'tethys_gizmos/vendor/highcharts/js/modules/exporting.js' %}"></script>
-<script type="text/javascript" src="{% static 'tethys_gizmos/js/tethys_snippets.js' %}"></script>
+<script type="text/javascript" src="{% static 'tethys_gizmos/js/tethys_gizmos.js' %}"></script>
