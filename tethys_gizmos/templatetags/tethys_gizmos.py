@@ -1,4 +1,7 @@
 import os
+import json
+import time
+from datetime import datetime
 from django.conf import settings
 from django import template
 from django.template.loader import get_template
@@ -6,6 +9,41 @@ from django.template import TemplateSyntaxError
 
 
 register = template.Library()
+
+@register.filter(is_safe=True)
+def isstring(value):
+    """
+    Filter that returns a type
+    """
+    if value is str:
+        return True
+    else:
+        return False
+
+
+def json_date_handler(obj):
+    if isinstance(obj, datetime):
+        return time.mktime(obj.timetuple()) * 1000
+    else:
+        return obj
+
+
+@register.filter
+def jsonify(data):
+    """
+    Convert python data structures into a JSON string
+    """
+    return json.dumps(data, default=json_date_handler)
+
+@register.filter
+def divide(value, divisor):
+    """
+    Divide value by divisor
+    """
+    v = float(value)
+    d = float(divisor)
+
+    return v/d
 
 
 class TethysGizmoIncludeNode(template.Node):

@@ -1,23 +1,19 @@
-{% load staticfiles %}
+{% load staticfiles tethys_gizmos %}
 
 <link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_snippets.css' %}" type="text/css" />
 
-{% if width %}
-  {% set margin_left = width / -2.0 %}
-{% endif %}
-
-<div id="{{ name }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="{{ name + 'Label' }}" aria-hidden="true" {% if width %} style="width: {{ width }}px; margin-left: {{ margin_left }}px;"{% endif %}>
+<div id="{{ name }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="{{ name|add:'Label' }}" aria-hidden="true" {% if width %} style="width: {{ width }}px; margin-left: {{ width|divide:-2.0 }}px;"{% endif %}>
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="{{ name + 'Label' }}">{% if title %} {{ _(title) }} {% else %} {{ _(Title) }}{% endif %}</h3>
+    <h3 id="{{ name|add:'Label' }}">{% if title %} {{ title }} {% else %} {{ Title }}{% endif %}</h3>
   </div>
   <div class="modal-body">
 	<p class="lead">
-		{{ _(message) }}
+		{{ message }}
 	</p>
   </div>
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">{% if dismiss_button %} {{ _(dismiss_button) }} {% else %} Cancel {% endif %}</button>
-    <a class="btn btn-primary" {% if affirmative_attributes %} {{ affirmative_attributes }} {% endif %}>{% if affirmative_button %} {{ _(affirmative_button) }} {% else %} Ok {% endif %}</a>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">{% if dismiss_button %} {{ dismiss_button }} {% else %} Cancel {% endif %}</button>
+    <a class="btn btn-primary" {% if affirmative_attributes %} {{ affirmative_attributes }} {% endif %}>{% if affirmative_button %} {{ affirmative_button }} {% else %} OK {% endif %}</a>
   </div>
 </div>

@@ -11,6 +11,6 @@ urlpatterns = patterns('',
     url(r'^editable-map/$', 'tethys_gizmos.views.gizmo_showcase.editable_map', name='editable_map'),
     url(r'^google-map/$', 'tethys_gizmos.views.gizmo_showcase.google_map', name='google_map'),
     url(r'^map-view', 'tethys_gizmos.views.gizmo_showcase.map_view', name='map_view'),
-    url(r'^fetch-climate-map/$', 'tethys_gizmos.views.gizmo_showcase.fetchclimate_map', name='fetch_climate_map'),
+    url(r'^fetch-climate-map/$', 'tethys_gizmos.views.gizmo_showcase.fetchclimate_map', name='fetchclimate_map'),
     url(r'^ajax/', include(ajax_urls)),
 )

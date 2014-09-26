@@ -5,15 +5,12 @@
 <div class="control-group {% if error %} error {% endif %}">
   {% if display_text %}<label class="control-label" for="{{ name }}">{{ display_text }}</label>{% endif %}
   <div class="controls">
-    <select id="{{ name }}" 
-        name="{{ name }}" 
-        {% if multiple %}multiple{% endif %}
-        {% if disabled %}disabled{% endif %}>
+    <select id="{{ name }}" name="{{ name }}" {% if multiple %}multiple{% endif %} {% if disabled %}disabled{% endif %}>
       {% for option, value in options %}
         {% if initial and option in initial %}
-        <option value="{{value}}" selected>{{- option -}}</option>
+        <option value="{{value}}" selected>{{ option }}</option>
         {% else %}
-        <option value="{{value}}">{{- option -}}</option>
+        <option value="{{value}}">{{ option }}</option>
         {% endif %}
       {% endfor %}
     </select>

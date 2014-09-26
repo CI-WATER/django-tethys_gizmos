@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles tethys_gizmos %}
 
 <!-- Editable Google Maps CSS -->
 <link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/farbtastic/farbtastic.css' %}" type="text/css" />
@@ -154,11 +154,11 @@
 	{% endif %}
 	
 	{% if input_overlays %}
-	initial_overlays_string = '{{ h.jsonify(input_overlays)|safe }}';
+	initial_overlays_string = '{{ input_overlays|jsonify }}';
 	{% endif %}
 	
 	{% if color_ramp %}
-	initial_color_ramp_string = '{{ h.jsonify(color_ramp)|safe }}';
+	initial_color_ramp_string = '{{ color_ramp|jsonify }}';
 	{% endif %}
 
 </script>

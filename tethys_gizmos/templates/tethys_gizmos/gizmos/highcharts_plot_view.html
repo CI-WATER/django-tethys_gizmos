@@ -1,12 +1,12 @@
-{% load staticfiles %}
+{% load staticfiles tethys_gizmos %}
 
 <link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_snippets.css' %}" type="text/css" />
 
-<div class="highcharts-plot" 
-  {% if highcharts_object is string %}
+<div class="highcharts-plot"
+  {% if highcharts_object|isstring %}
     data-json="{{ highcharts_object }}"
   {% else %}
-    data-json="{{ h.jsonify(highcharts_object) }}"
+    data-json="{{ highcharts_object|jsonify }}"
   {% endif %}
   style="min-width: {{ width }}; height: {{ height }}; margin: 0 auto;">
 </div>

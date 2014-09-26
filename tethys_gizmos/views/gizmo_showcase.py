@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 
 
 def index(request):
@@ -381,50 +382,63 @@ def index(request):
     return render(request, 'tethys_gizmos/gizmo_showcase/index.html', context)
 
 
-# @jsonify
-# def get_kml(self):
-# '''
-# This action is used to pass the kml data to the google map. It must
-#     return JSON with the key 'kml_link'.
-#     '''
-#     kml_links = ['http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/a656ecc5-5ddc-415a-ad12-aab50adc4818/download/elepolyterrain.kml']
-#
-#     for i in range(10000000):
-#         pass
-#
-#     return {'kml_link':kml_links}
-#
-# @jsonify
-# def swap_kml(self):
-#     '''
-#     This action is used to pass the kml data to the google map. It must
-#     return JSON with the key 'kml_link'.
-#     '''
-#     for i in range(0, 20000000):
-#         pass
-#
-#     kml_links = ['http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/1bb2db00-9944-4084-9ff7-b7897f483088/download/littledellcluster.kml']
-#     return {'kml_link':kml_links}
-#
-# @jsonify
-# def swap_overlays(self):
-#     '''
-#     This action is used to demonstrate how overlay layers can be swapped out
-#     dynamically using the javascript API.
-#     '''
-#
-#     overlay_json = {"type":"GeometryCollection",
-#                     "geometries":[{"type":"Polygon",
-#                                    "coordinates":[[40.643135583312805,-111.48951530456543],[40.636622594719725,-111.49432182312012],[40.63310531666155,-111.4877986907959],[40.63805550673186,-111.48110389709473],[40.6413120105605,-111.48539543151855]],
-#                                    "properties":{"id":4,"value":5},"crs":{"type":"link","properties":{"href":"http://spatialreference.org/ref/epsg/4326/proj4/","type":"proj4"}}},
-#                                   {"type":"Point",
-#                                    "coordinates":[40.629587853312174,-111.50959968566895],
-#                                    "properties":{"id":5,"value":6},"crs":{"type":"link","properties":{"href":"http://spatialreference.org/ref/epsg/4326/proj4/","type":"proj4"}}},
-#                                   {"type":"LineString",
-#                                    "coordinates":[[40.62737305910759,-111.50118827819824],[40.61564645424611,-111.5071964263916],[40.61277963772034,-111.48608207702637],[40.62802447679272,-111.49157524108887]],
-#                                    "properties":{"id":6,"value":7},"crs":{"type":"link","properties":{"href":"http://spatialreference.org/ref/epsg/4326/proj4/","type":"proj4"}}}]}
-#
-#     return {'overlay_json': overlay_json}
+def get_kml(request):
+    """
+    This action is used to pass the kml data to the google map. It must return JSON with the key 'kml_link'.
+    """
+    kml_links = [
+        'http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/a656ecc5-5ddc-415a-ad12-aab50adc4818/download/elepolyterrain.kml']
+
+    for i in range(10000000):
+        pass
+
+    return HttpResponse(json.dumps(kml_links), content_type='application/json')
+
+
+def swap_kml(self):
+    """
+    This action is used to pass the kml data to the google map. It must return JSON with the key 'kml_link'.
+    """
+    for i in range(0, 20000000):
+        pass
+
+    kml_links = [
+        'http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/1bb2db00-9944-4084-9ff7-b7897f483088/download/littledellcluster.kml']
+    return HttpResponse(json.dumps(kml_links), content_type='application/json')
+
+
+def swap_overlays(self):
+    """
+    This action is used to demonstrate how overlay layers can be swapped out dynamically using the javascript API.
+    """
+
+    overlay_json = {"type": "GeometryCollection",
+                    "geometries": [{"type": "Polygon",
+                                    "coordinates": [[40.643135583312805, -111.48951530456543],
+                                                    [40.636622594719725, -111.49432182312012],
+                                                    [40.63310531666155, -111.4877986907959],
+                                                    [40.63805550673186, -111.48110389709473],
+                                                    [40.6413120105605, -111.48539543151855]],
+                                    "properties": {"id": 4, "value": 5}, "crs": {"type": "link", "properties": {
+                                    "href": "http://spatialreference.org/ref/epsg/4326/proj4/", "type": "proj4"}}
+                                   },
+                                   {"type": "Point",
+                                    "coordinates": [40.629587853312174, -111.50959968566895],
+                                    "properties": {"id": 5, "value": 6}, "crs": {"type": "link", "properties": {
+                                    "href": "http://spatialreference.org/ref/epsg/4326/proj4/", "type": "proj4"}}
+                                   },
+                                   {"type": "LineString",
+                                    "coordinates": [[40.62737305910759, -111.50118827819824],
+                                                    [40.61564645424611, -111.5071964263916],
+                                                    [40.61277963772034, -111.48608207702637],
+                                                    [40.62802447679272, -111.49157524108887]],
+                                    "properties": {"id": 6, "value": 7}, "crs": {"type": "link", "properties": {
+                                    "href": "http://spatialreference.org/ref/epsg/4326/proj4/", "type": "proj4"}}
+                                   }
+                    ]
+    }
+
+    return HttpResponse(json.dumps(overlay_json), content_type='application/json')
 
 
 def editable_map(request):
@@ -481,88 +495,83 @@ def editable_map(request):
 
     return render(request, 'tethys_gizmos/gizmo_showcase/editable_map.html', context)
 
-#
-# def google_map(self):
-#     '''
-#     Place to display google map view in an isoloted environment
-#     '''
-#     t = p.toolkit
-#     c = t.c
-#     _ = t._
-#
-#     # Google Map
-#     c.google_map = {'height': '700px',
-#                     'width': '100%',
-#                     'kml_service': h.url_for('snippet-showcase-action', action='get_kml'),
-#                     'maps_api_key':'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws'}
-#
-#     return t.render('snippets_showcase/google_map.html')
-#
-# def map_view(self):
-#     '''
-#     Place to show off the new map view
-#     '''
-#     t = p.toolkit
-#     c = t.c
-#
-#     c.map_view = {'map_type':'google-earth',                #map types: 'google-earth', 'google-map', 'open-layers'
-#                   'height': '700px',
-#                   'width': '100%',
-#                   'legend': True,                           # true shows legend, false hides it
-#                   'legend_options': {'addLayers':False},     # options: addLayers,
-#
-#                   # array of links to map layers
-#                   'layer_data': ['http://tethys.byu.edu/storage/f/2013-11-13T18%3A58%3A10.477Z/soil-poly-v2.kml',
-#                                  #'http://tethys.byu.edu/storage/f/2013-11-22T18%3A02%3A16.551Z/ele-poly-terrain.kml'
-#                                 ],
-#
-#                   # url to retrieve an object containing an array of layer links
-#                   'kml_service': h.url_for('snippet-showcase-action', action='get_kml'),
-#
-#                   #Google Maps api key if Google Maps is used
-#                   'maps_api_key':'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws'}
-#
-#     return t.render('snippets_showcase/map_view.html')
-#
-#
-# def fetchclimate_map(self):
-#     '''
-#     Place to show off the new map view
-#     '''
-#     t = p.toolkit
-#     c = t.c
-#
-#     c.fetchclimate_map = {
-#                 'serverUrl':'http://fetchclimate2.cloudapp.net',
-#                 'variables': {
-#                   'prate':[423,432,426,424],
-#                   'elev':[]
-#                 },
-#                 'map': {
-#                   'css' : {'height': '600px',
-#                           'width': '100%'},
-#                   'map_data' : {
-#                     'api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws',
-#                     'drawing_types_enabled': ['RECTANGLE', 'POINTS'],
-#                     'initial_drawing_mode': 'RECTANGLE',
-#                     'max_num_grids' : 2
-#                   }
-#                 },
-#                 'grid' : {
-#                             'title' : 'Provo Canyon Watershed',
-#                             'boundingBox' : [40.308836,40.381579,-111.654462,-111.550778],
-#                             'gridResolution':[25,25]
-#                 },
-#                 'point' : {
-#                             'title' : 'Clyde Building',
-#                             'location':[40.246942,-111.647971],
-#                 },
-#                 'plot': {
-#                   'css' : {'height': '600px',
-#                           'width': '600px'}
-#                 }
-#               }
-#
-#     return t.render('snippets_showcase/fetchclimate_map.html')
-        
-        
+
+def google_map(request):
+    """
+    Place to display google map view in an isoloted environment
+    """
+    # Google Map
+    google_map = {'height': '700px',
+                  'width': '100%',
+                  'kml_service': h.url_for('snippet-showcase-action', action='get_kml'),
+                  'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws'}
+
+    context = {'google_map': google_map}
+
+    return render(request, 'snippets_showcase/google_map.html', context)
+
+
+def map_view(request):
+    """
+    Place to show off the new map view
+    """
+    map_view = {'map_type': 'google-earth',  # map types: 'google-earth', 'google-map', 'open-layers'
+                'height': '700px',
+                'width': '100%',
+                'legend': True,  # true shows legend, false hides it
+                'legend_options': {'addLayers': False},  # options: addLayers,
+
+                # array of links to map layers
+                'layer_data': ['http://tethys.byu.edu/storage/f/2013-11-13T18%3A58%3A10.477Z/soil-poly-v2.kml',
+                               # 'http://tethys.byu.edu/storage/f/2013-11-22T18%3A02%3A16.551Z/ele-poly-terrain.kml'
+                ],
+
+                # url to retrieve an object containing an array of layer links
+                'kml_service': reverse('gizmos:get_kml'),
+
+                # Google Maps api key if Google Maps is used
+                'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws'}
+
+    context = {'map_view', map_view}
+
+    return render(request, 'snippets_showcase/map_view.html', context)
+
+
+def fetchclimate_map(request):
+    """
+    Place to show off the new map view
+    """
+    fetchclimate_map = {
+        'serverUrl': 'http://fetchclimate2.cloudapp.net',
+        'variables': {
+            'prate': [423, 432, 426, 424],
+            'elev': []
+        },
+        'map': {
+            'css': {'height': '600px',
+                    'width': '100%'},
+            'map_data': {
+                'api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws',
+                'drawing_types_enabled': ['RECTANGLE', 'POINTS'],
+                'initial_drawing_mode': 'RECTANGLE',
+                'max_num_grids': 2
+            }
+        },
+        'grid': {
+            'title': 'Provo Canyon Watershed',
+            'boundingBox': [40.308836, 40.381579, -111.654462, -111.550778],
+            'gridResolution': [25, 25]
+        },
+        'point': {
+            'title': 'Clyde Building',
+            'location': [40.246942, -111.647971],
+        },
+        'plot': {
+            'css': {'height': '600px',
+                    'width': '600px'}
+        }
+    }
+
+    context = {'fetchclimate_map': fetchclimate_map}
+
+    return render(request, 'snippets_showcase/fetchclimate_map.html', context)

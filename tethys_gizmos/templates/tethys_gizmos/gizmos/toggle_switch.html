@@ -9,11 +9,11 @@
     <input id="{{ name }}"
         name="{{ name }}"
         type="checkbox"
-        class="bootstrap-switch {% if size %}switch-{{- size -}}{% endif %}"
-        data-on-label="{% if on_label %} {{- on_label -}} {% else %}ON{% endif %}"
-        data-off-label="{% if off_label %} {{- off_label -}} {% else %}OFF{% endif %}"
-        data-on="{% if on_style %} {{- on_style -}} {% else %}primary{% endif %}"
-        data-off="{% if off_style %} {{- off_style -}} {% else %}defualt{% endif %}"
+        class="bootstrap-switch {% if size %}switch-{{ size }}{% endif %}"
+        data-on-label="{% if on_label %} {{ on_label }} {% else %}ON{% endif %}"
+        data-off-label="{% if off_label %} {{ off_label }} {% else %}OFF{% endif %}"
+        data-on="{% if on_style %} {{ on_style }} {% else %}primary{% endif %}"
+        data-off="{% if off_style %} {{ off_style }} {% else %}defualt{% endif %}"
         {% if disabled %}disabled{% endif %}
         {% if initial %}checked{% endif %}>
   </div>

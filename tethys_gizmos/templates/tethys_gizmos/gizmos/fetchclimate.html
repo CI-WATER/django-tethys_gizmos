@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles tethys_gizmos %}
 
 <!-- FetchClimate CSS -->
 <link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/farbtastic/farbtastic.css' %}" type="text/css" />
@@ -13,25 +13,25 @@
 {% endif %}
 <!-- FC outerContainer -->
 <div id="fc_outer_container" class="parent-container" data-date=""
-{% if options is string %}
+{% if options|isstring %}
   {% if 'map' in options %}
     data-map={{ map }}
   {% endif %}
   data-variables = {{ variables }}
 {% else %}
   {% if 'map' in options %}
-    data-map="{{ h.jsonify(map) }}"
+    data-map="{{ map|jsonify }}"
   {% endif %}
-  data-variables = "{{ h.jsonify(variables) }}"
+  data-variables = "{{ variables|jsonify }}"
 {% endif %}
   data-server-url= {{ serverUrl }}
 {% if 'grid' in options %}
-  data-grids="{{ h.jsonify([grid]) }}"
+  data-grids="{{ grid|jsonify }}"
 {% else %}
   data-grids=""
 {% endif %}
 {% if 'point' in options %}
-  data-points="{{ h.jsonify([point]) }}"
+  data-points="{{ point|jsonify }}"
 {% else %}
   data-points=""
 {% endif %}

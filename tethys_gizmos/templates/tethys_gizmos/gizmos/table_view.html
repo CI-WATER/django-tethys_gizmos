@@ -7,15 +7,13 @@
     </tr>
     {% endif %}
     {% for row in rows %}
-    {% set row_index = loop.index - 1 %}
     <tr>
       {% for column_value in row %}
-        {% set column_index = loop.index - 1 %}
-        {% if editable_columns and editable_columns[column_index] %}
+        {% if editable_columns and editable_columns[forloop.counter0] %}
           {% if row_ids %}
-            {% set identifier = editable_columns[column_index] + row_ids[row_index]|string %}
+            {% set identifier = editable_columns[forloop.counter0] + row_ids[forloop.parentloop.counter0]|string %}
           {% else %}
-            {% set identifier = editable_columns[column_index] + row_index|string %}
+            {% set identifier = editable_columns[forloop.counter0] + row_index|string %}
           {% endif %}
           <td><input id="{{ identifier }}" name="{{ identifier }}" type="text" class="span2" value="{{ column_value }}" style="margin-bottom: 0;"></td>
         {% else %}

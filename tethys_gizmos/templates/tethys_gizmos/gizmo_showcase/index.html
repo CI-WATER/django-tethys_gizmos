@@ -36,14 +36,14 @@
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.single_button = {'buttons': [
+single_button = {'buttons': [
                                {'display_text': 'Click Me',
                                 'name': 'click_me_name',
                                 'attributes': 'onclick=alert(this.name);',
                                 'type': 'submit'}
                                ]}
 
-c.horizontal_buttons = {'buttons': [
+horizontal_buttons = {'buttons': [
                   {'display_text': 'Add',
                                    'icon': 'icon-plus',
                                    'style': 'success'},
@@ -53,7 +53,7 @@ c.horizontal_buttons = {'buttons': [
                                    'style': 'danger'}
                                   ]}
 
-c.vertical_buttons = {'buttons': [
+vertical_buttons = {'buttons': [
                                  {'display_text': 'Edit',
                                   'icon': 'icon-wrench',
                                   'style': 'warning',
@@ -64,7 +64,7 @@ c.vertical_buttons = {'buttons': [
                                   'attributes': 'name=info'},
                                  {'display_text': 'Apps',
                                   'icon': 'icon-home',
-                                  'href': h.url_for('apps'),
+                                  'href': '/apps',
                                   'style': 'primary'}
                                  ],
                      'vertical': True}</code></pre>
@@ -172,7 +172,7 @@ c.vertical_buttons = {'buttons': [
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.date_picker = {'display_text': 'Date',
+date_picker = {'display_text': 'Date',
                  'name': 'date1',
                  'autoclose': True,
                  'format': 'MM d, yyyy',
@@ -181,7 +181,7 @@ c.date_picker = {'display_text': 'Date',
                  'today_button': True,
                  'initial': 'February 15, 2014'}
         
-c.date_picker_error = {'display_text': 'Date',
+date_picker_error = {'display_text': 'Date',
                        'name': 'date2',
                        'initial': '10/2/2013',
                        'disabled': True,
@@ -329,13 +329,13 @@ c.date_picker_error = {'display_text': 'Date',
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.slider1 = {'display_text': 'Slider 1',
+slider1 = {'display_text': 'Slider 1',
              'name': 'slider1',
              'min': 0,
              'max': 100,
              'initial': 50,
              'step': 1}
-c.slider2 = {'display_text': 'Slider 2',
+slider2 = {'display_text': 'Slider 2',
              'name': 'slider2',
              'min': 0,
              'max': 1,
@@ -425,18 +425,18 @@ c.slider2 = {'display_text': 'Slider 2',
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.select_input = {'display_text': 'Select',
+select_input = {'display_text': 'Select',
                   'name': 'select1',
                   'multiple': False,
                   'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
                   'initial': ['Two']}
 
-c.select_input_multiple = {'display_text': 'Select Multiple',
+select_input_multiple = {'display_text': 'Select Multiple',
                            'name': 'select2',
                            'multiple': True,
                            'options': [('One', '1'), ('Two', '2'), ('Three', '3')]}
 
-c.select_input_error = {'display_text': 'Select Disabled',
+select_input_error = {'display_text': 'Select Disabled',
                         'name': 'select3',
                         'multiple': False,
                         'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
@@ -511,12 +511,12 @@ c.select_input_error = {'display_text': 'Select Disabled',
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.text_input = {'display_text': 'Text',
+text_input = {'display_text': 'Text',
                 'name': 'inputAmount',
                 'placeholder': 'e.g.: 10.00',
                 'prepend': '$'}
         
-c.text_error_input = {'display_text': 'Text Error',
+text_error_input = {'display_text': 'Text Error',
                       'name': 'inputEmail',
                       'initial': 'bob@example.com',
                       'disabled': True,
@@ -617,10 +617,10 @@ c.text_error_input = {'display_text': 'Text Error',
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-c.toggle_switch = {'display_text': 'Defualt Toggle',
+toggle_switch = {'display_text': 'Defualt Toggle',
                    'name': 'toggle1'}
   
-c.toggle_switch_styled = {'display_text': 'Styled Toggle',
+toggle_switch_styled = {'display_text': 'Styled Toggle',
                           'name': 'toggle2',
                           'on_label': 'Yes',
                           'off_label': 'No',
@@ -629,7 +629,7 @@ c.toggle_switch_styled = {'display_text': 'Styled Toggle',
                           'initial': True,
                           'size': 'large'}
         
-c.toggle_switch_disabled = {'display_text': 'Disabled Toggle',
+toggle_switch_disabled = {'display_text': 'Disabled Toggle',
                             'name': 'toggle3',
                             'on_label': 'On',
                             'off_label': 'Off',
@@ -724,13 +724,13 @@ c.toggle_switch_disabled = {'display_text': 'Disabled Toggle',
           columns that are editable. When used in this capacity, embed the table view in a form.</p>
         <div class="example">
         <div class="demo">
-        {% gizmo table_view table_view %}
-        {% gizmo table_view table_view_edit %}
+        {# {% gizmo table_view table_view %} #}
+        {# {% gizmo table_view table_view_edit %} #}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.table_view = {'column_names': ('Name', 'Age', 'Job'), 
+table_view = {'column_names': ('Name', 'Age', 'Job'),
                 'rows': [('Bill', 30, 'contractor'),
                          ('Fred', 18, 'programmer'),
                          ('Bob', 26, 'boss')],
@@ -739,7 +739,7 @@ c.table_view = {'column_names': ('Name', 'Age', 'Job'),
                 'bordered': False,
                 'condensed': False}
                 
-c.table_view_edit = {'column_names': ('Name', 'Age', 'Job'), 
+table_view_edit = {'column_names': ('Name', 'Age', 'Job'),
                      'rows': [('Bill', 30, 'contractor'),
                               ('Fred', 18, 'programmer'),
                               ('Bob', 26, 'boss')],
@@ -884,7 +884,7 @@ highcharts_object = {
                    [50, -2.5], [60, -27.7], [70, -55.7], [80, -76.5]]}
       ]}
   
-c.line_plot_view = {'highcharts_object': highcharts_object,
+line_plot_view = {'highcharts_object': highcharts_object,
                     'width': '500px',
                     'height': '500px'}                
           </code></pre>
@@ -935,7 +935,7 @@ web_plot_object = {
         }
         ]}
 
-c.web_plot = {'highcharts_object': web_plot_object,
+web_plot = {'highcharts_object': web_plot_object,
               'width': '500px',
               'height': '500px'}                  
           </code></pre>
@@ -1009,7 +1009,7 @@ timeseries_plot_object = {
     }]
 }
 
-c.timeseries_plot = {'highcharts_object': timeseries_plot_object,
+timeseries_plot = {'highcharts_object': timeseries_plot_object,
                      'width': '500px',
                      'height': '500px'}                  
           </code></pre>
@@ -1066,13 +1066,13 @@ c.timeseries_plot = {'highcharts_object': timeseries_plot_object,
     
     <div class="example">
         <div class="demo">
-          <a href="#{{ c.message_box.name }}" role="button" class="btn btn-success" data-toggle="modal">Show Message Box</a>
+          <a href="#{{ message_box.name }}" role="button" class="btn btn-success" data-toggle="modal">Show Message Box</a>
         {% gizmo message_box message_box %}
         </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.message_box = {'name': 'sampleModal',
+message_box = {'name': 'sampleModal',
                  'title': 'Message Box Title',
                  'message': 'Congratulations! This is a message box',
                  'dismiss_button': 'Nevermind',
@@ -1082,7 +1082,7 @@ c.message_box = {'name': 'sampleModal',
           <p class="muted">HTML</p>
         <pre><code class="language-python">
 &lt;!-- Trigger Button --&gt;
-&lt;a href="#{{ c.message_box.name }}" class="btn btn-success" data-toggle="modal"&gt;
+&lt;a href="#{{ message_box.name }}" class="btn btn-success" data-toggle="modal"&gt;
   Show Message Box
 &lt;/a&gt;
 
@@ -1155,12 +1155,12 @@ c.message_box = {'name': 'sampleModal',
         <div class="demo">
           <p> Demo cannot be shown on this page because of the demo for the editable google map.
           Click on button below for live demo.</p>
-          <a class="btn btn-success" href="{% url_for 'snippet-showcase-action', action='google_map' %}">Live Demo</a>
+          <a class="btn btn-success" href="{% url 'gizmos:google_map' %}">Live Demo</a>
         </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.google_map = {'height': '500px',
+google_map = {'height': '500px',
                 'width': '100%',
                 'kml_service': '/apps/my-app/get-kml',
                 'maps_api_key':'S0mEaPIk3y'}
@@ -1235,12 +1235,12 @@ def get_kml(self):
         <div class="demo">
           <p> Demo cannot be shown on this page because of the demo for the editable google map.
           Click on button below for live demo.</p>
-          <a class="btn btn-success" href="{% url_for 'snippet-showcase-action', action='map_view' %}">Live Demo</a>
+          <a class="btn btn-success" href="{% url 'gizmos:map_view' %}">Live Demo</a>
         </div>
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.google_map = {'height': '500px',
+google_map = {'height': '500px',
                 'width': '100%',
                 'kml_service': '/apps/my-app/get-kml',
                 'maps_api_key':'S0mEaPIk3y'}
@@ -1310,15 +1310,15 @@ def get_kml(self):
       An optional background dataset can be specified for reference. Only the shapes drawn by the user are returned (see 
       <a href="#retrieving_shapes">Retrieving Shapes</a> section).</p>
     <p><strong>NOTE: Do not create more than one map on a page at any given time.</strong></p>
-    <p>Click <a href="{% url_for 'snippet-showcase-action', action='editable_map' %}">here</a> for demo on a separate page.</p>
+    <p>Click <a href="{% url 'gizmos:editable_map' %}">here</a> for demo on a separate page.</p>
     <div class="example">
         <div class="demo">
         <!-- Flash Message -->
-          {% if c.flash_message %} 
+          {% if flash_message %}
           <div class="alert alert-info">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <h5>JSON:</h5>
-            <p>{{ c.flash_message }}</p>
+            <p>{{ flash_message }}</p>
           </div>
           {% endif %}
           
@@ -1330,7 +1330,7 @@ def get_kml(self):
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.editable_map = {'height': '600px',
+editable_map = {'height': '600px',
                   'width': '100%', 
                  'reference_kml_action': '/apps/my-app/get-kml',
                   'maps_api_key': 'S0mEaPIk3y',
@@ -1443,7 +1443,7 @@ geo_json = {'type':'WKTGeometryCollection',
                           ]
             }
 
-c.editable_google_map = {'height': '700px',
+editable_google_map = {'height': '700px',
                          'width': '100%',
                          'maps_api_key': 'S0mEaPIk3y',
                          'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
@@ -1466,7 +1466,7 @@ wkt_json = {"type":"GeometryCollection",
                           ]
             }
 
-c.editable_google_map = {'height': '700px',
+editable_google_map = {'height': '700px',
                          'width': '100%',
                          'maps_api_key': 'S0mEaPIk3y',
                          'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
@@ -1535,7 +1535,7 @@ c.editable_google_map = {'height': '700px',
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.fetchclimate_with_map_plot = {
+fetchclimate_with_map_plot = {
               'serverUrl':'http://fetchclimate2.cloudapp.net',
               'variables': {
                 'prate':[423,432,426,424],
@@ -1568,7 +1568,7 @@ c.fetchclimate_with_map_plot = {
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-c.fetchclimate_array = {
+fetchclimate_array = {
                 'serverUrl':'http://fetchclimate2.cloudapp.net',
                 'variables': {
                   'prate':[423,432,426,424],
