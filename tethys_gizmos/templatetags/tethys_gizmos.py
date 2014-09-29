@@ -183,9 +183,6 @@ class TethysGizmoDependenciesNode(template.Node):
         # Combine all tags
         tags = style_tags + script_tags
         tags_string = '\n'.join(tags)
-
-        print self.output_type
-        print tags_string
         return tags_string
 
 
