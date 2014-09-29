@@ -1,16 +1,5 @@
 {% load staticfiles tethys_gizmos %}
 
-<!-- FetchClimate CSS -->
-<link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/farbtastic/farbtastic.css' %}" type="text/css" />
-<link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/bootstrap_datepicker/css/datepicker.css' %}" type="text/css" />
-<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_gizmos.css' %}" type="text/css" />
-<link rel="stylesheet" href="{% static 'tethys_gizmos/css/fetchclimate/fetchclimate.css' %}" type="text/css" />
-{% if 'map' in options %}
-  <link rel="stylesheet" href="{% static 'tethys_gizmos/css/fetchclimate/fetchclimate_map.css' %}" type="text/css" />
-{% endif %}
-{% if 'plot' in options %}
-  <link rel="stylesheet" href="{% static 'tethys_gizmos/css/fetchclimate/fetchclimate_plot.css' %}" type="text/css" />
-{% endif %}
 <!-- FC outerContainer -->
 <div id="fc_outer_container" class="parent-container" data-date=""
 {% if options|isstring %}
@@ -94,18 +83,4 @@
   {% if map.map_data.api_key != '' %}
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing&key={{ map.map_data.api_key }}&sensor=false"></script>
   {% endif %}
-{% endif %}
-
-<script type="text/javascript" src="{% static 'tethys_gizmos/vendor/bootstrap_datepicker/js/bootstrap_datepicker.js' %}"></script>
-<script type="text/javascript" src="{% static 'tethys_gizmos/js/fetchclimate/fetchclimate_main.js' %}"></script>
-<script type="text/javascript" src="{% static 'tethys_gizmos/js/fetchclimate/fetchclimate_date.js' %}"></script>
-{% if 'map' in options %}
-  <script type="text/javascript" src="{% static 'tethys_gizmos/js/fetchclimate/fetchclimate_map.js' %}"></script>
-{% endif %}
-{% if 'plot' in options %}
-  <script type="text/javascript" src="{% static 'tethys_gizmos/vendor/highcharts/js/highcharts.js' %}"></script>
-  <script type="text/javascript" src="{% static 'tethys_gizmos/vendor/highcharts/js/highcharts-more.js' %}"></script>
-  <script type="text/javascript" src="{% static 'tethys_gizmos/js/fetchclimate/fetchclimate_plot.js' %}"></script>
-{% else %}
-  <script type="text/javascript" src="{% static 'tethys_gizmos/js/fetchclimate/fetchclimate_data.js' %}"></script>
 {% endif %}

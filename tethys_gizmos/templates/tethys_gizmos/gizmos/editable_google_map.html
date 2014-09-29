@@ -1,8 +1,4 @@
 {% load staticfiles tethys_gizmos %}
-
-<!-- Editable Google Maps CSS -->
-<link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/farbtastic/farbtastic.css' %}" type="text/css" />
-
 <style>
 	/* fix for scale bar distortion */
 	#editable_google_map img {
@@ -102,7 +98,6 @@
 {% if maps_api_key != '' %}
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing&key={{ maps_api_key }}&sensor=false"></script>
 {% endif %}
-<script type="text/javascript" src="{% static 'tethys_gizmos/vendor/farbtastic/farbtastic.js' %}"></script>
 <script type="text/javascript">
 	// Pass action to JavaScript
 	var kml_action = '';
@@ -162,6 +157,5 @@
 	{% endif %}
 
 </script>
-<script type="text/javascript" src="{% static 'tethys_gizmos/js/tethys_editable_map.js' %}"></script>
 
 

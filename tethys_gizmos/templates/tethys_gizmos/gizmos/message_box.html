@@ -1,6 +1,4 @@
-{% load staticfiles tethys_gizmos %}
-
-<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_gizmos.css' %}" type="text/css" />
+{% load tethys_gizmos %}
 
 <div id="{{ name }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="{{ name|add:'Label' }}" aria-hidden="true" {% if width %} style="width: {{ width }}px; margin-left: {{ width|divide:-2.0 }}px;"{% endif %}>
   <div class="modal-header">

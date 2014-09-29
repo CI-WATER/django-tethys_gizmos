@@ -142,12 +142,6 @@ class TethysGizmoDependenciesNode(template.Node):
         # Compile list of unique gizmo dependencies
         dependencies = []
 
-        # Add the global dependencies first
-        for dependency in global_dependencies(context):
-            if dependency not in dependencies:
-                # Lookup the static url given the path
-                dependencies.append(static(dependency))
-
         # Add gizmo dependencies
         for rendered_gizmo in gizmos_rendered:
             try:
@@ -160,18 +154,27 @@ class TethysGizmoDependenciesNode(template.Node):
 
                 # Only append dependencies if they do not already exist
                 for dependency in gizmo_deps:
-                    if dependency not in dependencies:
+                    static_url = static(dependency)
+                    if static_url not in dependencies:
                         # Lookup the static url given the path
-                        dependencies.append(static(dependency))
+                        dependencies.append(static_url)
 
             except AttributeError:
                 # Skip those that do not have dependencies
                 pass
 
+        # Add the global dependencies last
+        for dependency in global_dependencies(context):
+            static_url = static(dependency)
+            if static_url not in dependencies:
+                # Lookup the static url given the path
+                dependencies.append(static_url)
+
         # Create markup tags
         script_tags = []
         style_tags = []
         for dependency in dependencies:
+            print dependency
             # Only process Script tags if the dependency has a ".js" extension and the output type is JS or not specified
             if JS_EXTENSION in dependency and (self.output_type == JS_OUTPUT_TYPE or self.output_type is None):
                 script_tags.append('<script src="{0}" type="text/javascript"></script>'.format(dependency))
