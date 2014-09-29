@@ -17,25 +17,25 @@ def index(request):
     ]}
 
     horizontal_buttons = {'buttons': [{'display_text': 'Add',
-                                       'icon': 'icon-plus',
+                                       'icon': 'glyphicon glyphicon-plus',
                                        'style': 'success'},
                                       {'display_text': 'Delete',
-                                       'icon': 'icon-trash',
+                                       'icon': 'glyphicon glyphicon-trash',
                                        'disabled': True,
                                        'style': 'danger'}
     ]}
 
     vertical_buttons = {'buttons': [
         {'display_text': 'Edit',
-         'icon': 'icon-wrench',
+         'icon': 'glyphicon glyphicon-wrench',
          'style': 'warning',
          'attributes': 'id=edit_button'},
         {'display_text': 'Info',
-         'icon': 'icon-question-sign',
+         'icon': 'glyphicon glyphicon-question-sign',
          'style': 'info',
          'attributes': 'name=info'},
         {'display_text': 'Apps',
-         'icon': 'icon-home',
+         'icon': 'glyphicon glyphicon-home',
          'href': '/apps',
          'style': 'primary'}
     ],
