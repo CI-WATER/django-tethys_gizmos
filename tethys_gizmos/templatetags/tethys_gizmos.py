@@ -6,9 +6,16 @@ from django.conf import settings
 from django import template
 from django.template.loader import get_template
 from django.template import TemplateSyntaxError
-
+from django.contrib.staticfiles.templatetags.staticfiles import static
+from ..gizmo_dependencies import global_dependencies
 
 register = template.Library()
+
+CSS_OUTPUT_TYPE = 'css'
+JS_OUTPUT_TYPE = 'js'
+CSS_EXTENSION = '.css'
+JS_EXTENSION = '.js'
+VALID_OUTPUT_TYPES = (CSS_OUTPUT_TYPE, JS_OUTPUT_TYPE)
 
 @register.filter(is_safe=True)
 def isstring(value):
@@ -66,16 +73,12 @@ class TethysGizmoIncludeNode(template.Node):
                 gizmo_name = self.gizmo_name.replace("'", '')
                 gizmo_name = gizmo_name.replace('"', '')
 
-            # Add gizmo name to context variable
-            # if 'gizmos_rendered' not in context:
-            #     context.update({'gizmos_rendered': []})
-            #
-            # print(context)
-            #
-            # if gizmo_name not in context['gizmos_rendered']:
-            #     context['gizmos_rendered'].append(gizmo_name)
-            #
-            # print(context)
+            # Add gizmo name to 'gizmos_rendered' context variable (used to load static libraries
+            if 'gizmos_rendered' not in context:
+                context.update({'gizmos_rendered': []})
+
+            if gizmo_name not in context['gizmos_rendered']:
+                context['gizmos_rendered'].append(gizmo_name)
 
             # Determine path to gizmo template
             gizmo_file_name = '{0}.html'.format(gizmo_name)
@@ -123,58 +126,97 @@ def gizmo(parser, token):
     return TethysGizmoIncludeNode(gizmo_name, options_literal)
 
 
-# class TethysGizmoRegisterStaticNode(template.Node):
-#     """
-#     Custom template node that registers/appends the static library to the template context object.
-#     """
-#
-#     def __init__(self, static_path, *args, **kwargs):
-#         super(TethysGizmoRegisterStaticNode, self).__init__(*args, **kwargs)
-#         self.static_path = static_path
-#
-#     def render(self, context):
-#         if 'tethys_gizmo_static' not in context:
-#             append_context = {'tethys_gizmo_static': []}
-#             context.update(append_context)
-#             print(context)
-#         try:
-#             pass
-#             # gizmo_name = self.gizmo_name
-#             #
-#             # if self.gizmo_name[0] in ('"', "'"):
-#             #     gizmo_name = self.gizmo_name.replace("'", '')
-#             #     gizmo_name = gizmo_name.replace('"', '')
-#             #
-#             # gizmo_file_name = '{0}.html'.format(gizmo_name)
-#             # template_name = os.path.join('tethys_gizmos', 'gizmos', gizmo_file_name)
-#             # t = get_template(template_name)
-#             # context = context.new(self.options.resolve(context))
-#             # return t.render(context)
-#
-#         except:
-#             if settings.TEMPLATE_DEBUG:
-#                 raise
-#             return ''
-#
-#
-# @register.tag()
-# def gizmo_static(parser, token):
-#     """
-#     Append a gizmo static library to the context object to avoid repetitive library imports.
-#
-#     Note: This tag will not import the static library, but it will register it for being imported by the gizmo_libraries
-#     tag. Use the gizmo_libraries tag to import the libraries that have been collected.
-#     """
-#
-#     try:
-#         tag_name, static_path = token.split_contents()
-#
-#     except ValueError:
-#         raise template.TemplateSyntaxError('"%s" tag requires exactly one argument' % token.contents.split()[0])
-#
-#     bits = token.split_contents()
-#     if len(bits) < 2:
-#         raise TemplateSyntaxError('"{0}" tag takes at least one argument: the name of the '
-#                                   'static library to be included.'.format(bits[0]))
-#
-#     return TethysGizmoRegisterStaticNode(static_path)
+class TethysGizmoDependenciesNode(template.Node):
+    """
+    Loads gizmo dependencies and renders in "script" or "link" tag appropriately.
+    """
+
+    def __init__(self, output_type, *args, **kwargs):
+        super(TethysGizmoDependenciesNode, self).__init__(*args, **kwargs)
+        self.output_type = output_type
+
+    def render(self, context):
+        # Get the gizmos rendered from the context
+        gizmos_rendered = context['gizmos_rendered']
+
+        # Compile list of unique gizmo dependencies
+        dependencies = []
+
+        # Add the global dependencies first
+        for dependency in global_dependencies(context):
+            if dependency not in dependencies:
+                # Lookup the static url given the path
+                dependencies.append(static(dependency))
+
+        # Add gizmo dependencies
+        for rendered_gizmo in gizmos_rendered:
+            try:
+                # Retrieve the "gizmo_dependencies" module and find the appropriate function
+                dependencies_module = __import__('tethys_gizmos.gizmo_dependencies', fromlist=[rendered_gizmo])
+                dependencies_function = getattr(dependencies_module, rendered_gizmo)
+
+                # Retrieve a list of dependencies for the gizmo
+                gizmo_deps = dependencies_function(context)
+
+                # Only append dependencies if they do not already exist
+                for dependency in gizmo_deps:
+                    if dependency not in dependencies:
+                        # Lookup the static url given the path
+                        dependencies.append(static(dependency))
+
+            except AttributeError:
+                # Skip those that do not have dependencies
+                pass
+
+        # Create markup tags
+        script_tags = []
+        style_tags = []
+        for dependency in dependencies:
+            # Only process Script tags if the dependency has a ".js" extension and the output type is JS or not specified
+            if JS_EXTENSION in dependency and (self.output_type == JS_OUTPUT_TYPE or self.output_type is None):
+                script_tags.append('<script src="{0}" type="text/javascript"></script>'.format(dependency))
+
+            # Only process Style tags if the dependency has a ".css" extension and the output type is CSS or not specified
+            elif CSS_EXTENSION in dependency and (self.output_type == CSS_OUTPUT_TYPE or self.output_type is None):
+                style_tags.append('<link href="{0}" rel="stylesheet" />'.format(dependency))
+
+        # Combine all tags
+        tags = style_tags + script_tags
+        tags_string = '\n'.join(tags)
+
+        print self.output_type
+        print tags_string
+        return tags_string
+
+
+@register.tag()
+def gizmo_dependencies(parser, token):
+    """
+    Load all gizmo dependencies (JavaScript and CSS).
+    """
+    output_type = None
+
+    bits = token.split_contents()
+    if len(bits) > 2:
+        raise TemplateSyntaxError('"{0}" takes at most one argument: the type of dependencies to output '
+                                  '(either "js" or "css")'.format(token.split_contents()[0]))
+
+    elif len(bits) == 2:
+        output_type = bits[1]
+
+    # Validate output_type
+    if output_type:
+        # Remove quotes
+        if output_type[0] in ('"', "'"):
+            output_type = output_type.replace("'", '')
+            output_type = output_type.replace('"', '')
+
+        # Lowercase
+        output_type = output_type.lower()
+
+        # Check for valid values
+        if output_type not in VALID_OUTPUT_TYPES:
+            raise TemplateSyntaxError('Invalid output type specified: only "js" and "css" are '
+                                      'allowed, "{0}" given.'.format(output_type))
+
+    return TethysGizmoDependenciesNode(output_type)
