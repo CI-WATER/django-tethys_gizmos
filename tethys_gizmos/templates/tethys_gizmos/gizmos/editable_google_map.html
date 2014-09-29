@@ -99,63 +99,64 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing&key={{ maps_api_key }}&sensor=false"></script>
 {% endif %}
 <script type="text/javascript">
-	// Pass action to JavaScript
-	var kml_action = '';
-	
-	// Pass draw types to JavaScript
-	var draw_polygons = false;
-	var draw_points = false;
-	var draw_polylines = false;
-	
-	// Set the output format
-	var output_format = 'GEOJSON';
-	
-	// Set the input overlay defaults
-	var initial_overlays_string = '';
-	
-	// Legend items
-	var initial_color_ramp_string = '';
-	
-	// Pass in initial drawing mode
-	var initial_drawing_mode = '';
-	
-	{% if reference_kml_action %}
-	// Pass in kml action url
-	kml_action = "{{ reference_kml_action }}";
-	{% endif %}
-	
-	{% if 'POLYGONS' in drawing_types_enabled %}
-	// Enable polygon drawing capabilities
-	draw_polygons = true;
-	{% endif %}
-	
-	{% if 'POINTS' in drawing_types_enabled %}
-	// Enable point drawing capabilities
-	draw_points = true;
-	{% endif %}
-	
-	{% if 'POLYLINES' in drawing_types_enabled %}
-	// Enable polyline drawing capabilities
-	draw_polylines = true;
-	{% endif %}
-	
-	{% if initial_drawing_mode in drawing_types_enabled %}
-	// Set initial drawing mode
-	initial_drawing_mode = "{{ initial_drawing_mode }}";	
-	{% endif %}
-	
-	{% if output_format == 'WKT' %}
-	output_format = 'WKT';
-	{% endif %}
-	
-	{% if input_overlays %}
-	initial_overlays_string = '{{ input_overlays|jsonify }}';
-	{% endif %}
-	
-	{% if color_ramp %}
-	initial_color_ramp_string = '{{ color_ramp|jsonify }}';
-	{% endif %}
+  {% autoescape off %}
+    // Pass action to JavaScript
+    var kml_action = '';
 
+    // Pass draw types to JavaScript
+    var draw_polygons = false;
+    var draw_points = false;
+    var draw_polylines = false;
+
+    // Set the output format
+    var output_format = 'GEOJSON';
+
+    // Set the input overlay defaults
+    var initial_overlays_string = '';
+
+    // Legend items
+    var initial_color_ramp_string = '';
+
+    // Pass in initial drawing mode
+    var initial_drawing_mode = '';
+
+    {% if reference_kml_action %}
+    // Pass in kml action url
+    kml_action = "{{ reference_kml_action }}";
+    {% endif %}
+
+    {% if 'POLYGONS' in drawing_types_enabled %}
+    // Enable polygon drawing capabilities
+    draw_polygons = true;
+    {% endif %}
+
+    {% if 'POINTS' in drawing_types_enabled %}
+    // Enable point drawing capabilities
+    draw_points = true;
+    {% endif %}
+
+    {% if 'POLYLINES' in drawing_types_enabled %}
+    // Enable polyline drawing capabilities
+    draw_polylines = true;
+    {% endif %}
+
+    {% if initial_drawing_mode in drawing_types_enabled %}
+    // Set initial drawing mode
+    initial_drawing_mode = "{{ initial_drawing_mode }}";
+    {% endif %}
+
+    {% if output_format == 'WKT' %}
+    output_format = 'WKT';
+    {% endif %}
+
+    {% if input_overlays %}
+    initial_overlays_string = '{{ input_overlays|jsonify }}';
+    {% endif %}
+
+    {% if color_ramp %}
+    initial_color_ramp_string = '{{ color_ramp|jsonify }}';
+    {% endif %}
+	{% endautoescape %}
 </script>
 
 

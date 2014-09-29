@@ -3,6 +3,7 @@ from datetime import datetime
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
 def index(request):
@@ -386,8 +387,7 @@ def get_kml(request):
     """
     This action is used to pass the kml data to the google map. It must return JSON with the key 'kml_link'.
     """
-    kml_links = [
-        'http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/a656ecc5-5ddc-415a-ad12-aab50adc4818/download/elepolyterrain.kml']
+    kml_links = {'kml_link': [static('tethys_gizmos/kml/elepolyterrain.kml')]}
 
     for i in range(10000000):
         pass
@@ -395,19 +395,18 @@ def get_kml(request):
     return HttpResponse(json.dumps(kml_links), content_type='application/json')
 
 
-def swap_kml(self):
+def swap_kml(request):
     """
     This action is used to pass the kml data to the google map. It must return JSON with the key 'kml_link'.
     """
     for i in range(0, 20000000):
         pass
 
-    kml_links = [
-        'http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/1bb2db00-9944-4084-9ff7-b7897f483088/download/littledellcluster.kml']
+    kml_links = {'kml_link': [static('tethys_gizmos/kml/littledellcluster.kml')]}
     return HttpResponse(json.dumps(kml_links), content_type='application/json')
 
 
-def swap_overlays(self):
+def swap_overlays(request):
     """
     This action is used to demonstrate how overlay layers can be swapped out dynamically using the javascript API.
     """
@@ -447,7 +446,7 @@ def editable_map(request):
     """
 
     # Editable Google Map
-    editable_google_map = {'height': '700px',
+    editable_google_map = {'height': '600px',
                            'width': '100%',
                            'reference_kml_action': reverse('gizmos:get_kml'),
                            'maps_api_key': 'AIzaSyB-0nvmHhbOaaiYx6UN36145lWjUq5c2tg',
@@ -480,7 +479,7 @@ def editable_map(request):
 
     flash_message = ''
 
-    if ('editable_map_submit' in request.params) and (request.params['geometry']):
+    if ('editable_map_submit' in request.POST) and (request.POST['geometry']):
         # Some example code showing how you can decode the JSON into python
         # data structures.
         geometry_string = request.params['geometry']
@@ -508,7 +507,7 @@ def google_map(request):
 
     context = {'google_map': google_map}
 
-    return render(request, 'snippets_showcase/google_map.html', context)
+    return render(request, 'tethys_gizmos/gizmo_showcase/google_map.html', context)
 
 
 def map_view(request):
@@ -534,7 +533,7 @@ def map_view(request):
 
     context = {'map_view', map_view}
 
-    return render(request, 'snippets_showcase/map_view.html', context)
+    return render(request, 'tethys_gizmos/gizmo_showcase/map_view.html', context)
 
 
 def fetchclimate_map(request):

@@ -65,5 +65,4 @@ def fetchclimate(context):
             'tethys_gizmos/vendor/highcharts/js/highcharts.js',
             'tethys_gizmos/vendor/highcharts/js/highcharts-more.js',
             'tethys_gizmos/js/fetchclimate/fetchclimate_plot.js',
-            'tethys_gizmos/js/fetchclimate/fetchclimate_data.js'
-    )
+            'tethys_gizmos/js/fetchclimate/fetchclimate_data.js')

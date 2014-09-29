@@ -1,36 +1,27 @@
-{% load staticfiles %}
-
 {% extends "page.html" %}
 
-{% block styles %}
-	{{ super() }}
-	<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_apps.css' %}" type="text/css" />
-	<link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/prism/prism.css' %}" type="text/css" />
-{% endblock %}
+{% load staticfiles tethys_gizmos %}
+
+
 
 {% block primary_content %}
-  <div class="module">
-    <div class="module-content">
-      <h1>Editable Google Map</h1>
-      
-      <!-- Flash Message -->
-      {% if flash_message %} 
-      <div class="alert alert-info">
-      	<button type="button" class="close" data-dismiss="alert">&times;</button>
-      	<h5>JSON:</h5>
-      	<p>{{ flash_message }}</p>
-      </div>
-      {% endif %}
-      
-      <form method="post">			  
-      {% gizmo "editable_google_map" editable_google_map %}
-      	<button class="btn btn-primary" type="submit" name="editable_map_submit">Submit</button>
-      	<a class="btn btn-success" href="javascript:void(0);" data-kml-service="/apps/snippet-showcase/swap_kml" onclick="swap(this);">Swap Map</a>
-        <a class="btn btn-success" href="javascript:void(0);" onclick="swapOverlayService('/apps/snippet-showcase/swap_overlays', true);">Swap Overlays</a>
-      </form>
-      
-    </div>
+  <h1>Editable Google Map</h1>
+
+  <!-- Flash Message -->
+  {% if flash_message %}
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h5>JSON:</h5>
+    <p>{{ flash_message }}</p>
   </div>
+  {% endif %}
+
+  <form method="post">
+  {% gizmo "editable_google_map" editable_google_map %}
+    <button class="btn btn-primary" type="submit" name="editable_map_submit">Submit</button>
+    <a class="btn btn-success" href="javascript:void(0);" data-kml-service="{% url 'gizmos:swap_kml' %}" onclick="swap(this);">Swap Map</a>
+    <a class="btn btn-success" href="javascript:void(0);" onclick="swapOverlayService('{% url "gizmos:swap_overlays" %}', true);">Swap Overlays</a>
+  </form>
   
   <script>
 	function swap(element) {
@@ -40,10 +31,10 @@
 		kml_service = $(element).attr('data-kml-service');
 		
 		// Switch service (to allow map swapping)
-		if (kml_service === '/apps/snippet-showcase/swap_kml') {
-			$(element).attr('data-kml-service', '/apps/snippet-showcase/get_kml');
+		if (kml_service === '{% url "gizmos:swap_kml" %}') {
+			$(element).attr('data-kml-service', '{% url "gizmos:get_kml" %}');
 		} else {
-			$(element).attr('data-kml-service', '/apps/snippet-showcase/swap_kml');
+			$(element).attr('data-kml-service', '{% url "gizmos:swap_kml" %}');
 		}
 				
 		// Swap out map using a method from the TETHYS_EDIT_MAP library
@@ -52,10 +43,19 @@
   </script>
 {% endblock %}
 
-{% block secondary_content %}
-
+{% block styles %}
+	{{ block.super }}
+	<link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/prism/prism.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'tethys_gizmos/css/gizmo_showcase.css' %}" type="text/css" />
+  <style>
+    #content {
+      padding-bottom: 50px;
+    }
+  </style>
+  {% gizmo_dependencies css %}
 {% endblock %}
 
 {% block scripts %}
-	{{ super() }}
+  {{ block.super }}
+  {% gizmo_dependencies js %}
 {% endblock %}

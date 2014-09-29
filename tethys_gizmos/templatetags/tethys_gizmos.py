@@ -15,6 +15,7 @@ CSS_OUTPUT_TYPE = 'css'
 JS_OUTPUT_TYPE = 'js'
 CSS_EXTENSION = '.css'
 JS_EXTENSION = '.js'
+EXTERNAL_INDICATOR = '//'
 VALID_OUTPUT_TYPES = (CSS_OUTPUT_TYPE, JS_OUTPUT_TYPE)
 
 @register.filter(is_safe=True)
@@ -111,6 +112,7 @@ def gizmo(parser, token):
         {% gizmo "example_gizmo" options %}
 
     NOTE: the "options" dictionary must be a template context variable.
+    ALSO NOTE: All supporting css and javascript libraries are loaded using the gizmo_dependency tag (see below).
     """
     try:
         tag_name, gizmo_name, options_literal = token.split_contents()
@@ -154,7 +156,11 @@ class TethysGizmoDependenciesNode(template.Node):
 
                 # Only append dependencies if they do not already exist
                 for dependency in gizmo_deps:
-                    static_url = static(dependency)
+                    if EXTERNAL_INDICATOR in dependency:
+                        static_url = dependency
+                    else:
+                        static_url = static(dependency)
+
                     if static_url not in dependencies:
                         # Lookup the static url given the path
                         dependencies.append(static_url)
@@ -165,7 +171,11 @@ class TethysGizmoDependenciesNode(template.Node):
 
         # Add the global dependencies last
         for dependency in global_dependencies(context):
-            static_url = static(dependency)
+            if EXTERNAL_INDICATOR in dependency:
+                static_url = dependency
+            else:
+                static_url = static(dependency)
+
             if static_url not in dependencies:
                 # Lookup the static url given the path
                 dependencies.append(static_url)
@@ -174,7 +184,6 @@ class TethysGizmoDependenciesNode(template.Node):
         script_tags = []
         style_tags = []
         for dependency in dependencies:
-            print dependency
             # Only process Script tags if the dependency has a ".js" extension and the output type is JS or not specified
             if JS_EXTENSION in dependency and (self.output_type == JS_OUTPUT_TYPE or self.output_type is None):
                 script_tags.append('<script src="{0}" type="text/javascript"></script>'.format(dependency))
@@ -193,6 +202,11 @@ class TethysGizmoDependenciesNode(template.Node):
 def gizmo_dependencies(parser, token):
     """
     Load all gizmo dependencies (JavaScript and CSS).
+
+    Example::
+
+        {% gizmo_dependencies css %}
+        {% gizmo_dependencies js %}
     """
     output_type = None
 
