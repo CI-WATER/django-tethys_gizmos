@@ -3,10 +3,9 @@
 <link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/bootstrap_datepicker/css/datepicker.css' %}" type="text/css" />
 <link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_gizmos.css' %}" type="text/css" />
 
-<div class="control-group {% if error %} error {% endif %}">
+<div class="form-group {% if error %} has-error {% endif %}">
 	{% if display_text %}<label class="control-label" for="{{ name }}">{{ display_text }}</label>{% endif %}
-	<div class="controls">
-		<input id="{{ name }}"
+		<input class = "form-control" id="{{ name }}"
 			   name="{{ name }}"
 			   type="text"
 			   data-provide="datepicker"
@@ -25,9 +24,8 @@
 			   {% if today_highlight %}data-date-today-highlight="true"{% endif %}
 			   {% if week_start %}data-date-week-start="{{ week_start }}"{% endif %}
 			   {% if disabled %}disabled{% endif %}>
-	</div>
 	{% if error %}
-	<span class="help-inline">{{ error }}</span>
+	<p class="help-block">{{ error }}</p>
 	{% endif %}
 </div>
 

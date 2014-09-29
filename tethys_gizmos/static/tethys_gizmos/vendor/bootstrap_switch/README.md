@@ -1,44 +1,60 @@
-Bootstrap Switch
-================
+# Bootstrap Switch
+[![Dependency Status](https://david-dm.org/nostalgiaz/bootstrap-switch.svg?theme=shields.io)](https://david-dm.org/nostalgiaz/bootstrap-switch)
+[![devDependency Status](https://david-dm.org/nostalgiaz/bootstrap-switch/dev-status.svg?theme=shields.io)](https://david-dm.org/nostalgiaz/bootstrap-switch#info=devDependencies)
+[![NPM Version](http://img.shields.io/npm/v/bootstrap-switch.svg)](https://www.npmjs.org/)
 
 Turn checkboxes and radio buttons in toggle switches.
-**Version 2 is here. Beware! The API design has been revisited. Check out the documentation to know more.**
 
-Demo and Documentation
-----------------------
+## Demo and Documentation
 http://www.bootstrap-switch.org
 
-Usage
------
-Just include jQuery, Bootstrap and Bootstrap Switch CSS + Javascript
+## Usage
+
+Include the dependencies: jQuery, Bootstrap and Bootstrap Switch CSS + Javascript:
 
 ``` html
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<link rel="stylesheet" href="bootstrap.css">
-<link rel="stylesheet" href="bootstrap-switch.css">
+[...]
+<link href="bootstrap.css" rel="stylesheet">
+<link href="bootstrap-switch.css" rel="stylesheet">
 <script src="jquery.js"></script>
 <script src="bootstrap-switch.js"></script>
+[...]
 ```
 
-Less
-----
-If you want to use your bootstrap variables, edit bootstrap-switch.less and compile it:
+Add your checkbox:
 
-``` bash
-lessc src/less/bootstrap3/bootstrap-switch.less bootstrap-switch.css
+```html
+<input type="checkbox" name="my-checkbox" checked>
 ```
 
-Or if you are using Bootstrap 2.3.2:
+Initialize Bootstrap Switch on it:
 
-``` bash
-lessc src/less/bootstrap2/bootstrap-switch.less bootstrap-switch.css
+```javascript
+$("[name='my-checkbox']").bootstrapSwitch();
 ```
 
-Supported browsers
-------------------
-IE8+ and all the other modern browsers.
+Enjoy.
 
-License
--------
+## Less
+
+If you want to use your bootstrap variables, include `bootstrap-switch.less` in your compilation stack. You can even choose among Bootstrap versions 2.3.2 or 3.*.* compatible source.
+
+## AngularJs
+Two custom directives are available:
+- [angular-bootstrap-switch](https://github.com/frapontillo/angular-bootstrap-switch)
+- [angular-toggle-switch](https://github.com/JumpLink/angular-toggle-switch)
+
+## KnockoutJs
+A Knockout binding handler is available [here](https://github.com/pauloortins/knockout-bootstrap-switch)
+
+## NuGet
+A NuGet package is available [here](https://github.com/blachniet/bootstrap-switch-nuget)
+
+## Supported browsers
+
+IE9+ and all the other modern browsers.
+
+## License
+
 Licensed under the Apache License, Version 2.0
 http://www.apache.org/licenses/LICENSE-2.0
