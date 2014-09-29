@@ -644,37 +644,30 @@ var FETCHCLIMATE_MAP = (function() {
   $(function() {
     //initialize global variables
     var map_data = jQuery('#fc_outer_container').attr('data-map');
-    if(map_data.length>0) {
+    if(typeof map_data != 'undefined') {
       m_map_json = JSON.parse(map_data);
       m_max_num_grids = ('max_num_grids' in m_map_json.map_data? m_map_json.map_data.max_num_grids:-1);
       m_max_num_points = ('max_num_points' in m_map_json.map_data? m_map_json.map_data.max_num_points:-1);
       m_drawing_types_enabled = ('drawing_types_enabled' in m_map_json.map_data?m_map_json.map_data.drawing_types_enabled:[]);
       m_initial_drawing_mode = ('initial_drawing_mode' in m_map_json.map_data?m_map_json.map_data.initial_drawing_mode:[]);
-    } 
-    else {
-      m_map_json = [];
-      m_max_num_grids = -1;
-      m_max_num_points = -1;
-      m_drawing_types_enabled = [];
-      m_initial_drawing_mode = [];
-    }
-    m_current_drawing_modes = [];
-    m_grids_json = JSON.parse(jQuery('#fc_outer_container').attr('data-grids'));
-    m_points_json = JSON.parse(jQuery('#fc_outer_container').attr('data-points'));
-    m_grids = [];
-    m_points = [];
-    m_info_window = new google.maps.InfoWindow();
-    m_map_changed = false;
+      m_current_drawing_modes = [];
+      m_grids_json = JSON.parse(jQuery('#fc_outer_container').attr('data-grids'));
+      m_points_json = JSON.parse(jQuery('#fc_outer_container').attr('data-points'));
+      m_grids = [];
+      m_points = [];
+      m_info_window = new google.maps.InfoWindow();
+      m_map_changed = false;
 
-    //initialize the html element for the zoom to all control
-    m_zoom_to_all_control_div = createButton(
-                  'Click to zoom to all objects added to the map.',
-                  '<b>Zoom To All</b>');
-    m_reset_layers_control_div = createButton(
-                  'Click to reset layers to original layout.',
-                  '<b>Reset Layers</b>');
-    //initialize the map
-    initGoogleMap();
+      //initialize the html element for the zoom to all control
+      m_zoom_to_all_control_div = createButton(
+                    'Click to zoom to all objects added to the map.',
+                    '<b>Zoom To All</b>');
+      m_reset_layers_control_div = createButton(
+                    'Click to reset layers to original layout.',
+                    '<b>Reset Layers</b>');
+      //initialize the map
+      initGoogleMap();
+    }
   });
 
   return m_public_interface;
