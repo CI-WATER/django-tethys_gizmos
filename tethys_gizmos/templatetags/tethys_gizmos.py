@@ -57,14 +57,31 @@ class TethysGizmoIncludeNode(template.Node):
 
     def render(self, context):
         try:
+            # Get the name of the gizmo to load
             gizmo_name = self.gizmo_name
+            gizmo_templates_root = os.path.join('tethys_gizmos', 'gizmos')
 
+            # Handle case where gizmo_name is a string literal
             if self.gizmo_name[0] in ('"', "'"):
                 gizmo_name = self.gizmo_name.replace("'", '')
                 gizmo_name = gizmo_name.replace('"', '')
 
+            # Add gizmo name to context variable
+            # if 'gizmos_rendered' not in context:
+            #     context.update({'gizmos_rendered': []})
+            #
+            # print(context)
+            #
+            # if gizmo_name not in context['gizmos_rendered']:
+            #     context['gizmos_rendered'].append(gizmo_name)
+            #
+            # print(context)
+
+            # Determine path to gizmo template
             gizmo_file_name = '{0}.html'.format(gizmo_name)
-            template_name = os.path.join('tethys_gizmos', 'gizmos', gizmo_file_name)
+            template_name = os.path.join(gizmo_templates_root, gizmo_file_name)
+
+            # Retrieve the gizmo template and render
             t = get_template(template_name)
             context = context.new(self.options.resolve(context))
             return t.render(context)
@@ -104,3 +121,60 @@ def gizmo(parser, token):
                                   'template to be included.'.format(bits[0]))
 
     return TethysGizmoIncludeNode(gizmo_name, options_literal)
+
+
+# class TethysGizmoRegisterStaticNode(template.Node):
+#     """
+#     Custom template node that registers/appends the static library to the template context object.
+#     """
+#
+#     def __init__(self, static_path, *args, **kwargs):
+#         super(TethysGizmoRegisterStaticNode, self).__init__(*args, **kwargs)
+#         self.static_path = static_path
+#
+#     def render(self, context):
+#         if 'tethys_gizmo_static' not in context:
+#             append_context = {'tethys_gizmo_static': []}
+#             context.update(append_context)
+#             print(context)
+#         try:
+#             pass
+#             # gizmo_name = self.gizmo_name
+#             #
+#             # if self.gizmo_name[0] in ('"', "'"):
+#             #     gizmo_name = self.gizmo_name.replace("'", '')
+#             #     gizmo_name = gizmo_name.replace('"', '')
+#             #
+#             # gizmo_file_name = '{0}.html'.format(gizmo_name)
+#             # template_name = os.path.join('tethys_gizmos', 'gizmos', gizmo_file_name)
+#             # t = get_template(template_name)
+#             # context = context.new(self.options.resolve(context))
+#             # return t.render(context)
+#
+#         except:
+#             if settings.TEMPLATE_DEBUG:
+#                 raise
+#             return ''
+#
+#
+# @register.tag()
+# def gizmo_static(parser, token):
+#     """
+#     Append a gizmo static library to the context object to avoid repetitive library imports.
+#
+#     Note: This tag will not import the static library, but it will register it for being imported by the gizmo_libraries
+#     tag. Use the gizmo_libraries tag to import the libraries that have been collected.
+#     """
+#
+#     try:
+#         tag_name, static_path = token.split_contents()
+#
+#     except ValueError:
+#         raise template.TemplateSyntaxError('"%s" tag requires exactly one argument' % token.contents.split()[0])
+#
+#     bits = token.split_contents()
+#     if len(bits) < 2:
+#         raise TemplateSyntaxError('"{0}" tag takes at least one argument: the name of the '
+#                                   'static library to be included.'.format(bits[0]))
+#
+#     return TethysGizmoRegisterStaticNode(static_path)
