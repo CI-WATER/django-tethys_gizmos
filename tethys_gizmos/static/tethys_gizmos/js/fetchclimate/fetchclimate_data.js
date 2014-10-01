@@ -9,6 +9,22 @@
 /*****************************************************************************
  *                      LIBRARY WRAPPER
  *****************************************************************************/
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 var FETCHCLIMATE_DATA = (function() {
   // Wrap the library in a package function
@@ -44,8 +60,9 @@ var FETCHCLIMATE_DATA = (function() {
     var percentage = Math.round(getPercentage(series_indexes_received));
     var update_text = grid.gridData.title + ' ('+variable_name+')';
     var update_bar_text = percentage != 100 ? 'Requesting:'+percentage+'%'+'...':'Complete!';
-    jQuery('#fetchclimate_data #'+ variable_name+ '_' +grid.gridType +'_'+ grid.gridData.id+' .progress .bar')
+    jQuery('#fetchclimate_data #'+ variable_name+ '_' +grid.gridType +'_'+ grid.gridData.id+' .progress-bar')
       .text(update_bar_text)
+      .attr('aria-valuenow',percentage)
       .css('width', percentage + '%');
     console.log(update_text+': '+update_bar_text);
   };
@@ -53,22 +70,29 @@ var FETCHCLIMATE_DATA = (function() {
   //gets data for each request
   getSingleRequestData = function(grid, variable, series_index) {
     var series_indexes_received = [];
+    var csrftoken = getCookie('csrftoken');
     //Perform ajax request for each of the date queries
     var requests = m_date_queries.map(function(date_query, series_index) {
       return jQuery.ajax({
           type: "POST",
-          url: "/apps/snippets-ajax/fetchclimate/dataRequestSingle",
+          url: "/developer/gizmos/ajax/fetchclimate/single-request/",
           dataType: "json",
+          beforeSend: function(xhr, settings) {
+            if (!(/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type)) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+          },
           data: {
                   serviceUrl: m_service_url,
                   variable : JSON.stringify(variable), 
                   grid : JSON.stringify(grid),
                   time : JSON.stringify(date_query)
-                },
+          },
           success: function(data) {
-            series_indexes_received.push(series_index);
-            console.log(grid.gridData.title + ' ('+variable.name+'): '+series_indexes_received.length+'/'+m_date_queries.length);
-            giveStatusUpdate(grid,variable.name,series_indexes_received);
+            //series_indexes_received.push(series_index);
+            //console.log(grid.gridData.title + ' ('+variable.name+'): '+series_indexes_received.length+'/'+m_date_queries.length);
+            //giveStatusUpdate(grid,variable.name,series_indexes_received);
+            console.log(data);
           }
       });
     });
@@ -122,7 +146,12 @@ var FETCHCLIMATE_DATA = (function() {
     var serverURL = jQuery('#fc_outer_container').attr('data-server-url');
     m_service_url = serverURL.length>0?serverURL:'';
     var update_html = "";
-    var num_date_queries = m_date_queries.length;
+    var progress_bar_html =
+        '<div class="progress">'+
+            '<div class="progress-bar progress-bar-striped" role="progressbar"' +
+              ' aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">Requesting:1/'+
+              m_date_queries.length +'...</div>'+
+        '</div>';
     if(typeof FETCHCLIMATE_MAP !== 'undefined') {
       var grids_json = FETCHCLIMATE_MAP.getGridsJSON();
       var points_json = FETCHCLIMATE_MAP.getPointsJSON();
@@ -136,19 +165,14 @@ var FETCHCLIMATE_DATA = (function() {
       m_all_data[variable] = {};
       //loop through grids
       for (var grid_id in grids_json) {
-        update_html = 
-          '<div id="'+variable+'_CellGrid_'+grid_id+'">'+
-            grids_json[grid_id].title+' ('+variable+')'+
-            '<div class="job-percentage progress progress-striped active data-loading">'+
-              '<div class="bar" style="width: 0%;color:black;">Requesting:1/'+
-                num_date_queries +'...</div>'+
-            '</div></div>';
+        update_html = '<div id="'+variable+'_CellGrid_'+grid_id+'">'+
+            grids_json[grid_id].title+' ('+variable+')'+ progress_bar_html + '</div>';
         jQuery(update_html).appendTo('#fetchclimate_data');
         grids_json[grid_id].id = grid_id;
         var grid_requests = getSingleRequestData(
           {
             gridType:'CellGrid', 
-            gridData:grids_json[grid_id]
+            gridData: grids_json[grid_id]
           },
           {
             name:variable,
@@ -157,11 +181,9 @@ var FETCHCLIMATE_DATA = (function() {
       }
       //loop through points
       for (var point_id in points_json) {
-        update_html = 
-        '<div id="'+variable+'_Points_'+point_id+'">'+ points_json[point_id].title+' ('+variable+')'+
-          '<div class="job-percentage progress progress-striped active data-loading">' +
-            '<div class="bar" style="width: 0%;color:black;">Requesting:1/'+ num_date_queries +'...</div>' + 
-          '</div></div>';
+        update_html = '<div id="'+variable+'_Points_'+point_id+'">'+ 
+                      points_json[point_id].title+' ('+variable+')'+
+                      progress_bar_html + '</div>';
         jQuery(update_html).appendTo('#fetchclimate_data');
         points_json[point_id].id = point_id;
         var point_requests = getSingleRequestData(
@@ -181,10 +203,11 @@ var FETCHCLIMATE_DATA = (function() {
       m_all_ajax_requests = [];
       console.log("Your request is complete. You can view the data in the console and you can access" +
         "the data through the Javascript API in the snippets documentation."); 
-      jQuery('#fetchclimate_data .progress .bar').each(function() {
+      jQuery('#fetchclimate_data .progress-bar').each(function() {
         jQuery(this)
           .css('width','100%')
-          .css('color','white')
+          .attr('aria-valuenow',100)
+          .addClass('progress-bar-success')
           .text('Complete!');
       });
       m_request_complete = true;
