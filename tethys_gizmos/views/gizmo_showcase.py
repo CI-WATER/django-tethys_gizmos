@@ -102,7 +102,7 @@ def index(request):
                         'name': 'inputEmail',
                         'initial': 'bob@example.com',
                         'disabled': True,
-                        'icon_append': 'icon-envelope',
+                        'icon_append': 'glyphicon glyphicon-envelope',
                         'error': 'Here is my error text'}
 
     # Toggle Switch

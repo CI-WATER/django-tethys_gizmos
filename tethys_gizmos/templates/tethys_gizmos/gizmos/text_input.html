@@ -1,26 +1,24 @@
-<div class="control-group {% if error %} error {% endif %}">
+<div class="form-group {% if error %} has-error {% endif %}">
   {% if display_text %}<label class="control-label" for="{{ name }}">{{ display_text }}</label>{% endif %}
-  <div class="controls">
-    <div class="{% if prepend or icon_prepend %}input-prepend{% endif %} {% if append or icon_append %}input-append{% endif %}">
+  <div class="input-group">
       {% if prepend %}
-        <span class="add-on">{{ prepend }}</span>
+        <div class="input-group-addon">{{ prepend }}</div>
       {% elif icon_prepend %}
-        <span class="add-on"><i class="{{ icon_prepend }}"></i></span>
+        <div class="input-group-addon"><span class="{{ icon_prepend }}"></span></div>
       {% endif %}
-      <input id="{{ name }}"
+      <input id="{{ name }}" class="form-control"
            name="{{ name }}"
            type="text"
            {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
            {% if initial %}value="{{ initial }}"{% endif %}
            {% if disabled %}disabled{% endif %} >
       {% if append %}
-        <span class="add-on">{{ append }}</span>
+        <div class="input-group-addon">{{ append }}</div>
       {% elif icon_append %}
-        <span class="add-on"><i class="{{ icon_append }}"></i></span>
+        <div class="input-group-addon"><span class="{{ icon_append }}"></span></div>
       {% endif %}
-    </div>
   </div>
   {% if error %}
-  <span class="help-inline">{{ error }}</span>
+  <p class="help-block">{{ error }}</p>
   {% endif %}
 </div>
