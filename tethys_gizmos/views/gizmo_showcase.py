@@ -387,7 +387,7 @@ def get_kml(request):
     """
     This action is used to pass the kml data to the google map. It must return JSON with the key 'kml_link'.
     """
-    kml_links = {'kml_link': [static('tethys_gizmos/kml/elepolyterrain.kml')]}
+    kml_links = [static('tethys_gizmos/kml/elepolyterrain.kml')]
 
     for i in range(10000000):
         pass

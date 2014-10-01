@@ -715,9 +715,49 @@ var TETHYS_EDIT_MAP = (function() {
         }).done(function(json) {
             var google_map_div;
             var height, width;
+            var kml_links, link_staging;
+
+            // Parse the json object returned
+            if ('kml_link' in json) {
+                kml_links = json['kml_link'];
+
+            } else if ('kml_links' in json) {
+                kml_links = json['kml_links'];
+
+            } else if (json instanceof Array) {
+                kml_links = json;
+
+            } else {
+                kml_links = [];
+            }
+
+            // Check for relative urls and append host if necessary
+            link_staging = [];
+
+            for (var i = 0; i < kml_links.length; i++) {
+                var current_link;
+
+                current_link = kml_links[i];
+
+                if (!current_link.contains('://')) {
+                    var host;
+
+                    // Assemble the host
+                    host = location.protocol + '//' + location.host;
+
+                    if (current_link.charAt(0) === '/') {
+                        current_link = host + current_link;
+                    } else {
+                        current_link = host + '/' + current_link;
+                    }
+
+                    // Overwrite the previous link
+                    kml_links[i] = current_link;
+                }
+            }
             
             // Set global map data variable
-            google_map_urls = json['kml_link'];
+            google_map_urls = kml_links;
             
             // Get height and width of loading div
             height = $('#editable_google_map_loading').css('height');
@@ -1146,6 +1186,13 @@ var TETHYS_EDIT_MAP = (function() {
     // Initialization: jQuery function that gets called when 
     // the DOM tree finishes loading
     $(function() {
+        // Add contains method to String prototype
+        if ( !String.prototype.contains ) {
+            String.prototype.contains = function() {
+                return String.prototype.indexOf.apply( this, arguments ) !== -1;
+            };
+        }
+
         /* Initialize the globals */
         // info_window               
         info_window = new google.maps.InfoWindow();
