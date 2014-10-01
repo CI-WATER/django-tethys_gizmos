@@ -95,7 +95,7 @@ class TethysGizmoIncludeNode(template.Node):
             return ''
 
 
-@register.tag()
+@register.tag
 def gizmo(parser, token):
     """
     Similar to the include tag, gizmo loads special templates called gizmos that come with the django-tethys_gizmo
@@ -174,7 +174,6 @@ class TethysGizmoDependenciesNode(template.Node):
         script_tags = []
         style_tags = []
         for dependency in dependencies:
-            print dependency
             # Only process Script tags if the dependency has a ".js" extension and the output type is JS or not specified
             if JS_EXTENSION in dependency and (self.output_type == JS_OUTPUT_TYPE or self.output_type is None):
                 script_tags.append('<script src="{0}" type="text/javascript"></script>'.format(dependency))
@@ -189,7 +188,7 @@ class TethysGizmoDependenciesNode(template.Node):
         return tags_string
 
 
-@register.tag()
+@register.tag
 def gizmo_dependencies(parser, token):
     """
     Load all gizmo dependencies (JavaScript and CSS).

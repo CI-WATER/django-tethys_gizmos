@@ -1,5 +1,5 @@
 import datetime,json,re,requests
-from FCResponse import FCResponse
+from fc_response import FCResponse
 #------------------------------------------------------------------------------
 #This class holds the data for the request to the Fetch Climate server
 #------------------------------------------------------------------------------

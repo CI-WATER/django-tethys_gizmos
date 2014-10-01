@@ -508,7 +508,7 @@ def google_map(request):
 
     context = {'google_map': google_map}
 
-    return render(request, 'snippets_showcase/google_map.html', context)
+    return render(request, 'tethys_gizmos/gizmo_showcase/google_map.html', context)
 
 
 def map_view(request):
@@ -534,7 +534,7 @@ def map_view(request):
 
     context = {'map_view', map_view}
 
-    return render(request, 'snippets_showcase/map_view.html', context)
+    return render(request, 'tethys_gizmos/gizmo_showcase/map_view.html', context)
 
 
 def fetchclimate_map(request):
@@ -574,4 +574,4 @@ def fetchclimate_map(request):
 
     context = {'fetchclimate_map': fetchclimate_map}
 
-    return render(request, 'snippets_showcase/fetchclimate_map.html', context)
+    return render(request, 'tethys_gizmos/gizmo_showcase/fetchclimate_map.html', context)
