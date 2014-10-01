@@ -24,7 +24,7 @@ jQuery(window).load(function() {
         if(jQuery('#fetchclimate_plot').length !== 0) {
           jQuery('#fc_next_step_button').text('Loading...');
           FETCHCLIMATE_PLOT.initPlots(); 
-          jQuery('#fc_next_step_button').html('<i class="icon-play"></i>Next Step');
+          jQuery('#fc_next_step_button').html('<span class="glyphicon glyphicon-play"></span>Next Step');
           FETCHCLIMATE_PLOT.getData(); 
         }
         else {
@@ -63,7 +63,6 @@ jQuery(window).load(function() {
       }
       //if there is data
       if(!jQuery('#fetchclimate_data').hasClass('hidden')) {
-        jQuery('#fc_next_step_button').text('Finish');
         jQuery('#fetchclimate_data').addClass('hidden');
       }
     }
