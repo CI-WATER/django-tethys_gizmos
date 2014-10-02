@@ -1,17 +1,16 @@
-{% load staticfiles %}
+{% load staticfiles tethys_gizmos %}
 
-<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_gizmos.css' %}" type="text/css" />
 <link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_map_view.css' %}" type="text/css" />
 
  <div id='map-view-container'
    style="
-     {% if options.height %} height:{{ options.height }} {% endif %};
-     {% if options.width %} width:{{ options.width }} {% endif %};"
-     data-map-type={% if options.map_type %} "{{ options.map_type }}" {% else %} {{'google-earth'}} {% endif %}
-     data-legend={% if options.legend %} "{{ h.jsonify(options.legend) }}" {% else %} {{'false'}} {% endif %}
-     data-legend-options={% if options.legend_options %} "{{ h.jsonify(options.legend_options) }}" {% else %} {{'{}'}} {% endif %}
-     data-layer-data={% if options.layer_data %} "{{ h.jsonify(options.layer_data) }}" {% else %} {{'[]'}} {% endif %}
-     data-kml-service={% if options.kml_service %} "{{ options.kml_service }}" {% else %} {{' '}} {% endif %}
+     {% if height %} height:{{ height }} {% endif %};
+     {% if width %} width:{{ width }} {% endif %};"
+     data-map-type={% if map_type %} "{{ map_type }}" {% else %} {{'google-earth'}} {% endif %}
+     data-legend={% if legend %} "{{ legend|jsonify }}" {% else %} {{'false'}} {% endif %}
+     data-legend-options={% if legend_options %} "{{ legend_options|jsonify }}" {% else %} {{'{}'}} {% endif %}
+     data-layer-data={% if layer_data %} "{{ layer_data|jsonify }}" {% else %} {{'[]'}} {% endif %}
+     data-kml-service={% if kml_service %} "{{ kml_service }}" {% else %} {{' '}} {% endif %}
   >
     	<div id="map-view">
     	  <img id='map-view-fullscreen' src='http://earth-api-samples.googlecode.com/svn/trunk/external/dinther_fullscreen_tofull.png'>
@@ -27,7 +26,7 @@
           
         </div>
         
-        <div id='map-view-divider' title='drage to resize legend'>
+        <div id='map-view-divider' title='drag to resize legend'>
           <div id='map-view-handle' class='center-parent' title='double click to hide legend'>
             <span class='center'><i class='icon-chevron-right'></i></span>
           </div>
@@ -80,7 +79,7 @@
     </div>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 {% if maps_api_key != '' %}
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ options.maps_api_key }}&sensor=false"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ maps_api_key }}&sensor=false"></script>
 {% endif %}
 
 <!-- <script>var workerTest= new Worker('http://192.168.249.211:5000/fanstatic/ckanext_apps/:version:2014-04-23T14:32:59.79/js/workerTest.js');</script> -->

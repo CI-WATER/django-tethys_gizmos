@@ -29,7 +29,7 @@ var TETHYS_MAP = (function() {
  	*                    PRIVATE FUNCTION DECLARATIONS
  	*************************************************************************/
 	// Google Map and Earth Managment Function Declarations
-	var initGoogleEarth, googleEarthInitCB, googleEarthFailureCB, initGoogleMap,
+	var initGoogleEarth, googleEarthInitCB, googleEarthFailureCB, initGoogleMap, parseJsonLinks,
 		retrieveKmlData;
 	
 	googleEarthInitCB = function(instance) {
@@ -89,6 +89,50 @@ var TETHYS_MAP = (function() {
 			layer.setMap(map);
 		}
 	};
+
+	// Parse the json object retrieved by kml_service
+    parseJsonLinks = function(json) {
+        var kml_links;
+
+        // Parse the json object returned
+        if (json instanceof Array) {
+            kml_links = json;
+
+        } else if (json instanceof Object && 'kml_links' in json) {
+            kml_links = json['kml_links'];
+
+        } else if (json instanceof Object && 'kml_link' in json) {
+            kml_links = json['kml_link'];
+
+        } else {
+            kml_links = [];
+        }
+
+        // Check for relative urls and append host if necessary
+        for (var i = 0; i < kml_links.length; i++) {
+            var current_link;
+
+            current_link = kml_links[i];
+
+            if (!current_link.contains('://')) {
+                var host;
+
+                // Assemble the host
+                host = location.protocol + '//' + location.host;
+
+                if (current_link.charAt(0) === '/') {
+                    current_link = host + current_link;
+                } else {
+                    current_link = host + '/' + current_link;
+                }
+
+                // Overwrite the previous link
+                kml_links[i] = current_link;
+            }
+        }
+
+        return kml_links;
+    };
 	
 	// KML Data Retriever
 	retrieveKmlData = function(kml_service) {
@@ -99,10 +143,7 @@ var TETHYS_MAP = (function() {
 			var height, width;
 			
 			// Set global map data variable
-			if (json['kml_link']){
-				google_map_urls = json['kml_link'];
-				console.log(google_map_urls);
-			}
+		    google_map_urls = parseJsonLinks(json);
 			
 			// Get height and width of loading div
 			height = $('#google_map_loading').css('height');
@@ -129,6 +170,13 @@ var TETHYS_MAP = (function() {
  	*                            Initialization
  	*************************************************************************/
 	$(function() {
+	    // Add contains method to String prototype
+        if ( !String.prototype.contains ) {
+            String.prototype.contains = function() {
+                return String.prototype.indexOf.apply( this, arguments ) !== -1;
+            };
+        }
+
 		// Initialize globals
 		google_map_urls = [];
 		

@@ -1,26 +1,29 @@
-{% load staticfiles %}
-
 {% extends "page.html" %}
 
+{% load staticfiles tethys_gizmos %}
+
 {% block styles %}
-	{{ super() }}
-	<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_apps.css' %}" type="text/css" />
+	{{ block.super }}
 	<link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/prism/prism.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'tethys_gizmos/css/gizmo_showcase.css' %}" type="text/css" />
+  <style>
+    #content {
+      padding-bottom: 50px;
+    }
+  </style>
 {% endblock %}
 
 {% block primary_content %}
   <div class="module">
     <div class="module-content">
-      <h1>Google Map</h1>
-      {% gizmo "google_map" google_map %}
+      <h2>Google Map</h2>
+      {% gizmo google_map google_map %}
     </div>
   </div>
 {% endblock %}
 
-{% block secondary_content %}
-
-{% endblock %}
-
 {% block scripts %}
-	{{ super() }}	
+  {% gizmo_dependencies css %}
+	{{ block.super }}
+  {% gizmo_dependencies js %}
 {% endblock %}

@@ -501,7 +501,7 @@ def google_map(request):
     Place to display google map view in an isoloted environment
     """
     # Google Map
-    google_map = {'height': '700px',
+    google_map = {'height': '600px',
                   'width': '100%',
                   'kml_service': reverse('gizmos:get_kml'),
                   'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws'}
@@ -530,9 +530,10 @@ def map_view(request):
                 'kml_service': reverse('gizmos:get_kml'),
 
                 # Google Maps api key if Google Maps is used
-                'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws'}
+                'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws'
+    }
 
-    context = {'map_view', map_view}
+    context = {'map_view': map_view}
 
     return render(request, 'tethys_gizmos/gizmo_showcase/map_view.html', context)
 
