@@ -27,20 +27,19 @@ def index(request):
                                        'style': 'danger'}
     ]}
 
-    vertical_buttons = {'buttons': [
-        {'display_text': 'Edit',
-         'icon': 'glyphicon glyphicon-wrench',
-         'style': 'warning',
-         'attributes': 'id=edit_button'},
-        {'display_text': 'Info',
-         'icon': 'glyphicon glyphicon-question-sign',
-         'style': 'info',
-         'attributes': 'name=info'},
-        {'display_text': 'Apps',
-         'icon': 'glyphicon glyphicon-home',
-         'href': '/apps',
-         'style': 'primary'}
-    ],
+    vertical_buttons = {'buttons': [{'display_text': 'Edit',
+                                     'icon': 'glyphicon glyphicon-wrench',
+                                     'style': 'warning',
+                                     'attributes': 'id=edit_button'},
+                                    {'display_text': 'Info',
+                                     'icon': 'glyphicon glyphicon-question-sign',
+                                     'style': 'info',
+                                     'attributes': 'name=info'},
+                                    {'display_text': 'Apps',
+                                     'icon': 'glyphicon glyphicon-home',
+                                     'href': '/apps',
+                                     'style': 'primary'}
+                                    ],
                         'vertical': True}
 
     # Date Picker Data

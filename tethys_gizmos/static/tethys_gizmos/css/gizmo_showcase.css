@@ -7,6 +7,9 @@
   width: 192px;
   margin: 0 -1px 0 -1px;
 }
+#showcase_nav_list .nav-list > .active > a {
+  color: #ffffff;
+}
 #showcase_nav_list a {
   font-size: 14pt;
   padding: 10px 15px;
@@ -31,6 +34,9 @@
   -moz-border-radius: 5px;
   border-radius: 5px;
   background-color: #fcfcfc;
+}
+.code {
+  background-color: #F5F2F0;
 }
 .demo:after,
 .code:after {

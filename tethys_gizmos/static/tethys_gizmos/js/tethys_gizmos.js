@@ -10,7 +10,7 @@
  *                      LIBRARY WRAPPER
  *****************************************************************************/
 
-var TETHYS_SNIPPETS = (function() {
+var TETHYS_GIZMOS = (function() {
 	// Wrap the library in a package function
 	"use strict"; // And enable strict mode for this library
 	
@@ -161,10 +161,10 @@ function remoteSubmit(formID) {
 	"use strict";
 	
 	// Pass through the library object
-	TETHYS_SNIPPETS.remoteSubmit(formID);
+	TETHYS_GIZMOS.remoteSubmit(formID);
 }
 
 function updateSliderDisplayValue(value_for, range_input) {
-	TETHYS_SNIPPETS.updateSliderDisplayValue(value_for, range_input); 	
+	TETHYS_GIZMOS.updateSliderDisplayValue(value_for, range_input);
 }
  

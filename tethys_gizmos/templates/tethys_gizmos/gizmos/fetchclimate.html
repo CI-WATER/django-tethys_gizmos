@@ -27,31 +27,32 @@
 {% else %}
   <div id="fetchclimate_date" class="center-parent">
 {% endif %}
-    <div class="input-daterange" id="fc_datepicker">
-      <label for="start">Start Date (mm/dd/yyyy)</label>
-      <input id="fc_start_date" value="01/01/1989" name="start"/>
-      <span class="add-on">to</span>
-      <label for="end">End Date (mm/dd/yyyy)</label>
-      <input id="fc_end_date" value="01/01/1990" name="end"/>
-    </div>
-    <div class="form-group">
-      <label class="control-label" for="fc_year_mode">Year Mode</label>
-      <select class="time-control-select form-control" id="fc_year_mode">
-        <option value="individual">Individual years</option>
-        <option value="avg" selected="selected">Average over the years</option>
-      </select>                      
-      <label class="control-label" for="fc_day_mode">Day Mode</label>
-      <select class="time-control-select form-control" id="fc_day_mode">
-        <option value="individual">Individual days</option>
-        <option value="avg" selected="selected">Average over the whole year</option>
-      </select>                      
-      <label class="control-label" for="fc_hour_mode">Hour Mode</label>
-      <select class="time-control-select form-control" id="fc_hour_mode">
-        <option value="individual">Individual hours</option>
-        <option value="avg" selected="selected">Average over the whole day</option>
-      </select>                    
-    </div>
-  </div>
+     <div class="form-group">
+        <div class="input-daterange" id="fc_datepicker">
+          <label for="start">Start Date (mm/dd/yyyy)</label>
+          <input id="fc_start_date" class="form-control" value="01/01/1989" name="start"/>
+          <label for="end">End Date (mm/dd/yyyy)</label>
+          <input id="fc_end_date" class="form-control" value="01/01/1990" name="end"/>
+        </div>
+
+       <label class="control-label" for="fc_year_mode">Year Mode</label>
+        <select class="time-control-select form-control" id="fc_year_mode">
+          <option value="individual">Individual years</option>
+          <option value="avg" selected="selected">Average over the years</option>
+        </select>
+
+       <label class="control-label" for="fc_day_mode">Day Mode</label>
+        <select class="time-control-select form-control" id="fc_day_mode">
+          <option value="individual">Individual days</option>
+          <option value="avg" selected="selected">Average over the whole year</option>
+        </select>
+
+       <label class="control-label" for="fc_hour_mode">Hour Mode</label>
+        <select class="time-control-select form-control" id="fc_hour_mode">
+          <option value="individual">Individual hours</option>
+          <option value="avg" selected="selected">Average over the whole day</option>
+        </select>
+      </div>
 {% if plot %}
   <!-- FC Plot -->
   <div id="fetchclimate_plot" class="center-parent hidden">

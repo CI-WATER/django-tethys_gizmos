@@ -1,4 +1,4 @@
-<div class="form-group {% if error %} error {% endif %}">
+<div class="form-group {% if error %} has-error {% endif %}">
   {% if display_text %}<label class="control-label" for="{{ name }}">{{ display_text }}</label>{% endif %}
   <select id="{{ name }}" class="form-control" name="{{ name }}" {% if multiple %}multiple{% endif %} {% if disabled %}disabled{% endif %}>
     {% for option, value in options %}
@@ -10,6 +10,6 @@
     {% endfor %}
   </select>
   {% if error %}
-  <span class="help-inline">{{ error }}</span>
+  <p class="help-block">{{ error }}</p>
   {% endif %}
 </div>

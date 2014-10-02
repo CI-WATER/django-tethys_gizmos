@@ -7,19 +7,23 @@
     </tr>
     {% endif %}
     {% for row in rows %}
-    <tr>
-      {% for column_value in row %}
-        {% if editable_columns and editable_columns[forloop.counter0] %}
-          {% if row_ids %}
-            {% set identifier = editable_columns[forloop.counter0] + row_ids[forloop.parentloop.counter0]|string %}
-          {% else %}
-            {% set identifier = editable_columns[forloop.counter0] + row_index|string %}
-          {% endif %}
-          <td><input id="{{ identifier }}" name="{{ identifier }}" type="text" class="span2" value="{{ column_value }}" style="margin-bottom: 0;"></td>
-        {% else %}
-        <td>{{ column_value }}</td>
-        {% endif %}
-      {% endfor %}
-    </tr>        
+      {% with current_row=forloop.counter0 %}
+      <tr>
+        {% for column_value in row %}
+          {% with current_col=forloop.counter0 %}
+            {% if editable_columns and editable_columns[current_col] %}
+              {% if row_ids %}
+                {% set identifier = editable_columns[current_col] + row_ids[current_row]|string %}
+              {% else %}
+                {% set identifier = editable_columns[current_col] + row_index|string %}
+              {% endif %}
+              <td><input id="{{ identifier }}" name="{{ identifier }}" type="text" class="span2" value="{{ column_value }}" style="margin-bottom: 0;"></td>
+            {% else %}
+            <td>{{ column_value }}</td>
+            {% endif %}
+          {% endwith %}
+        {% endfor %}
+      </tr>
+      {% endwith %}
     {% endfor %}
 </table>
