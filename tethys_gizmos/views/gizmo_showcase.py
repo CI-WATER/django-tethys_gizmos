@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.contrib import messages
 
 
 def index(request):
@@ -387,7 +388,8 @@ def get_kml(request):
     """
     This action is used to pass the kml data to the google map. It must return JSON with the key 'kml_link'.
     """
-    kml_links = [static('tethys_gizmos/kml/elepolyterrain.kml')]
+    #kml_links = [static('tethys_gizmos/kml/elepolyterrain.kml')]
+    kml_links = ['http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/a656ecc5-5ddc-415a-ad12-aab50adc4818/download/elepolyterrain.kml']
 
     for i in range(10000000):
         pass
@@ -402,7 +404,9 @@ def swap_kml(request):
     for i in range(0, 20000000):
         pass
 
-    kml_links = {'kml_link': [static('tethys_gizmos/kml/littledellcluster.kml')]}
+    #kml_links = [static('tethys_gizmos/kml/littledellcluster.kml')]
+    kml_links = ['http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/1bb2db00-9944-4084-9ff7-b7897f483088/download/littledellcluster.kml']
+
     return HttpResponse(json.dumps(kml_links), content_type='application/json')
 
 
@@ -477,20 +481,17 @@ def editable_map(request):
                            }
     }
 
-    flash_message = ''
-
     if ('editable_map_submit' in request.POST) and (request.POST['geometry']):
         # Some example code showing how you can decode the JSON into python
         # data structures.
-        geometry_string = request.params['geometry']
+        geometry_string = request.POST['geometry']
         geometry_json = json.loads(geometry_string)
         editable_google_map['input_overlays'] = geometry_json
 
         # Display the JSON as flash message
-        flash_message = geometry_string
+        messages.info(request, geometry_string)
 
-    context = {'editable_google_map': editable_google_map,
-               'flash_message': flash_message}
+    context = {'editable_google_map': editable_google_map}
 
     return render(request, 'tethys_gizmos/gizmo_showcase/editable_map.html', context)
 
@@ -502,7 +503,7 @@ def google_map(request):
     # Google Map
     google_map = {'height': '700px',
                   'width': '100%',
-                  'kml_service': h.url_for('snippet-showcase-action', action='get_kml'),
+                  'kml_service': reverse('gizmos:get_kml'),
                   'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws'}
 
     context = {'google_map': google_map}

@@ -40,9 +40,10 @@ var TETHYS_EDIT_MAP = (function() {
      *************************************************************************/
     // Google Map and Earth Managment Function Declarations
     var addInitialGeoJsonOverlays, addInitialWktJsonOverlays, colorRecycle, changeColor, clickOffPopover,
-    createInfoWindow, geojsonify, getFillColorForValue, getOverlayId, getUniqueColor, initColorPicker,
-    initGoogleMap, overlayClick, overlayDrawingComplete, polygonCenter, retrieveKmlData, setColorForOverlay,
-    setInitialColorRamp, scrapColorPicker, showColorPickerPopover, updateField, updateLegend, wellKnownTextify;
+        createInfoWindow, geojsonify, getFillColorForValue, getOverlayId, getUniqueColor, initColorPicker,
+        initGoogleMap, overlayClick, overlayDrawingComplete, polygonCenter, parseJsonLinks, retrieveKmlData,
+        setColorForOverlay, setInitialColorRamp, scrapColorPicker, showColorPickerPopover, updateField, updateLegend,
+        wellKnownTextify;
     
     addInitialGeoJsonOverlays = function(json) {
         var geometries;
@@ -707,6 +708,50 @@ var TETHYS_EDIT_MAP = (function() {
         
         return new google.maps.LatLng(center.x, center.y);
     };
+
+    // Parse the json object retrieved by kml_service
+    parseJsonLinks = function(json) {
+        var kml_links;
+
+        // Parse the json object returned
+        if (json instanceof Array) {
+            kml_links = json;
+
+        } else if (json instanceof Object && 'kml_links' in json) {
+            kml_links = json['kml_links'];
+
+        } else if (json instanceof Object && 'kml_link' in json) {
+            kml_links = json['kml_link'];
+
+        } else {
+            kml_links = [];
+        }
+
+        // Check for relative urls and append host if necessary
+        for (var i = 0; i < kml_links.length; i++) {
+            var current_link;
+
+            current_link = kml_links[i];
+
+            if (!current_link.contains('://')) {
+                var host;
+
+                // Assemble the host
+                host = location.protocol + '//' + location.host;
+
+                if (current_link.charAt(0) === '/') {
+                    current_link = host + current_link;
+                } else {
+                    current_link = host + '/' + current_link;
+                }
+
+                // Overwrite the previous link
+                kml_links[i] = current_link;
+            }
+        }
+
+        return kml_links;
+    };
     
     // KML Data Retriever
     retrieveKmlData = function(kml_action) {
@@ -715,46 +760,9 @@ var TETHYS_EDIT_MAP = (function() {
         }).done(function(json) {
             var google_map_div;
             var height, width;
-            var kml_links, link_staging;
+            var kml_links;
 
-            // Parse the json object returned
-            if ('kml_link' in json) {
-                kml_links = json['kml_link'];
-
-            } else if ('kml_links' in json) {
-                kml_links = json['kml_links'];
-
-            } else if (json instanceof Array) {
-                kml_links = json;
-
-            } else {
-                kml_links = [];
-            }
-
-            // Check for relative urls and append host if necessary
-            link_staging = [];
-
-            for (var i = 0; i < kml_links.length; i++) {
-                var current_link;
-
-                current_link = kml_links[i];
-
-                if (!current_link.contains('://')) {
-                    var host;
-
-                    // Assemble the host
-                    host = location.protocol + '//' + location.host;
-
-                    if (current_link.charAt(0) === '/') {
-                        current_link = host + current_link;
-                    } else {
-                        current_link = host + '/' + current_link;
-                    }
-
-                    // Overwrite the previous link
-                    kml_links[i] = current_link;
-                }
-            }
+            kml_links = parseJsonLinks(json);
             
             // Set global map data variable
             google_map_urls = kml_links;
@@ -1115,41 +1123,39 @@ var TETHYS_EDIT_MAP = (function() {
             // $('#google_maps_async_loading').css('display', 'block');
             
             $.ajax({
-            url: kml_service
+                url: kml_service
             }).done(function(json) {
-            
-            if (json.hasOwnProperty('kml_link')) {
+
                 var kml_links;
-                
+
                 // Remove kmls from map
                 for (var i = 0; i < reference_layers.length; i++) {
                     var reference_layer = reference_layers[i];
                     reference_layer.setMap(null);
                 }
-                
+
                 // Clear reference layers
                 reference_layers = [];
-                
+
                 // Get Links
-                kml_links = json['kml_link'];
-                
+                kml_links = parseJsonLinks(json);
+
                 for (var i = 0; i < kml_links.length; i++) {
-                var kml_link, layer;
-                
-                // Get link
-                kml_link = kml_links[i];
-                
-                // Create new layer object with link
-                layer = new google.maps.KmlLayer(kml_link);
-                layer.setMap(map);
-                
-                // Store handle to layer in global for later use
-                reference_layers.push(layer);
+                    var kml_link, layer;
+
+                    // Get link
+                    kml_link = kml_links[i];
+
+                    // Create new layer object with link
+                    layer = new google.maps.KmlLayer(kml_link);
+                    layer.setMap(map);
+
+                    // Store handle to layer in global for later use
+                    reference_layers.push(layer);
                 }
-            }
-            
-            // Hide loading message
-            // $('#google_maps_async_loading').css('display', 'none');
+
+                // Hide loading message
+                // $('#google_maps_async_loading').css('display', 'none');
             
             });
         },
@@ -1159,8 +1165,14 @@ var TETHYS_EDIT_MAP = (function() {
                 url: overlay_service
             }).done(function(json) {
             
-                if (json.hasOwnProperty('overlay_json')) {
-                    var overlay_json = json['overlay_json'];
+                if (json.hasOwnProperty('overlay_json') || json.hasOwnProperty('type')) {
+                    var overlay_json;
+
+                    if (json.hasOwnProperty('overlay_json')) {
+                        overlay_json = json['overlay_json'];
+                    } else if (json.hasOwnProperty('type')) {
+                        overlay_json = json;
+                    }
     
                     if (clear_overlays) {
                         // Remove overlays from map
@@ -1173,11 +1185,15 @@ var TETHYS_EDIT_MAP = (function() {
                     }
                     
                     // Add input overlays
-                    if ('type' in overlay_json && overlay_json['type'] === 'WKTGeometryCollection') {
+                    if (typeof overlay_json !== 'undefined' && 'type' in overlay_json && overlay_json['type'] === 'WKTGeometryCollection') {
                         addInitialWktJsonOverlays(overlay_json);
-                    } else if ('type' in overlay_json && overlay_json['type'] === 'GeometryCollection') {
+                    } else if (typeof overlay_json !== 'undefined' && 'type' in overlay_json && overlay_json['type'] === 'GeometryCollection') {
                         addInitialGeoJsonOverlays(overlay_json);
                     }
+
+                } else {
+                    console.log('Warning: TETHYS_EDIT_MAP.swapOverlayService was executed, but no GeoJSON or WKT JSON ' +
+                                'object was returned by the overlay service provided " + overlay_service + ".');
                 }
             });
         }

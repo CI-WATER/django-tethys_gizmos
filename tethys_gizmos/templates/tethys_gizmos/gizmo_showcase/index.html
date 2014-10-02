@@ -1826,10 +1826,10 @@ jQuery('#fetchclimate_data')[0].addEventListener('fcOneDataRequestComplete', fun
   {{ block.super }}
   <link href="{% static 'tethys_gizmos/vendor/prism/prism.css' %}" rel="stylesheet" />
   <link href="{% static 'tethys_gizmos/css/gizmo_showcase.css' %}" rel="stylesheet" />
-  {% gizmo_dependencies css %}
 {% endblock %}
 
 {% block scripts %}
+  {% gizmo_dependencies css %}
   {{ block.super }}
   <script src="{% static 'tethys_gizmos/vendor/prism/prism.js' %}" type="text/javascript"></script>
   {% gizmo_dependencies js %}

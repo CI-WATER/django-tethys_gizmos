@@ -17,7 +17,8 @@
   {% endif %}
 
   <form method="post">
-  {% gizmo "editable_google_map" editable_google_map %}
+    {% csrf_token %}
+    {% gizmo "editable_google_map" editable_google_map %}
     <button class="btn btn-primary" type="submit" name="editable_map_submit">Submit</button>
     <a class="btn btn-success" href="javascript:void(0);" data-kml-service="{% url 'gizmos:swap_kml' %}" onclick="swap(this);">Swap Map</a>
     <a class="btn btn-success" href="javascript:void(0);" onclick="swapOverlayService('{% url "gizmos:swap_overlays" %}', true);">Swap Overlays</a>
