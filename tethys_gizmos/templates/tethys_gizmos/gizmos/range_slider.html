@@ -1,22 +1,23 @@
-<div class="control-group {% if error %} error {% endif %}">
+<div class="form-group {% if error %} has-error {% endif %}">
 	{% if display_text %}<label class="control-label" for="{{ name }}">{{ display_text }}</label>{% endif %}
-	<div class="controls">
-	  <div class="input-prepend input-append">
-		<span class="add-on slider-before">{{ min }}</span>
-		<input id="{{ name }}"
-			   class="slider-input"
-			   name="{{ name }}"
-			   type="range" min="{{ min }}"
-			   max="{{ max }}"
-			   step="{{ step }}"
-			   value="{{ initial }}"
-			   oninput="updateSliderDisplayValue('{{ name }}', this);"
-			   {% if disabled %}disabled{% endif %}>
-		<span class="add-on slider-after">{{ max }}</span>
-      </div>
-    <span class="slider-value" for="{{ name }}" style="padding-left:50px;">{{ initial }}</span>
-	</div>
+	<div class="input-group">
+    <span class="input-group-addon slider-before">{{ min }}</span>
+    <input id="{{ name }}"
+           class="slider-input form-control"
+           name="{{ name }}"
+           type="range" min="{{ min }}"
+           max="{{ max }}"
+           step="{{ step }}"
+           value="{{ initial }}"
+           oninput="updateSliderDisplayValue('{{ name }}', this);"
+           {% if disabled %}disabled{% endif %}>
+    <span class="input-group-addon slider-after">{{ max }}</span>
+
+  </div>
+
+  {# <span class="slider-value" for="{{ name }}" style="padding-left:50px;">{{ initial }}</span> #}
+
 	{% if error %}
-	<span class="help-inline">{{ error }}</span>
+	<p class="help-block">{{ error }}</p>
 	{% endif %}
 </div>

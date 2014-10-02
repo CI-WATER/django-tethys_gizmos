@@ -66,3 +66,10 @@ def fetchclimate(context):
             'tethys_gizmos/vendor/highcharts/js/highcharts-more.js',
             'tethys_gizmos/js/fetchclimate/fetchclimate_plot.js',
             'tethys_gizmos/js/fetchclimate/fetchclimate_data.js')
+
+def range_slider(context):
+    """
+    Dependencies for range_slider gizmo.
+    """
+
+    return ('tethys_gizmos/css/range_slider.css',)

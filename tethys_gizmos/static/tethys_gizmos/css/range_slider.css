@@ -1,0 +1,14 @@
+.slider-input {
+	-webkit-appearance: none;
+	height: 15px;
+	padding: 6.5px;
+	border:solid;
+	border-width:thin;
+	border-color:#CCCCCC;
+	background-color: #EEEEEE;
+	background-image: -webkit-linear-gradient(#EEEEEE, #DDDDDD, #EEEEEE);
+	background-image: 	 -moz-linear-gradient(#EEEEEE, #DDDDDD, #EEEEEE);
+	background-image:     -ms-linear-gradient(#EEEEEE, #DDDDDD, #EEEEEE);
+	background-image:      -o-linear-gradient(#EEEEEE, #DDDDDD, #EEEEEE);
+	background-image:         linear-gradient(#EEEEEE, #DDDDDD, #EEEEEE);
+}
