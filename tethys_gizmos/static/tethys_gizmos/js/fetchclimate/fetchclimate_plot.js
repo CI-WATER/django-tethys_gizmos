@@ -13,21 +13,6 @@ if(jQuery('#fetchclimate_plot').length > 0) {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
   };
 
-  function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-      var cookies = document.cookie.split(';');
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = jQuery.trim(cookies[i]);
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) == (name + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  }
   /*****************************************************************************
    *                      LIBRARY WRAPPER
    *****************************************************************************/
@@ -117,14 +102,9 @@ if(jQuery('#fetchclimate_plot').length > 0) {
         //Perform ajax request for each of the date queries
         var requests = m_date_queries.map(function(dateQuery, series_index) {
           return jQuery.ajax({
-              type: "POST",
+              type: "GET",
               url: "/developer/gizmos/ajax/fetchclimate/single-request/",
               dataType: "json",
-              beforeSend: function(xhr, settings) {
-                if (!(/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type)) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-                }
-              },
               data: { 
                       serviceUrl: (serverURL.length>0?serverURL:''),
                       variable : JSON.stringify(variable), 
@@ -207,11 +187,14 @@ if(jQuery('#fetchclimate_plot').length > 0) {
         var grids_json = JSON.parse(jQuery('#fc_outer_container').attr('data-grids'));
         var points_json = JSON.parse(jQuery('#fc_outer_container').attr('data-points'));
       }
+
       var variables_json = JSON.parse(jQuery('#fc_outer_container').attr('data-variables'));
       var high_chart = {
                           chart: {
                             type: 'area',
-                            zoomType: 'x'
+                            zoomType: 'x',
+                            shadow: true,
+                            spacing: [15,30,20,15]
                           },
                           title: {
                             text: 'Time Series Loading'
@@ -231,6 +214,19 @@ if(jQuery('#fetchclimate_plot').length > 0) {
                             data: []
                           }]
                         };
+      //set plot dimensions
+      if(typeof jQuery("#fetchclimate_plot").attr('data-plot-dimensions')!='undefined') {
+        var plot_dimensions = JSON.parse(jQuery("#fetchclimate_plot").attr('data-plot-dimensions'));
+        console.log(plot_dimensions);
+        if(typeof plot_dimensions.width != 'undefined') {
+          high_chart.chart.width = plot_dimensions.width;
+        }
+        if(typeof plot_dimensions.height != 'undefined') {
+          high_chart.chart.height = plot_dimensions.height;
+        } else {
+          high_chart.chart.height = 500;
+        }
+      }
       var plot_html = '<div class="highcharts-plot"></div>';
       for (var variable in variables_json) {
         m_all_data[variable] = {};
@@ -242,6 +238,7 @@ if(jQuery('#fetchclimate_plot').length > 0) {
           this_plot.highcharts(high_chart);
           this_plot.attr('geometry', JSON.stringify({gridType:'CellGrid', gridData:grids_json[grid_id]}));
           this_plot.attr('variable', JSON.stringify({name:variable,sources:variables_json[variable]}));
+
         }
         for (var point_id in points_json) {
           high_chart.title.text = points_json[point_id].title;
@@ -275,7 +272,7 @@ if(jQuery('#fetchclimate_plot').length > 0) {
                 m_date_queries.length +'...</div>'+
           '</div>';
       var charts = jQuery("#fetchclimate_plot .highcharts-plot").each(function() {
-        var chartHTML = jQuery(this);
+        var chartHTML = jQuery(this).find('.highcharts-container');
         jQuery(progress_bar_html).appendTo(chartHTML);
         chartHTML.addClass('plot-parent');
         chartHTML.find('.highcharts-container').addClass('plot-overlay');

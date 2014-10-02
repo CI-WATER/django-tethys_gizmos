@@ -567,8 +567,7 @@ def fetchclimate_map(request):
             'location': [40.246942, -111.647971],
         },
         'plot': {
-            'css': {'height': '600px',
-                    'width': '600px'}
+            'dimensions': {'height': 350, 'width':500}
         }
     }
 

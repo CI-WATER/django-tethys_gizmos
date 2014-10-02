@@ -53,9 +53,13 @@
           <option value="avg" selected="selected">Average over the whole day</option>
         </select>
       </div>
+    </div> <!-- End FC Date -->
 {% if plot %}
   <!-- FC Plot -->
-  <div id="fetchclimate_plot" class="center-parent hidden">
+  <div id="fetchclimate_plot" class="center-parent hidden"
+  {%if plot.dimensions%} 
+    data-plot-dimensions="{{plot.dimensions|jsonify}}"
+  {%endif%}>
 {% else %}
   <!-- FC Data -->
   <div id="fetchclimate_data" class="center-parent hidden">
