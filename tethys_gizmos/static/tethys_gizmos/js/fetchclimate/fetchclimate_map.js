@@ -402,50 +402,48 @@ if(typeof jQuery('#fc_outer_container').attr('data-map') != 'undefined') {
           anchor = overlay.getBounds().getCenter()
           var ne = overlay.getBounds().getNorthEast();
           var sw = overlay.getBounds().getSouthWest();
-          add_content = '<div class="control-group">'+
-                          '<div class="controls">'+
+          add_content = '<div class="form-group">'+
                             '<div class="float-parent">'+
                               '<div class="float-left">'+
                                 '<label class="control-label" for="inputLatMin">Lat Min</label>'+
-                                '<input class="half-width" form="#inputLatMin" type="text" id="inputLatMin" name="Lat Min" value="' + sw.lat() + '">'+
+                                '<input class="form-control" form="#inputLatMin" type="text" id="inputLatMin" name="Lat Min" value="' + sw.lat() + '">'+
                                 '<label class="control-label" for="inputLonMin">Lon Min</label>'+
-                                '<input class="half-width" form="#inputLonMin" type="text" id="inputLonMin" name="Lon Min" value="' + sw.lng() + '">'+
+                                '<input class="form-control" form="#inputLonMin" type="text" id="inputLonMin" name="Lon Min" value="' + sw.lng() + '">'+
                               '</div>'+
                               '<div class="float-right">'+
                                 '<label class="control-label" for="inputLatMax">Lat Max</label>'+
-                                '<input class="half-width"form="#inputLatMax" type="text" id="inputLatMax" name="Lat Max" value="' + ne.lat() + '">'+
+                                '<input class="form-control"form="#inputLatMax" type="text" id="inputLatMax" name="Lat Max" value="' + ne.lat() + '">'+
                                 '<label class="control-label" for="inputLonMax">Lon Max</label>'+
-                                '<input class="half-width" form="#inputLonMax" type="text" id="inputLonMax" name="Lon Max" value="' + ne.lng() + '">'+
+                                '<input class="form-control" form="#inputLonMax" type="text" id="inputLonMax" name="Lon Max" value="' + ne.lng() + '">'+
                               '</div>'+
                             '</div>'+
                             '<div class="float-parent">'+
                               '<div class="float-left">'+
                                 '<label class="control-label" for="inputResX">X Resolution</label>'+
-                                '<input class="half-width" form="#inputResX" type="text" id="inputResX" name="X Resolution" value="' + 
+                                '<input class="form-control" form="#inputResX" type="text" id="inputResX" name="X Resolution" value="' + 
                                     (typeof overlay.gridResolution !== 'undefined' ? overlay.gridResolution[0] : 25) + '">'+
                               '</div>'+
                               '<div class="float-right">'+
                                 '<label class="control-label" for="inputResY">Y Resolution</label>'+
-                                '<input class="half-width" form="#inputResY" type="text" id="inputResY" name="Y Resolution" value="' + 
+                                '<input class="form-control" form="#inputResY" type="text" id="inputResY" name="Y Resolution" value="' + 
                                     (typeof overlay.gridResolution !== 'undefined' ? overlay.gridResolution[1] : 25)  + '">'+
                               '</div>'+
                             '</div>'+
-                          '</div>'+
                         '</div>';
       } else if (type === google.maps.drawing.OverlayType.MARKER) {
           //add marker specific attributes
           anchor = overlay.getPosition();
-          add_content = '<div class="control-group">'+
+          add_content = '<div class="form-group">'+
                           '<div class="controls">'+
                             '<div class="float-parent">'+
                               '<div class="float-left">'+
                                 '<label class="control-label" for="inputLat">Lat</label>'+
-                                '<input class="half-width" form="#inputLat" type="text" id="inputLat" name="Lat" value="' + 
+                                '<input class="form-control" form="#inputLat" type="text" id="inputLat" name="Lat" value="' + 
                                     anchor.lat() + '">'+
                               '</div>'+
                               '<div class="float-right">'+
                                 '<label class="control-label" for="inputLon">Lon</label>'+
-                                '<input class="half-width" form="#inputLon" type="text" id="inputLon" name="Lon" value="' + 
+                                '<input class="form-control" form="#inputLon" type="text" id="inputLon" name="Lon" value="' + 
                                     anchor.lng()  + '">'+
                               '</div>'+
                             '</div>'+
@@ -457,14 +455,14 @@ if(typeof jQuery('#fc_outer_container').attr('data-map') != 'undefined') {
       var content_string = '<div>'+
                   '<h4>' + title + '</h4>'+
                   '<form id="infoWindowForm">'+
-                    '<div class="control-group">'+
+                    '<div class="form-group">'+
                       '<div class="controls">'+
                         '<label class="control-label" for="infoWindowInput">Title</label>'+
-                        '<input form="#infoWindowForm" type="text" id="infoWindowInput" name="Title" value="' + overlay.title + '">'+
+                        '<input class="form-control" form="#infoWindowForm" type="text" id="infoWindowInput" name="Title" value="' + overlay.title + '">'+
                         '<input type="hidden" id="overlayType" name="overlayType" value="' + type + '">'+
                       '</div>'+
                     '</div>'+ add_content +
-                    '<div class="control-group">'+
+                    '<div class="form-group">'+
                       '<div class="controls">'+
                         '<a class="btn btn-danger" onclick="FCMap_deleteOverlay('+
                                 overlay_id + ');" href="javascript:void(0);">Delete</a>'+
@@ -633,6 +631,9 @@ if(typeof jQuery('#fc_outer_container').attr('data-map') != 'undefined') {
       },
       resetMapChanged: function() {
         m_map_changed = false;
+      },
+      refreshMap: function() {
+        google.maps.event.trigger(m_map, 'resize');
       }
     };
     
