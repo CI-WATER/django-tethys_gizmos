@@ -7,11 +7,11 @@ from django.views.generic import ListView
 from django.http import HttpResponse
 
 #imports from this app
-from ...lib.fetchclimate.fc_grid import FCGrid 
-from ...lib.fetchclimate.fc_response import FCResponse 
-from ...lib.fetchclimate.fc_request import FCRequest 
-from ...lib.fetchclimate.fc_time_series import FCTimeSeries 
-from ...lib.fetchclimate.fc_temporal_domain import FCTemporalDomain 
+from ...lib.fetchclimate.fc_grid import FCGrid
+from ...lib.fetchclimate.fc_response import FCResponse
+from ...lib.fetchclimate.fc_request import FCRequest
+from ...lib.fetchclimate.fc_time_series import FCTimeSeries
+from ...lib.fetchclimate.fc_temporal_domain import FCTemporalDomain
 
 #------------------------------------------------------------------------------
 #file global functions

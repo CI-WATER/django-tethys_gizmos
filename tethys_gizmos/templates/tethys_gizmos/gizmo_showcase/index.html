@@ -1374,8 +1374,9 @@ def get_kml(self):
           </div>
           {% endif %}
           
-          <form method="post">        
-          {% gizmo editable_google_map editable_google_map %}
+          <form method="post">
+            {% csrf_token %}
+            {% gizmo editable_google_map editable_google_map %}
             <button class="btn btn-primary" type="submit" name="editable_map_submit">Submit</button>
           </form>
       </div>
