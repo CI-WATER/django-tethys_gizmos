@@ -16,6 +16,7 @@
             {% if editable_columns and editable_columns|return_item:col_idx %}
               {% if row_ids %}
                 {% with identifier=editable_columns|return_item:col_idx|add:row_ids|return_item:row_idx %}
+                  {{ editable_columns|return_item:col_idx }}
                   <td>
                     <input id="{{ identifier }}" name="{{ identifier }}" type="text" class="form-control input-sm" value="{{ column_value }}" style="margin-bottom: 0;">
                   </td>
