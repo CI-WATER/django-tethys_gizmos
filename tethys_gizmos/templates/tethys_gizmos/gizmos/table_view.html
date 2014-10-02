@@ -1,3 +1,5 @@
+{% load tethys_gizmos %}
+
 <table class="table {% if bordered %}table-bordered{% endif %} {% if hover %}table-hover{% endif %} {% if striped %}table-striped{% endif %} {% if condensed %}table-condensed{% endif %}">
     {% if column_names %}
     <tr>
@@ -7,19 +9,26 @@
     </tr>
     {% endif %}
     {% for row in rows %}
-      {% with current_row=forloop.counter0 %}
+      {% with row_idx=forloop.counter0 %}
       <tr>
         {% for column_value in row %}
-          {% with current_col=forloop.counter0 %}
-            {% if editable_columns and editable_columns[current_col] %}
+          {% with col_idx=forloop.counter0 %}
+            {% if editable_columns and editable_columns|return_item:col_idx %}
               {% if row_ids %}
-                {% set identifier = editable_columns[current_col] + row_ids[current_row]|string %}
+                {% with identifier=editable_columns|return_item:col_idx|add:row_ids|return_item:row_idx %}
+                  <td>
+                    <input id="{{ identifier }}" name="{{ identifier }}" type="text" class="form-control input-sm" value="{{ column_value }}" style="margin-bottom: 0;">
+                  </td>
+                {% endwith %}
               {% else %}
-                {% set identifier = editable_columns[current_col] + row_index|string %}
+                {% with identifier=editable_columns|return_item:col_idx|add:row_idx %}
+                  <td>
+                    <input id="{{ identifier }}" name="{{ identifier }}" type="text" class="form-control input-sm" value="{{ column_value }}" style="margin-bottom: 0;">
+                  </td>
+                {% endwith %}
               {% endif %}
-              <td><input id="{{ identifier }}" name="{{ identifier }}" type="text" class="span2" value="{{ column_value }}" style="margin-bottom: 0;"></td>
             {% else %}
-            <td>{{ column_value }}</td>
+              <td>{{ column_value }}</td>
             {% endif %}
           {% endwith %}
         {% endfor %}

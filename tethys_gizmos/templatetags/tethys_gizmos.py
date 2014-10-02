@@ -29,6 +29,14 @@ def isstring(value):
         return False
 
 
+@register.filter
+def return_item(l, i):
+    try:
+        return l[i]
+    except:
+        return None
+
+
 def json_date_handler(obj):
     if isinstance(obj, datetime):
         return time.mktime(obj.timetuple()) * 1000
