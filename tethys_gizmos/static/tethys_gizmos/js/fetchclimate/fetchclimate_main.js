@@ -51,6 +51,7 @@ jQuery(window).load(function() {
       jQuery('#fc_prev_step_button').addClass('hidden');
       jQuery('#fetchclimate_date').addClass('hidden');
       jQuery('#fetchclimate_map').removeClass('hidden');
+      FETCHCLIMATE_MAP.refreshMap();
     } 
     //This is if they are going back a step from the plot/data
     else if (!jQuery('#fetchclimate_plot').hasClass('hidden')) {
