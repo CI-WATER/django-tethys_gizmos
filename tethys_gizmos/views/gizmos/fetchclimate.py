@@ -131,32 +131,9 @@ class FetchClimateGizmoView(object):
     #get variable data
     self.variable_data = json.loads(post_info['variable'])
 
-  #checks the status of the request
-  #@jsonify
-  def statusCheck(self):
-    # Tools
-    t = p.toolkit
-    post_info =  t.request.POST
-    #init class data from post
-    self.initFromPost(post_info)
-
-    #init request
-    request = self.initRequest()
-    #get the response info
-    answer = post_info['responseUri']
-    #check to see what is in the hash
-    hashIdx = answer.find("Blob=") 
-    hashIdx = answer.find("hash=") if (hashIdx == -1) else hashIdx
-    if (hashIdx == -1):
-      print "No hash found in response: " + answer
-    else:
-      request.hash = answer[hashIdx + 5:].strip()
-    response = request.doStatusCheck()
-    return response if not inspect.isclass(type(response)) else {'status' : 'receiving', 'statusData' : 100}
-
 #this handles the request for data for a single plot
 def data_request_single(request):
-  post_info = request.POST
+  post_info = request.GET
   gizmoView = FetchClimateGizmoView()
   #init class data from post
   gizmoView.initFromPost(post_info)

@@ -8,25 +8,6 @@
 //only include if there are no plots
 if(jQuery('#fetchclimate_plot').length <= 0) {
   /*****************************************************************************
-   *                      CUSTOM FUNCTIONS
-   *****************************************************************************/
-  function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-      var cookies = document.cookie.split(';');
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = jQuery.trim(cookies[i]);
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) == (name + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  }
-
-  /*****************************************************************************
    *                      LIBRARY WRAPPER
    *****************************************************************************/
   var FETCHCLIMATE_DATA = (function() {
@@ -76,14 +57,9 @@ if(jQuery('#fetchclimate_plot').length <= 0) {
       //Perform ajax request for each of the date queries
       var requests = m_date_queries.map(function(date_query, series_index) {
         return jQuery.ajax({
-            type: "POST",
+            type: "GET",
             url: "/developer/gizmos/ajax/fetchclimate/single-request/",
             dataType: "json",
-            beforeSend: function(xhr, settings) {
-              if (!(/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type)) && !this.crossDomain) {
-                  xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-              }
-            },
             data: {
                     serviceUrl: m_service_url,
                     variable : JSON.stringify(variable), 
