@@ -3,7 +3,8 @@ from django.conf.urls import patterns, url, include
 ajax_urls = [
     url(r'^get-kml/$', 'tethys_gizmos.views.gizmo_showcase.get_kml', name='get_kml'),
     url(r'^swap-kml/$', 'tethys_gizmos.views.gizmo_showcase.swap_kml', name='swap_kml'),
-    url(r'^swap-overlays/$', 'tethys_gizmos.views.gizmo_showcase.swap_overlays', name='swap_overlays')
+    url(r'^swap-overlays/$', 'tethys_gizmos.views.gizmo_showcase.swap_overlays', name='swap_overlays'),
+    url(r'^fetchclimate/single-request/$', 'tethys_gizmos.views.gizmos.fetchclimate.data_request_single', name='single_request'),
 ]
 
 urlpatterns = patterns('',

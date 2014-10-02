@@ -1,17 +1,17 @@
 #external imports
-from pylons.decorators import jsonify
 import inspect,requests,json 
 
-#ckan imports
-import ckan.plugins as p
-from ckan.lib.base import BaseController
+#django imports
+from django.http import JsonResponse
+from django.views.generic import ListView
+from django.http import HttpResponse
 
 #imports from this app
-from ...lib.FetchClimate.FCGrid import FCGrid 
-from ...lib.FetchClimate.FCResponse import FCResponse 
-from ...lib.FetchClimate.FCRequest import FCRequest 
-from ...lib.FetchClimate.FCTimeSeries import FCTimeSeries 
-from ...lib.FetchClimate.FCTemporalDomain import FCTemporalDomain 
+from ...lib.fetchclimate.fc_grid import FCGrid 
+from ...lib.fetchclimate.fc_response import FCResponse 
+from ...lib.fetchclimate.fc_request import FCRequest 
+from ...lib.fetchclimate.fc_time_series import FCTimeSeries 
+from ...lib.fetchclimate.fc_temporal_domain import FCTemporalDomain 
 
 #------------------------------------------------------------------------------
 #file global functions
@@ -19,7 +19,7 @@ from ...lib.FetchClimate.FCTemporalDomain import FCTemporalDomain
 #------------------------------------------------------------------------------
 #This class contains the configuration for FetchClimate variables
 #------------------------------------------------------------------------------
-class FCConfiguration:
+class FCConfiguration(object):
   def __init__(self, options):
     self.config = []
     self.timeout = 180000 # 3 minute timeout for configuration request
@@ -69,9 +69,9 @@ class FCConfiguration:
     return None
 
 #------------------------------------------------------------------------------
-#This class is the main class for the Fetch Climate controller
+#This class is the main class for the Fetch Climate View
 #------------------------------------------------------------------------------
-class FetchClimateSnippetController(BaseController):
+class FetchClimateGizmoView(object):
   """
   Docs
   """
@@ -131,35 +131,15 @@ class FetchClimateSnippetController(BaseController):
     #get variable data
     self.variable_data = json.loads(post_info['variable'])
 
-  #this handles the request for data for a single plot
-  @jsonify
-  def dataRequestSingle(self):
-    # Tools
-    t = p.toolkit
-
-    post_info =  t.request.POST
-    #init class data from post
-    self.initFromPost(post_info)
-    #initialize request
-    response = self.initDataRequest()
-    #get data from response
-    data = self.getDataFromResponse(response)
-    timeseries = FCTimeSeries(self.temporalDomain, data['data'])
-    if data['success']:
-      return {'data' : timeseries.timeSeriesDateToMilisecond(),
-            'dataName':self.FCConfig.getDataDescriptionByName(self.variable_data['name']),
-            'dataUnits':self.FCConfig.getDataUnitsbyName(self.variable_data['name']),
-            'dataSize':timeseries.timeSeriesDataSize()} 
-    return False
-
   #checks the status of the request
-  @jsonify
+  #@jsonify
   def statusCheck(self):
     # Tools
     t = p.toolkit
     post_info =  t.request.POST
     #init class data from post
     self.initFromPost(post_info)
+
     #init request
     request = self.initRequest()
     #get the response info
@@ -174,23 +154,21 @@ class FetchClimateSnippetController(BaseController):
     response = request.doStatusCheck()
     return response if not inspect.isclass(type(response)) else {'status' : 'receiving', 'statusData' : 100}
 
-  #this is to check the data size
-  @jsonify
-  def checkDataSize(self):
-    # Tools
-    t = p.toolkit
-    c = t.c
-    _ = t._
-
-    #initialize temporal domain
-    time_data = json.loads(post_info['time'])
-    self.temporalDomain = FCTemporalDomain(time_data['years'],time_data['yc'],
-          time_data['days'],time_data['dc'],time_data['hours'],time_data['hc'])
-    #check to see if there is an order too large
-    dataSize = FCTimeSeries(self.temporalDomain, None).timeSeriesDataSize()
-    error = ""
-    if dataSize > 1000:
-      error = 'Data Size Too Big (' + str(dataSize) + ')'
-    return error
-
-
+#this handles the request for data for a single plot
+def data_request_single(request):
+  post_info = request.POST
+  gizmoView = FetchClimateGizmoView()
+  #init class data from post
+  gizmoView.initFromPost(post_info)
+  #initialize request
+  response = gizmoView.initDataRequest()
+  #get data from response
+  data = gizmoView.getDataFromResponse(response)
+  timeseries = FCTimeSeries(gizmoView.temporalDomain, data['data'])
+  response_data = {}
+  if data['success']:
+   response_data = JsonResponse({'data' : timeseries.timeSeriesDateToMilisecond(),
+          'dataName':gizmoView.FCConfig.getDataDescriptionByName(gizmoView.variable_data['name']),
+          'dataUnits':gizmoView.FCConfig.getDataUnitsbyName(gizmoView.variable_data['name']),
+          'dataSize':timeseries.timeSeriesDataSize()})
+  return response_data

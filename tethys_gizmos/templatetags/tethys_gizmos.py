@@ -96,7 +96,7 @@ class TethysGizmoIncludeNode(template.Node):
             return ''
 
 
-@register.tag()
+@register.tag
 def gizmo(parser, token):
     """
     Similar to the include tag, gizmo loads special templates called gizmos that come with the django-tethys_gizmo
@@ -198,7 +198,7 @@ class TethysGizmoDependenciesNode(template.Node):
         return tags_string
 
 
-@register.tag()
+@register.tag
 def gizmo_dependencies(parser, token):
     """
     Load all gizmo dependencies (JavaScript and CSS).

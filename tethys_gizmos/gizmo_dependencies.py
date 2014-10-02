@@ -10,7 +10,7 @@ def date_picker(context):
     """
     Dependencies for date_picker gizmo.
     """
-    return ('tethys_gizmos/vendor/bootstrap_datepicker/css/datepicker.css',
+    return ('tethys_gizmos/vendor/bootstrap_datepicker/css/datepicker3.css',
             'tethys_gizmos/vendor/bootstrap_datepicker/js/bootstrap_datepicker.js')
 
 
@@ -54,7 +54,7 @@ def fetchclimate(context):
     Dependencies for fetchclimate gizmo.
     """
     return ('tethys_gizmos/vendor/farbtastic/farbtastic.css',
-            'tethys_gizmos/vendor/bootstrap_datepicker/css/datepicker.css',
+            'tethys_gizmos/vendor/bootstrap_datepicker/css/datepicker3.css',
             'tethys_gizmos/css/fetchclimate/fetchclimate.css',
             'tethys_gizmos/css/fetchclimate/fetchclimate_map.css',
             'tethys_gizmos/css/fetchclimate/fetchclimate_plot.css',

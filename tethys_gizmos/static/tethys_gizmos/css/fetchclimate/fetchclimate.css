@@ -1,6 +1,7 @@
 .stay-bottom {
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
+  left: 15px;
 }
 
 .float-parent{
@@ -20,7 +21,9 @@
 }
 #fc_outer_container {
   min-height: 400px;
+  padding-bottom: 20px;
 }
+
 .hidden {
   display: none;
 }

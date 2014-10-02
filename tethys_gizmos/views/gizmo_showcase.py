@@ -104,7 +104,7 @@ def index(request):
                         'name': 'inputEmail',
                         'initial': 'bob@example.com',
                         'disabled': True,
-                        'icon_append': 'icon-envelope',
+                        'icon_append': 'glyphicon glyphicon-envelope',
                         'error': 'Here is my error text'}
 
     # Toggle Switch
@@ -575,4 +575,4 @@ def fetchclimate_map(request):
 
     context = {'fetchclimate_map': fetchclimate_map}
 
-    return render(request, 'snippets_showcase/fetchclimate_map.html', context)
+    return render(request, 'tethys_gizmos/gizmo_showcase/fetchclimate_map.html', context)

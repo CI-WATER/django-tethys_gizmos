@@ -2,31 +2,23 @@
 
 <!-- FC outerContainer -->
 <div id="fc_outer_container" class="parent-container" data-date=""
-{% if options|isstring %}
-  {% if 'map' in options %}
-    data-map={{ map }}
-  {% endif %}
-  data-variables = {{ variables }}
-{% else %}
-  {% if 'map' in options %}
-    data-map="{{ map|jsonify }}"
-  {% endif %}
-  data-variables = "{{ variables|jsonify }}"
+{% if map %}
+ data-map="{{ map|jsonify }}"
 {% endif %}
-  data-server-url= {{ serverUrl }}
-{% if 'grid' in options %}
-  data-grids="{{ grid|jsonify }}"
+ data-variables = "{{ variables|jsonify }}"
+ data-server-url= {{ serverUrl }}
+{% if grid %}
+ data-grids="[{{ grid|jsonify }}]"
 {% else %}
-  data-grids=""
+ data-grids=""
 {% endif %}
-{% if 'point' in options %}
-  data-points="{{ point|jsonify }}"
+{% if point %}
+ data-points="[{{ point|jsonify }}]"
 {% else %}
-  data-points=""
+ data-points=""
 {% endif %}
 >
-
-{% if 'map' in options %}
+{% if map %}
   <!-- FC Map -->
   <div id="fetchclimate_map" class="center-parent" style="height: {{ map.css.height }}; width: {{ map.css.width }}; background-color:#efefef;">
   </div>
@@ -36,31 +28,31 @@
   <div id="fetchclimate_date" class="center-parent">
 {% endif %}
     <div class="input-daterange" id="fc_datepicker">
-      <label class="control-label" for="start">Start Date (mm/dd/yyyy)</label>
-      <input id="fc_start_date" value="01/01/1989" name="start" />
+      <label for="start">Start Date (mm/dd/yyyy)</label>
+      <input id="fc_start_date" value="01/01/1989" name="start"/>
       <span class="add-on">to</span>
-      <label class="control-label" for="end">End Date (mm/dd/yyyy)</label>
-      <input id="fc_end_date" value="01/01/1990" name="end" />
+      <label for="end">End Date (mm/dd/yyyy)</label>
+      <input id="fc_end_date" value="01/01/1990" name="end"/>
     </div>
-    <div>
+    <div class="form-group">
       <label class="control-label" for="fc_year_mode">Year Mode</label>
-      <select class="time-control-select" id="fc_year_mode">
+      <select class="time-control-select form-control" id="fc_year_mode">
         <option value="individual">Individual years</option>
         <option value="avg" selected="selected">Average over the years</option>
       </select>                      
       <label class="control-label" for="fc_day_mode">Day Mode</label>
-      <select class="time-control-select" id="fc_day_mode">
+      <select class="time-control-select form-control" id="fc_day_mode">
         <option value="individual">Individual days</option>
         <option value="avg" selected="selected">Average over the whole year</option>
       </select>                      
       <label class="control-label" for="fc_hour_mode">Hour Mode</label>
-      <select class="time-control-select" id="fc_hour_mode">
+      <select class="time-control-select form-control" id="fc_hour_mode">
         <option value="individual">Individual hours</option>
         <option value="avg" selected="selected">Average over the whole day</option>
       </select>                    
     </div>
   </div>
-{% if 'plot' in options %}
+{% if plot %}
   <!-- FC Plot -->
   <div id="fetchclimate_plot" class="center-parent hidden">
 {% else %}
@@ -68,17 +60,18 @@
   <div id="fetchclimate_data" class="center-parent hidden">
 {% endif %}
 </div>
-</div> <!-- end FC outerContainer -->
 <div id="fc_control-buttons" class="stay-bottom">
   <div class="btn-group">
-    <a name="prev_step_button" class="btn hidden" role="button" id="fc_prev_step_button">
-      Prev Step</a>    
-    <a name="next_step_button" class="btn btn-success " role="button" id="fc_next_step_button">
-      <i class="icon-play"></i>Next Step</a>
+    <button name="prev_step_button" class="btn btn-default hidden" role="button" id="fc_prev_step_button">
+      Prev Step</button>    
+    <button name="next_step_button" class="btn btn-success " role="button" id="fc_next_step_button">
+      <span class="glyphicon glyphicon-play"></span>Next Step</button>
   </div>
 </div>
+</div> 
+<!-- end FC outerContainer -->
 <!-- FetchClimate Script -->
-{% if 'map' in options %}
+{% if map %}
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   {% if map.map_data.api_key != '' %}
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing&key={{ map.map_data.api_key }}&sensor=false"></script>

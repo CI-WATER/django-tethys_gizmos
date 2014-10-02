@@ -1,18 +1,11 @@
-{% load staticfiles %}
-
 {% extends "page.html" %}
-
-{% block styles %}
-	{{ super() }}
-	<link rel="stylesheet" href="{% static 'tethys_gizmos/css/tethys_apps.css' %}" type="text/css" />
-	<link rel="stylesheet" href="{% static 'tethys_gizmos/vendor/prism/prism.css' %}" type="text/css" />
-{% endblock %}
+{% load staticfiles tethys_gizmos %}
 
 {% block primary_content %}
   <div class="module">
     <div class="module-content">
       <h1>FetchClimate</h1>
-      {% gizmo "fetchclimate" fetchclimate_map %}
+      {% gizmo fetchclimate fetchclimate_map %}
     </div>
   </div>
 {% endblock %}
@@ -21,6 +14,15 @@
 
 {% endblock %}
 
+{% block styles %}
+  {{ block.super }}
+  <link href="{% static 'tethys_gizmos/vendor/prism/prism.css' %}" rel="stylesheet" />
+  {% gizmo_dependencies "css" %}
+{% endblock %}
+
 {% block scripts %}
-	{{ super() }}	
+  {{ block.super }}
+  {% gizmo_dependencies "css" %}
+  <script src="{% static 'tethys_gizmos/vendor/prism/prism.js' %}" type="text/javascript"></script>
+  {% gizmo_dependencies "js" %}
 {% endblock %}
