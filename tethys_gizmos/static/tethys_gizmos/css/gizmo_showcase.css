@@ -1,5 +1,5 @@
 #content {
-  margin: 0 50px;
+  margin: 50px;
 }
 .anchor {
   display: block;
@@ -20,14 +20,26 @@
   color: #ffffff;
 }
 #showcase_nav_list a {
-  font-size: 14pt;
+  font-size: 15px;
   padding: 10px 15px;
   border: solid 1px #dddddd;
   margin-top: -1px;
 }
 #showcase_nav_list a.nav-list-sub {
-  font-size: 12pt;
+  font-size: 13px;
   padding: 10px 25px;
+}
+#gizmo-showcase-wrapper {
+  padding-right: 200px;
+}
+#gizmo-showcase-wrapper .gizmo-showcase-page-header {
+  font-size: 100px;
+}
+#gizmo-showcase-wrapper p {
+  text-align: justify;
+}
+pre[class*="language-"].overview-example-code {
+  margin: 20px 0;
 }
 /* Demo and Code Example Styles */
 .example {
