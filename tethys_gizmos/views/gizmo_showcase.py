@@ -2,8 +2,7 @@ import json
 from datetime import datetime
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
-from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 
 
@@ -319,7 +318,7 @@ def index(request):
     # Editable Google Map
     editable_google_map = {'height': '600px',
                            'width': '100%',
-                           'reference_kml_action': reverse('gizmos:get_kml'),  # TODO: Change this to the get_kml action url
+                           'reference_kml_action': reverse('gizmos:get_kml'),
                            'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws',
                            'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
                            'initial_drawing_mode': 'POINTS',
@@ -390,10 +389,7 @@ def get_kml(request):
     #kml_links = [static('tethys_gizmos/kml/elepolyterrain.kml')]
     kml_links = ['http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/a656ecc5-5ddc-415a-ad12-aab50adc4818/download/elepolyterrain.kml']
 
-    for i in range(10000000):
-        pass
-
-    return HttpResponse(json.dumps(kml_links), content_type='application/json')
+    return JsonResponse({'kml_links': kml_links})
 
 
 def swap_kml(request):

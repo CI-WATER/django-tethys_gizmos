@@ -66,7 +66,7 @@
     <div class="col-md-9">
       <h1 class="gizmo-showcase-page-heading">Gizmo Showcase</h1>
       <p>
-        Gizmos are building blocks that can be used to create elements that are commonly used in web apps. Using gizmos,
+        Gizmos are building blocks that can be used to create beautiful interactive controls for web apps. Using gizmos,
         developers can add date-pickers, plots, and maps to their templates with minimal coding. This page provides the
         documentation developers need to user Gizmos.
       </p>
@@ -218,7 +218,8 @@ vertical_buttons = {'buttons': [
             <p class="muted">HTML</p>
           <pre><code class="language-python">
 &#123;% gizmo button_group.html single_button %&#125;
-  ...</code></pre>
+&#123;% gizmo button_group.html horizontal_buttons %&#125;
+&#123;% gizmo button_group.html vertical_buttons %&#125;</code></pre>
           </div>
         </div>
 
@@ -338,7 +339,7 @@ date_picker_error = {'display_text': 'Date',
           <p class="muted">HTML</p>
         <pre><code class="language-python">
 &#123;% gizmo date_picker date_picker %&#125;
-...</code></pre>
+&#123;% gizmo date_picker date_picker_error %&#125;</code></pre>
         </div>
       </div>
 
@@ -496,8 +497,8 @@ slider2 = {'display_text': 'Slider 2',
            'error': 'Incorrect, please choose another value.'}</code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
-&#123;% gizmo range_slider sliders %&#125;
-...</code></pre>
+&#123;% gizmo range_slider slider1 %&#125;
+&#123;% gizmo range_slider slider2 %&#125;</code></pre>
         </div>
       </div>
 
@@ -598,7 +599,8 @@ select_input_error = {'display_text': 'Select Disabled',
             <p class="muted">HTML</p>
           <pre><code class="language-python">
 &#123;% gizmo select_input select_input %&#125;
-  ...</code></pre>
+&#123;% gizmo select_input select_input_multiple %&#125;
+&#123;% gizmo select_input select_input_error %&#125;</code></pre>
           </div>
         </div>
 
@@ -667,16 +669,16 @@ select_input_error = {'display_text': 'Select Disabled',
             <p class="muted">Controller</p>
             <pre><code class="language-python">
 text_input = {'display_text': 'Text',
-            'name': 'inputAmount',
-            'placeholder': 'e.g.: 10.00',
-            'prepend': '$'}
+              'name': 'inputAmount',
+              'placeholder': 'e.g.: 10.00',
+              'prepend': '$'}
 
 text_error_input = {'display_text': 'Text Error',
-                  'name': 'inputEmail',
-                  'initial': 'bob@example.com',
-                  'disabled': True,
-                  'icon_append':'glyphicon glyphicon-envelope',
-                  'error': 'Here is my error text'}</code></pre>
+                    'name': 'inputEmail',
+                    'initial': 'bob@example.com',
+                    'disabled': True,
+                    'icon_append':'glyphicon glyphicon-envelope',
+                    'error': 'Here is my error text'}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
 &#123;% gizmo text_input text_input %&#125;
@@ -799,7 +801,8 @@ toggle_switch_disabled = {'display_text': 'Disabled Toggle',
           <p class="muted">HTML</p>
         <pre><code class="language-python">
 &#123;% gizmo toggle_switch toggle_switch %&#125;
-...</code></pre>
+&#123;% gizmo toggle_switch toggle_switch_styled %&#125;
+&#123;% gizmo toggle_switch toggle_switch_disabled %&#125;</code></pre>
         </div>
       </div>
 
@@ -889,28 +892,28 @@ toggle_switch_disabled = {'display_text': 'Disabled Toggle',
           <p class="muted">Controller</p>
           <pre><code class="language-python">
 table_view = {'column_names': ('Name', 'Age', 'Job'),
-                'rows': [('Bill', 30, 'contractor'),
-                         ('Fred', 18, 'programmer'),
-                         ('Bob', 26, 'boss')],
-                'hover': True,
-                'striped': True,
-                'bordered': False,
-                'condensed': False}
+              'rows': [('Bill', 30, 'contractor'),
+                       ('Fred', 18, 'programmer'),
+                       ('Bob', 26, 'boss')],
+              'hover': True,
+              'striped': True,
+              'bordered': False,
+              'condensed': False}
                 
 table_view_edit = {'column_names': ('Name', 'Age', 'Job'),
-                     'rows': [('Bill', 30, 'contractor'),
-                              ('Fred', 18, 'programmer'),
-                              ('Bob', 26, 'boss')],
-                     'hover': True,
-                     'striped': True,
-                     'bordered': False,
-                     'condensed': False,
-                     'editable_columns': (False, 'ageInput', 'jobInput'),
-                     'row_ids': [21, 25, 31]}</code></pre>
+                   'rows': [('Bill', 30, 'contractor'),
+                            ('Fred', 18, 'programmer'),
+                            ('Bob', 26, 'boss')],
+                   'hover': True,
+                   'striped': True,
+                   'bordered': False,
+                   'condensed': False,
+                   'editable_columns': (False, 'ageInput', 'jobInput'),
+                   'row_ids': [21, 25, 31]}</code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
 &#123;% gizmo table_view table_view %&#125;
-...</code></pre>
+&#123;% gizmo table_view table_view_edit %&#125;</code></pre>
         </div>
     </div>
     
@@ -1045,8 +1048,8 @@ highcharts_object = {
       ]}
   
 line_plot_view = {'highcharts_object': highcharts_object,
-                    'width': '500px',
-                    'height': '500px'}                
+                  'width': '500px',
+                  'height': '500px'}
           </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
@@ -1335,15 +1338,19 @@ google_map = {'height': '500px',
                 'maps_api_key':'S0mEaPIk3y'}</code></pre>
             <p class="muted">KML Service Controller</p>
             <pre><code class="language-python">
-@jsonify
-def get_kml(self):
-    '''
-    This action is used to pass the kml data to the google map. It must
-    return JSON with the key 'kml_link'.
-    '''
+from django.http import JsonResponse
+
+def get_kml(request):
+    """
+    This action is used to pass the kml data to the google map.
+    It must return a JSON response with a Python dictionary that
+    has the key 'kml_links'.
+    """
     kml_links = ['http://www.example.com/soil-poly-v3.kml',
                  'http://www.example.com/ele-poly-terrain.kml']
-    return {'kml_link':kml_links}</code></pre>
+
+    return JsonResponse({'kml_links': kml_links})
+            </code></pre>
             <p class="muted">HTML</p>
             <pre><code class="language-python">
 &#123;% gizmo google_map google_map %&#125;</code></pre>
@@ -1414,15 +1421,19 @@ google_map = {'height': '500px',
                 'maps_api_key':'S0mEaPIk3y'}</code></pre>
               <p class="muted">KML Service Controller</p>
               <pre><code class="language-python">
-@jsonify
-def get_kml(self):
-    '''
-    This action is used to pass the kml data to the google map. It must
-    return JSON with the key 'kml_link'.
-    '''
+from django.http import JsonResponse
+
+def get_kml(request):
+    """
+    This action is used to pass the kml data to the google map.
+    It must return a JSON response with a Python dictionary that
+    has the key 'kml_links'.
+    """
     kml_links = ['http://www.example.com/soil-poly-v3.kml',
                  'http://www.example.com/ele-poly-terrain.kml']
-    return {'kml_link':kml_links}</code></pre>
+
+    return JsonResponse({'kml_links': kml_links})
+              </code></pre>
               <p class="muted">HTML</p>
               <pre><code class="language-python">
 &#123;% gizmo google_map google_map %&#125;</code></pre>
@@ -1510,15 +1521,18 @@ editable_map = {'height': '600px',
             </code></pre>
             <p class="muted">KML Service Controller</p>
             <pre><code class="language-python">
-@jsonify
-def get_kml(self):
-    '''
-    This action is used to pass the kml data to the google map. It must
-    return JSON with the key 'kml_link'.
-    '''
+from django.http import JsonResponse
+
+def get_kml(request):
+    """
+    This action is used to pass the kml data to the google map.
+    It must return a JSON response with a Python dictionary that
+    has the key 'kml_links'.
+    """
     kml_links = ['http://www.example.com/soil-poly-v3.kml',
                  'http://www.example.com/ele-poly-terrain.kml']
-    return {'kml_link':kml_links}
+
+    return JsonResponse({'kml_links': kml_links})
             </code></pre>
             <p class="muted">HTML</p>
             <pre><code class="language-python">
