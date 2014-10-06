@@ -1,5 +1,8 @@
+@import "vendor/prefixer";
+
 #content {
   margin: 50px;
+  margin-top: 0;
 }
 
 .anchor {
@@ -14,33 +17,33 @@
 }
 
 #showcase_nav_list {
-    position: fixed;
-    top: 100px;
-	width: 192px;
-	margin: 0 -1px 0 -1px;
+  position: fixed;
+  top: 100px;
+  width: 192px;
+  margin: 0 -1px 0 -1px;
 
-	.nav-list > .active > a {
-	    color: #ffffff;
-	}
-}
+  .nav-list > .active > a {
+      color: #ffffff;
+  }
 
-#showcase_nav_list a {
-	font-size: 15px;
-	padding: 10px 15px;
-	border: solid 1px #dddddd;
-	margin-top: -1px;
-}
+  a {
+    font-size: 15px;
+    padding: 5px 8px;
+    margin-top: -1px;
+    .border-radius(5px);
 
-#showcase_nav_list a.nav-list-sub {
-	font-size: 13px;
-	padding: 10px 25px;
+    &.nav-list-sub {
+      font-size: 13px;
+      padding: 10px 25px;
+    }
+  }
 }
 
 #gizmo-showcase-wrapper {
   padding-right: 200px;
 
-  .gizmo-showcase-page-header {
-    font-size: 100px;
+  .gizmo-showcase-page-heading {
+    font-size: 60px;
   }
 
   p {
@@ -54,7 +57,7 @@ pre[class*="language-"].overview-example-code {
 
 /* Demo and Code Example Styles */
 .example {
-	max-width: 750px;
+
 }
 .demo, .code {
 	position: relative;

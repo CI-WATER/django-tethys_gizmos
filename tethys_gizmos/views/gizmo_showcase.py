@@ -319,7 +319,7 @@ def index(request):
     # Editable Google Map
     editable_google_map = {'height': '600px',
                            'width': '100%',
-                           'reference_kml_action': '',  # TODO: Change this to the get_kml action url
+                           'reference_kml_action': reverse('gizmos:get_kml'),  # TODO: Change this to the get_kml action url
                            'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws',
                            'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
                            'initial_drawing_mode': 'POINTS',

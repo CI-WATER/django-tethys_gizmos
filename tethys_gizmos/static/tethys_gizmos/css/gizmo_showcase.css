@@ -1,5 +1,6 @@
 #content {
   margin: 50px;
+  margin-top: 0;
 }
 .anchor {
   display: block;
@@ -21,9 +22,11 @@
 }
 #showcase_nav_list a {
   font-size: 15px;
-  padding: 10px 15px;
-  border: solid 1px #dddddd;
+  padding: 5px 8px;
   margin-top: -1px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background-clip: padding-box;
 }
 #showcase_nav_list a.nav-list-sub {
   font-size: 13px;
@@ -32,8 +35,8 @@
 #gizmo-showcase-wrapper {
   padding-right: 200px;
 }
-#gizmo-showcase-wrapper .gizmo-showcase-page-header {
-  font-size: 100px;
+#gizmo-showcase-wrapper .gizmo-showcase-page-heading {
+  font-size: 60px;
 }
 #gizmo-showcase-wrapper p {
   text-align: justify;
@@ -42,9 +45,6 @@ pre[class*="language-"].overview-example-code {
   margin: 20px 0;
 }
 /* Demo and Code Example Styles */
-.example {
-  max-width: 750px;
-}
 .demo,
 .code {
   position: relative;

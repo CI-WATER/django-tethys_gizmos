@@ -64,10 +64,11 @@
 
     {# Content -------------------------------------------------------------------------------------------------------#}
     <div class="col-md-9">
-      <h1 class="snippet-showcase-page-heading">Gizmo Showcase</h1>
+      <h1 class="gizmo-showcase-page-heading">Gizmo Showcase</h1>
       <p>
         Gizmos are building blocks that can be used to create elements that are commonly used in web apps. Using gizmos,
-        developers can add date-pickers, plots, and maps to their templates with minimal coding.
+        developers can add date-pickers, plots, and maps to their templates with minimal coding. This page provides the
+        documentation developers need to user Gizmos.
       </p>
 
       {# Quick Start -------------------------------------------------------------------------------------------------#}
@@ -133,7 +134,7 @@
     &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-        <h2>How it Works</h2>
+        <h3>How it Works</h3>
 
         <p>
           Gizmos are composed of HTML, JavaScript, and CSS. When the template is rendered, each of the <b>gizmo</b>
@@ -166,22 +167,22 @@
       {# Button Group ------------------------------------------------------------------------------------------------#}
       <a id="buttons_docs" class="anchor"></a>
       <div class="docs-section">
-        <h3>Button Group</h3>
+        <h2>Button Group</h2>
         <p>
-          The buttons snippet can be used to generate a single button or a group of buttons. Groups of
+          The button group gizmo can be used to generate a single button or a group of buttons. Groups of
           buttons can be stacked horizontally or vertically. For a single button, specify a button group
-          with one button. This snippet is a wrapper for Twitter Bootstrap buttons.
+          with one button. This gizmo is a wrapper for Twitter Bootstrap buttons.
         </p>
 
-      <div class="example">
-        <div class="demo">
-        {% gizmo button_group single_button %}
-        {% gizmo button_group horizontal_buttons %}
-        {% gizmo button_group vertical_buttons %}
-        </div>
-        <div class="code">
-          <p class="muted">Controller</p>
-          <pre><code class="language-python">
+        <div class="example">
+          <div class="demo">
+            {% gizmo button_group single_button %}
+            {% gizmo button_group horizontal_buttons %}
+            {% gizmo button_group vertical_buttons %}
+          </div>
+          <div class="code">
+            <p class="muted">Controller</p>
+            <pre><code class="language-python">
 single_button = {'buttons': [
                              {'display_text': 'Click Me',
                               'name': 'click_me_name',
@@ -214,12 +215,12 @@ vertical_buttons = {'buttons': [
                                 'style': 'primary'}
                                ],
                    'vertical': True}</code></pre>
-          <p class="muted">HTML</p>
-        <pre><code class="language-python">
+            <p class="muted">HTML</p>
+          <pre><code class="language-python">
 &#123;% gizmo button_group.html single_button %&#125;
-...</code></pre>
+  ...</code></pre>
+          </div>
         </div>
-      </div>
 
         <h4>Button Group Options</h4>
         <table class="table table-striped table-bordered">
@@ -300,12 +301,12 @@ vertical_buttons = {'buttons': [
             <td colspan="2">Set the disabled state</td>
           </tr>
         </table>
-    </div>
+      </div>
 
       {# Date Picker -------------------------------------------------------------------------------------------------#}
       <a id="date_picker_docs" class="anchor"></a>
       <div class="docs-section">
-        <h3>Date Picker</h3>
+        <h2>Date Picker</h2>
         <p>
           Date pickers are used to make the input of dates streamlined and easy. Rather than typing the date, the
           user is presented with a calendar to select the date. This date picker was implemented using
@@ -464,7 +465,7 @@ date_picker_error = {'display_text': 'Date',
       {# Range Slider ------------------------------------------------------------------------------------------------#}
       <a id="range_slider_docs" class="anchor"></a>
       <div class="docs-section">
-        <h3>Range Slider</h3>
+        <h2>Range Slider</h2>
         <p>
           Sliders can be used to request an input value from a range of possible values.
           A slider is configured with a dictionary of key-value options.
@@ -562,21 +563,21 @@ slider2 = {'display_text': 'Slider 2',
       {# Select Input ------------------------------------------------------------------------------------------------#}
       <a id="select_input_docs" class="anchor"></a>
       <div class="docs-section">
-        <h3>Select Input</h3>
+        <h2>Select Input</h2>
         <p>
-          Select inputs are used to select values from an given set of values. Use this snippet
+          Select inputs are used to select values from an given set of values. Use this gizmo
           to create select inputs and multi select inputs.
         </p>
 
-      <div class="example">
-        <div class="demo">
-      {% gizmo select_input select_input %}
-      {% gizmo select_input select_input_multiple %}
-      {% gizmo select_input select_input_error %}
-        </div>
-        <div class="code">
-          <p class="muted">Controller</p>
-          <pre><code class="language-python">
+        <div class="example">
+          <div class="demo">
+        {% gizmo select_input select_input %}
+        {% gizmo select_input select_input_multiple %}
+        {% gizmo select_input select_input_error %}
+          </div>
+          <div class="code">
+            <p class="muted">Controller</p>
+            <pre><code class="language-python">
 select_input = {'display_text': 'Select',
                 'name': 'select1',
                 'multiple': False,
@@ -594,12 +595,12 @@ select_input_error = {'display_text': 'Select Disabled',
                       'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
                       'disabled': True,
                       'error': 'Here is my error text'}</code></pre>
-          <p class="muted">HTML</p>
-        <pre><code class="language-python">
+            <p class="muted">HTML</p>
+          <pre><code class="language-python">
 &#123;% gizmo select_input select_input %&#125;
-...</code></pre>
+  ...</code></pre>
+          </div>
         </div>
-      </div>
 
         <h4>Select Input Options</h4>
         <table class="table table-striped table-bordered">
@@ -651,38 +652,38 @@ select_input_error = {'display_text': 'Select Disabled',
       {# Text Input --------------------------------------------------------------------------------------------------#}
       <a id="text_input_docs" class="anchor"></a>
       <div class="docs-section">
-        <h3>Text Input</h3>
+        <h2>Text Input</h2>
         <p>
-          The text input snippet makes it easy to add text inputs to your app
+         The text input gizmo makes it easy to add text inputs to your app
          that are styled similarly to the other input snippets.
         </p>
 
-      <div class="example">
-        <div class="demo">
-      {% gizmo text_input text_input %}
-      {% gizmo text_input text_error_input %}
-        </div>
-        <div class="code">
-          <p class="muted">Controller</p>
-          <pre><code class="language-python">
+        <div class="example">
+          <div class="demo">
+            {% gizmo text_input text_input %}
+            {% gizmo text_input text_error_input %}
+          </div>
+          <div class="code">
+            <p class="muted">Controller</p>
+            <pre><code class="language-python">
 text_input = {'display_text': 'Text',
-              'name': 'inputAmount',
-              'placeholder': 'e.g.: 10.00',
-              'prepend': '$'}
+            'name': 'inputAmount',
+            'placeholder': 'e.g.: 10.00',
+            'prepend': '$'}
 
 text_error_input = {'display_text': 'Text Error',
-                    'name': 'inputEmail',
-                    'initial': 'bob@example.com',
-                    'disabled': True,
-                    'icon_append':'glyphicon glyphicon-envelope',
-                    'error': 'Here is my error text'}</code></pre>
-          <p class="muted">HTML</p>
-        <pre><code class="language-python">
+                  'name': 'inputEmail',
+                  'initial': 'bob@example.com',
+                  'disabled': True,
+                  'icon_append':'glyphicon glyphicon-envelope',
+                  'error': 'Here is my error text'}</code></pre>
+            <p class="muted">HTML</p>
+          <pre><code class="language-python">
 &#123;% gizmo text_input text_input %&#125;
 &#123;% gizmo text_input text_error_input %&#125;
-</code></pre>
+    </code></pre>
+          </div>
         </div>
-      </div>
 
         <h4>Text Input Options</h4>
         <table class="table table-striped table-bordered">
@@ -758,7 +759,7 @@ text_error_input = {'display_text': 'Text Error',
       {# Toggle Switch -----------------------------------------------------------------------------------------------#}
       <a id="toggle_switch_docs" class="anchor"></a>
       <div class="docs-section">
-        <h3>Toggle Switch</h3>
+        <h2>Toggle Switch</h2>
         <p>
           Toggle switches can be used as an alternative to check boxes for boolean or binomial input. Toggle
           switches are implemented using the excellent <a href="http://www.bootstrap-switch.org/">Bootstrap Switch</a> project.
@@ -877,8 +878,8 @@ toggle_switch_disabled = {'display_text': 'Disabled Toggle',
       <a id="table_view_docs" class="anchor"></a>
       <div class="docs-section">
         <h2>Table View</h2>
-        <p>Table views can be used to display tabular data. The table gizmo can be configured to have
-          columns that are editable. When used in this capacity, embed the table view in a form.</p>
+        <p>Table views can be used to display tabular data. The table view gizmo can be configured to have
+          columns that are editable. When used in this capacity, embed the table view in a form with a submit button.</p>
         <div class="example">
         <div class="demo">
         {% gizmo table_view table_view %}
@@ -1224,24 +1225,26 @@ timeseries_plot = {'highcharts_object': timeseries_plot_object,
       <a id="message_box_docs" class="anchor"></a>
       <div class="docs-section">
         <h2>Message Box</h2>
+        <p>Message box gizmos can be used to display messages to users. These are especially useful for alerts and
+        warning messages. The message box gizmo is implemented using Twitter Bootstrap's modal.</p>
 
         <div class="example">
-            <div class="demo">
-              <a href="#{{ message_box.name }}" role="button" class="btn btn-success" data-toggle="modal">Show Message Box</a>
+          <div class="demo">
+            <a href="#{{ message_box.name }}" role="button" class="btn btn-success" data-toggle="modal">Show Message Box</a>
             {% gizmo message_box message_box %}
-            </div>
-            <div class="code">
-              <p class="muted">Controller</p>
-              <pre><code class="language-python">
+          </div>
+          <div class="code">
+            <p class="muted">Controller</p>
+            <pre><code class="language-python">
 message_box = {'name': 'sampleModal',
-                 'title': 'Message Box Title',
-                 'message': 'Congratulations! This is a message box',
-                 'dismiss_button': 'Nevermind',
-                 'affirmative_button': 'Proceed',
-                 'width': 500,
-                 'affirmative_attributes': 'href=javascript:void(0);'}</code></pre>
-              <p class="muted">HTML</p>
-              <pre><code class="language-python">
+               'title': 'Message Box Title',
+               'message': 'Congratulations! This is a message box',
+               'dismiss_button': 'Nevermind',
+               'affirmative_button': 'Proceed',
+               'width': 500,
+               'affirmative_attributes': 'href=javascript:void(0);'}</code></pre>
+            <p class="muted">HTML</p>
+            <pre><code class="language-python">
 &lt;!-- Trigger Button --&gt;
 &lt;a href="#{{ message_box.name }}" class="btn btn-success" data-toggle="modal"&gt;
   Show Message Box
@@ -1249,7 +1252,7 @@ message_box = {'name': 'sampleModal',
 
 &lt;!-- Message Box --&gt;
 &#123;% gizmo message_box message_box %&#125;</code></pre>
-            </div>
+          </div>
         </div>
     
         <h4>Message Box Options</h4>
@@ -1309,11 +1312,14 @@ message_box = {'name': 'sampleModal',
       <a id="google_map_docs" class="anchor"></a>
       <div class="docs-section">
         <h2>Google Map</h2>
-        <p>This snippet can be used to generate map views of spatial data. By default the data will be shown using
-          Google Earth (3D globe). However, Google Earth requires a browser plugin that is not supported in all
-          operating systems or browsers. For systems that don't support the Google Earth plugin, a Google Maps map (2D map) will be generated
-          instead. Note that the link to the data must be publicly accessible to be shown on a Google Map</p>
+        <p>This gizmo can be used to generate map views of spatial data. By default the data will be shown using
+          Google Earth (3D globe). However, Google Earth requires a browser plugin that is not supported on all
+          operating systems or browsers. For systems that don't support the Google Earth plugin, a Google Maps map
+          (2D map) will be generated instead. Note that the link to the data must be publicly accessible to be shown on
+          a Google Map</p>
         <p><strong>NOTE: Do not create more than one map on a page at any given time.</strong></p>
+        <p><strong>ALSO NOTE: Only Google Earth is able to show KML animations. If the map reverts to Google Maps,
+          animations will not be shown properly.</strong></p>
         <div class="example">
             <div class="demo">
               <p> Demo cannot be shown on this page because of the demo for the editable google map.
@@ -1388,7 +1394,7 @@ def get_kml(self):
       <a id="map_view_docs" class="anchor"></a>
       <div class="docs-section">
         <h2>Map View</h2>
-        <p>This snippet can be used to generate map views of spatial data. By default the data will be shown using
+        <p>This gizmo can be used to generate map views of spatial data. By default the data will be shown using
           Google Earth (3D globe). However, Google Earth requires a browser plugin that is not supported in all
           operating systems or browsers. For systems that don't support the Google Earth plugin, a Google Maps map (2D map) will be generated
           instead. Note that the link to the data must be publicly accessible to be shown on a Google Map</p>
@@ -1468,7 +1474,7 @@ def get_kml(self):
       <div class="docs-section">
         <h2>Editable Google Map</h2>
         <p>
-          The editable map snippet uses Google Maps 3 with the drawing library enabled to allow geospatial user input.
+          The editable map gizmo uses Google Maps 3 with the drawing library enabled to allow geospatial user input.
           An optional background dataset can be specified for reference. Only the shapes drawn by the user are returned (see
           <a href="#retrieving_shapes">Retrieving Shapes</a> section).
         </p>

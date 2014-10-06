@@ -546,7 +546,7 @@ var TETHYS_EDIT_MAP = (function() {
         mapOptions = {
             center: new google.maps.LatLng(39.0, -96.0),
             zoom: 4,
-            mapTypeId: google.maps.MapTypeId.HYBRID,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
                 scaleControl: true,
                 rotateControl: true,
         };
