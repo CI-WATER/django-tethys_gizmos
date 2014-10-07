@@ -97,15 +97,16 @@
 </code></pre>
 
         <p>
-          Load the <b>tethys_gizmos</b> library <u>at the top</u> of your template. This only needs to be done once for
-          each template that uses gizmos.
+          Next, open the template you intend to add the gizmo to and load the <b>tethys_gizmos</b> library. Be sure to
+          do this somewhere near<u>the top</u> of your template&mdash;before any gizmo occurances. This only needs to be
+          done once for each template that uses gizmos.
         </p>
 
         <pre class="overview-example-code"><code class="language-python">{% templatetag openblock %} load tethys_gizmos {% templatetag closeblock %}</code></pre>
 
         <p>
-          Use the <b>gizmo</b> tag to insert the date picker anywhere in your template. Pass the name of the gizmo
-          and the options dictionary as arguments:
+          Now, use the <b>gizmo</b> tag to insert the date picker anywhere in your template. Pass the name of the gizmo
+          and the options dictionary that you passed to the template from your view as arguments:
         </p>
 
         <pre class="overview-example-code"><code class="language-python">{% templatetag openblock %} gizmo date_picker date_picker_options {% templatetag closeblock %}</code></pre>
@@ -116,6 +117,14 @@
         </p>
 
         <pre class="overview-example-code"><code class="language-python">{% templatetag openblock %} gizmo_dependencies {% templatetag closeblock %}</code></pre>
+
+        <div class="alert alert-info" role="alert">
+          <span class="alert-header">Note</span>
+          <p>
+            When using Tethys Gizmos in Tethys App development, it is not necessary to include the <b>gizmo_dependencies</b> tag in the template. The dependencies are already
+            included in the <b>app_base</b> template.
+          </p>
+        </div>
 
         <p>
           All together your template may look something like this:
