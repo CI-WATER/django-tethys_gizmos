@@ -23,7 +23,6 @@ Quick start
                                    'django.core.context_processors.media',
                                    'django.core.context_processors.static',
                                    'django.core.context_processors.tz',
-                                   'django.contrib.messages.context_processors.messages',
                                    'tethys_gizmos.context_processors.tethys_gizmos_context')
 
 3. Include the Tethys gizmos URLconf to your project urls.py with the "gizmos" namespace::
@@ -41,19 +40,24 @@ working you will need to create a template called "page.html" in your base "temp
 called "styles", "bodytag", "primary_content", and "scripts". Also include the Bootstrap and Jquery dependencies. Your
 "page.html" should look something like this::
 
-    <html>
-        <head>
-            {% block styles %}
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-            {% endblock %}
-        </head>
-        <body {% block body_tag %}{% endblock %}>
-            {% block primary_content %}
-            {% endblock %}
 
-            {% block scripts %}
-                <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-            {% endblock %}
-        </body>
-    </html>
+  <!DOCTYPE html>
+  <html>
+      <head>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+          <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+          {% block styles %}
+          {% endblock %}
+      </head>
+      <body {% block body_tag %}{% endblock %}>
+          {% block primary_content %}
+          {% endblock %}
+
+          {% block scripts %}
+          {% endblock %}
+      </body>
+  </html>
+
+..note::
+  The gizmos work best if your Jquery and Bootstrap scripts are included in the head of your document as is depicted above.
