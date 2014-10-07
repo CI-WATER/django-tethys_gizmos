@@ -59,5 +59,4 @@ called "styles", "bodytag", "primary_content", and "scripts". Also include the B
       </body>
   </html>
 
-..note::
-  The gizmos work best if your Jquery and Bootstrap scripts are included in the head of your document as is depicted above.
+..note:: The gizmos work best if your Jquery and Bootstrap scripts are included in the head of your document as is depicted above.
