@@ -50,7 +50,7 @@ called "styles", "bodytag", "primary_content", and "scripts". Also include the B
             {% block styles %}
             {% endblock %}
         </head>
-        <body {% block body_tag %}{% endblock %}>
+        <body {% block bodytag %}{% endblock %}>
             {% block primary_content %}
             {% endblock %}
 
@@ -60,6 +60,4 @@ called "styles", "bodytag", "primary_content", and "scripts". Also include the B
     </html>
 
 
-..note::
-
-    The gizmos work best if your Jquery and Bootstrap scripts are included in the head of your document as is depicted above.
+..note:: The gizmos work best if your Jquery and Bootstrap JavaScript scripts are included in the head of your document as is depicted above.
