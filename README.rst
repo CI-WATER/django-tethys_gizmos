@@ -41,22 +41,25 @@ called "styles", "bodytag", "primary_content", and "scripts". Also include the B
 "page.html" should look something like this::
 
 
-  <!DOCTYPE html>
-  <html>
-      <head>
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-          <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-          {% block styles %}
-          {% endblock %}
-      </head>
-      <body {% block body_tag %}{% endblock %}>
-          {% block primary_content %}
-          {% endblock %}
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+            <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+            {% block styles %}
+            {% endblock %}
+        </head>
+        <body {% block body_tag %}{% endblock %}>
+            {% block primary_content %}
+            {% endblock %}
 
-          {% block scripts %}
-          {% endblock %}
-      </body>
-  </html>
+            {% block scripts %}
+            {% endblock %}
+        </body>
+    </html>
 
-..note:: The gizmos work best if your Jquery and Bootstrap scripts are included in the head of your document as is depicted above.
+
+..note::
+
+    The gizmos work best if your Jquery and Bootstrap scripts are included in the head of your document as is depicted above.
