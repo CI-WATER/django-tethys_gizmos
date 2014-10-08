@@ -142,6 +142,10 @@ var TETHYS_GIZMOS = (function() {
 		$('.bootstrap-switch').each(function() {
 			$(this).bootstrapSwitch();
 		});
+		// Initialize any select2 elements
+		$('.select2').each(function() {
+			$(this).select2();
+		});
 		
 		// Initialize any plots
 		$('.highcharts-plot').each(function() {

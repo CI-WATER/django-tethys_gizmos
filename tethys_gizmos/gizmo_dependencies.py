@@ -13,6 +13,13 @@ def date_picker(context):
     return ('tethys_gizmos/vendor/bootstrap_datepicker/css/datepicker3.css',
             'tethys_gizmos/vendor/bootstrap_datepicker/js/bootstrap_datepicker.js')
 
+def select2_input(context):
+    """
+    Dependencies for select2_input gizmo.
+    """
+    return ('tethys_gizmos/vendor/select2_3.5.1/select2.css',
+            'tethys_gizmos/vendor/select2_3.5.1/select2.js')
+
 
 def highcharts_plot_view(context):
     """
