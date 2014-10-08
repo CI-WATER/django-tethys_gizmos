@@ -1209,100 +1209,105 @@ var TETHYS_EDIT_MAP = (function() {
             };
         }
 
-        /* Initialize the globals */
-        // info_window               
-        info_window = new google.maps.InfoWindow();
-        
-        // Bind stuff to the domready event
-        google.maps.event.addListener(info_window, 'domready', function() {
-            // Set the first input to be focused when info window is shown
-            $('#infoWindowForm input:first').focus();    
-        });
-        
-        // Reference layers global
-        reference_layers = [];
-        
-        // Overlay globals
-        overlays = [];
-        next_overlay_id = 1;
-        default_value = 1;
-        
-        // Parse the initial color ramp string
-        if (initial_color_ramp_string !== '') {
-            initial_color_ramp = JSON.parse(initial_color_ramp_string);
+        if (typeof google.maps !== 'undefined') {
+
+            /* Initialize the globals */
+            // info_window
+            info_window = new google.maps.InfoWindow();
+
+            // Bind stuff to the domready event
+            google.maps.event.addListener(info_window, 'domready', function() {
+                // Set the first input to be focused when info window is shown
+                $('#infoWindowForm input:first').focus();
+            });
+
+            // Reference layers global
+            reference_layers = [];
+
+            // Overlay globals
+            overlays = [];
+            next_overlay_id = 1;
+            default_value = 1;
+
+            // Parse the initial color ramp string
+            if (initial_color_ramp_string !== '') {
+                initial_color_ramp = JSON.parse(initial_color_ramp_string);
+            } else {
+                initial_color_ramp = null;
+            }
+
+            // Parse initial overlays string
+            if (initial_overlays_string !== '') {
+                initial_overlays = JSON.parse(initial_overlays_string);
+            } else {
+                initial_overlays = {}; // Empty object
+            }
+
+            // Initialize legend color ramp
+            legend_color_ramp = [
+                         '#ff0000', // red
+                         '#ff7f00', // orange
+                         '#ffff00', // yellow
+                         '#00c800', // green
+                         '#00c8ff', // sky blue
+                         '#0000ff', // blue
+                         '#7f00ff', // purple
+                         '#f768a1', // pink
+                         '#ff00ff', // magenta
+                         '#999999', // gray
+                         '#a65628', // brown
+                         '#800000', // dark red
+                         '#c86400', // dark orange
+                         '#c8c800', // dark yellow
+                         '#647D00', // olive green
+                         '#003280', // navy blue
+                         '#400080', // dark purple
+                         '#800080', // dark magenta
+                         '#8dd3c7', // pastel turquoise
+                         '#ffffb3', // pastel yellow
+                         '#bebada', // pastel purple
+                         '#fb8072', // pastel red
+                         '#80b1d3', // pastel blue
+                         '#fdb462', // pastel orange
+                         '#b3de69', // pastel green
+                         '#fccde5', // pastel pink
+                         '#d9d9d9', // pastel gray
+                         '#e5d8bd', // pastel brown
+                         '#016c59', // others
+                         '#9ecae1',
+                         '#e31a1c',
+                         '#efedf5',
+                         '#d9d9d9',
+                         '#737373',
+                         '#525252',
+                        ];
+
+            ramp_index = 0;
+            popover_open = false;
+
+            var color_picker_div = '<div id="color_picker" style="width: 195px; height: 195px;"></div>';
+            var popover = $('body').popover({ placement: 'left',
+                              html: true,
+                              content: color_picker_div,
+                              selector: '.popoverTrigger',
+                              container: 'body'});
+
+            // Bind init and scrap methods to the popovers
+            $(popover).on('shown', initColorPicker);
+            $(popover).on('show', showColorPickerPopover);
+            $(popover).on('hidden', scrapColorPicker);
+
+            // Setup click off event = close for popovers
+            $('body').on('click', clickOffPopover);
+
+            // Note that the kml_action parameter is passed through a variable
+            // declaration that is part of the snippet.
+            retrieveKmlData(kml_action);
         } else {
-            initial_color_ramp = null;
+          $('#editable_google_map_loading .centered').html('<h5>Google Maps Not Available</h5>');
         }
         
-        // Parse initial overlays string
-        if (initial_overlays_string !== '') {
-            initial_overlays = JSON.parse(initial_overlays_string);
-        } else {
-            initial_overlays = {}; // Empty object
-        }
-            
-        // Initialize legend color ramp
-        legend_color_ramp = [
-                     '#ff0000', // red
-                     '#ff7f00', // orange
-                     '#ffff00', // yellow
-                     '#00c800', // green
-                     '#00c8ff', // sky blue
-                     '#0000ff', // blue
-                     '#7f00ff', // purple
-                     '#f768a1', // pink
-                     '#ff00ff', // magenta
-                     '#999999', // gray
-                     '#a65628', // brown
-                     '#800000', // dark red
-                     '#c86400', // dark orange
-                     '#c8c800', // dark yellow
-                     '#647D00', // olive green
-                     '#003280', // navy blue
-                     '#400080', // dark purple
-                     '#800080', // dark magenta
-                     '#8dd3c7', // pastel turquoise
-                     '#ffffb3', // pastel yellow
-                     '#bebada', // pastel purple
-                     '#fb8072', // pastel red
-                     '#80b1d3', // pastel blue
-                     '#fdb462', // pastel orange
-                     '#b3de69', // pastel green
-                     '#fccde5', // pastel pink
-                     '#d9d9d9', // pastel gray
-                     '#e5d8bd', // pastel brown
-                     '#016c59', // others
-                     '#9ecae1',
-                     '#e31a1c',
-                     '#efedf5',
-                     '#d9d9d9',
-                     '#737373',
-                     '#525252',
-                    ];
-                    
-        ramp_index = 0;
-        popover_open = false;
-        
-        var color_picker_div = '<div id="color_picker" style="width: 195px; height: 195px;"></div>';
-        var popover = $('body').popover({ placement: 'left',
-                          html: true,
-                          content: color_picker_div,
-                          selector: '.popoverTrigger',
-                          container: 'body'});
-        
-        // Bind init and scrap methods to the popovers                   
-        $(popover).on('shown', initColorPicker);
-        $(popover).on('show', showColorPickerPopover);
-        $(popover).on('hidden', scrapColorPicker);
-        
-        // Setup click off event = close for popovers
-        $('body').on('click', clickOffPopover);
-        
-        // Note that the kml_action parameter is passed through a variable
-        // declaration that is part of the snippet.
-        retrieveKmlData(kml_action);
-        
-        });
+    });
     
     return public_interface;
 

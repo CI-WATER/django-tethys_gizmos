@@ -324,7 +324,6 @@ def index(request):
     editable_google_map = {'height': '600px',
                            'width': '100%',
                            'reference_kml_action': reverse('gizmos:get_kml'),
-                           'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws',
                            'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
                            'initial_drawing_mode': 'POINTS',
                            'output_format': 'WKT'}
@@ -454,7 +453,6 @@ def editable_map(request):
     editable_google_map = {'height': '600px',
                            'width': '100%',
                            'reference_kml_action': reverse('gizmos:get_kml'),
-                           'maps_api_key': 'AIzaSyB-0nvmHhbOaaiYx6UN36145lWjUq5c2tg',
                            'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
                            'initial_drawing_mode': 'POINTS',
                            'input_overlays': {"type": "GeometryCollection",
@@ -504,8 +502,7 @@ def google_map(request):
     # Google Map
     google_map = {'height': '600px',
                   'width': '100%',
-                  'kml_service': reverse('gizmos:get_kml'),
-                  'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws'}
+                  'kml_service': reverse('gizmos:get_kml')}
 
     context = {'google_map': google_map}
 
@@ -528,10 +525,7 @@ def map_view(request):
                 ],
 
                 # url to retrieve an object containing an array of layer links
-                'kml_service': reverse('gizmos:get_kml'),
-
-                # Google Maps api key if Google Maps is used
-                'maps_api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws'
+                'kml_service': reverse('gizmos:get_kml')
     }
 
     context = {'map_view': map_view}
@@ -553,7 +547,6 @@ def fetchclimate_map(request):
             'css': {'height': '600px',
                     'width': '100%'},
             'map_data': {
-                'api_key': 'AIzaSyAswFfpH07XyrhFEjClWzXHwwhGzEhiYws',
                 'drawing_types_enabled': ['RECTANGLE', 'POINTS'],
                 'initial_drawing_mode': 'RECTANGLE',
                 'max_num_grids': 2

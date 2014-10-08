@@ -79,7 +79,11 @@ data-ajax-url="{% url 'gizmos:single_request' %}"
 <!-- FetchClimate Script -->
 {% if map %}
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  {% if map.map_data.api_key != '' %}
+  {% if map.map_data.api_key  %}
+    <!-- Developer API Key -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing&key={{ map.map_data.api_key }}&sensor=false"></script>
+  {% elif gizmos_google_maps_key %}
+    <!-- Global API key -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing&key={{ gizmos_google_maps_key }}&sensor=false"></script>
   {% endif %}
 {% endif %}

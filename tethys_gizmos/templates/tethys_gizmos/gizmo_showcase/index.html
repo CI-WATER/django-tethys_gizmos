@@ -1410,9 +1410,29 @@ def get_kml(request):
             <td>string</td>
             <td>' '</td>
             <td colspan="2">For the Google Maps backup map to be enabled, an API key for Google Maps
-                          must be provided.</td>
+                          must be provided. If the API key is provided in the settings.py via the
+                          TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY option, this parameter is not required.</td>
           </tr>
         </table>
+        <h4>Settings</h4>
+        <p>
+          The Map View gizmo uses the Google Maps v3 API as an alternative when the Google Earth Plugin is not supported.
+          The Google Maps API requires an API key to use. This can be set either through the 'maps_api_key' parameter of
+          the gizmos option or it can be set globally in the <b>settings.py</b> file. To set the API key globally, add
+          this parameter to your <b>settings.py</b>:
+        </p>
+        <pre><code class="language-python">TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY = 'S0m3@piK3Y'</code></pre>
+        <p>
+          If you do not provide the API key globally, developers will need to provide their own API keys via the
+          'maps_api_key' option for the gizmo.
+        </p>
+        <div class="alert alert-info" role="alert">
+          <span class="alert-header">Note</span>
+          <p>
+            If your map does not load and the message 'Google Maps Not Available' is shown, it could indicate that the
+            API key is not configured properly.
+          </p>
+        </div>
       </div>
 
       {# Map View ----------------------------------------------------------------------------------------------------#}
@@ -1493,9 +1513,30 @@ def get_kml(request):
             <td>string</td>
             <td>' '</td>
             <td colspan="2">For the Google Maps backup map to be enabled, an API key for Google Maps
-                          must be provided.</td>
+                          must be provided. If the API key is provided in the settings.py via the
+                          TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY option, this parameter is not required.</td>
           </tr>
         </table>
+
+        <h4>Settings</h4>
+        <p>
+          The Map View gizmo uses the Google Maps v3 API as an alternative when the Google Earth Plugin is not supported.
+          The Google Maps API requires an API key to use. This can be set either through the 'maps_api_key' parameter of
+          the gizmos option or it can be set globally in the <b>settings.py</b> file. To set the API key globally, add
+          this parameter to your <b>settings.py</b>:
+        </p>
+        <pre><code class="language-python">TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY = 'S0m3@piK3Y'</code></pre>
+        <p>
+          If you do not provide the API key globally, developers will need to provide their own API keys via the
+          'maps_api_key' option for the gizmo.
+        </p>
+        <div class="alert alert-info" role="alert">
+          <span class="alert-header">Note</span>
+          <p>
+            If your map does not load and the message 'Google Maps Not Available' is shown, it could indicate that the
+            API key is not configured properly.
+          </p>
+        </div>
       </div>
 
       {# Editable Google Map -----------------------------------------------------------------------------------------#}
@@ -1583,7 +1624,8 @@ def get_kml(request):
             <td colspan="2">maps_api_key</td>
             <td>string</td>
             <td>required</td>
-            <td colspan="2">The Google Maps API key.</td>
+            <td colspan="2">The Google Maps API key. If the API key is provided in the settings.py via the
+                          TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY option, this parameter is not required.</td>
           </tr>
           <tr>
             <td colspan="2">reference_kml_action</td>
@@ -1675,7 +1717,26 @@ editable_google_map = {'height': '700px',
                          'input_overlays': wkt_json}</code></pre>
           </div>
         </div>
-      
+
+        <h4>Settings</h4>
+        <p>
+          The Google Editable Map uses the Google Maps v3 API, which requires an API key to use. This can be set either
+          through the 'maps_api_key' parameter of the gizmos option or it can be set globally in the <b>settings.py</b>
+          file. To set the API key globally, add this parameter to your <b>settings.py</b>:
+        </p>
+        <pre><code class="language-python">TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY = 'S0m3@piK3Y'</code></pre>
+        <p>
+          If you do not provide the API key globally, developers will need to provide their own API keys via the
+          'maps_api_key' option for the gizmo.
+        </p>
+        <div class="alert alert-info" role="alert">
+          <span class="alert-header">Note</span>
+          <p>
+            If your map does not load and the message 'Google Maps Not Available' is shown, it could indicate that the
+            API key is not configured properly.
+          </p>
+        </div>
+
         <h4 id="retrieving_shapes">Retrieving Shapes</h4>
         <p>
           The shapes can be retrieved from the map in two ways. A hidden text field named 'geometry' is updated

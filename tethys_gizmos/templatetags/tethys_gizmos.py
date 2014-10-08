@@ -13,9 +13,9 @@ register = template.Library()
 
 CSS_OUTPUT_TYPE = 'css'
 JS_OUTPUT_TYPE = 'js'
-CSS_EXTENSION = '.css'
-JS_EXTENSION = '.js'
-EXTERNAL_INDICATOR = '//'
+CSS_EXTENSION = 'css'
+JS_EXTENSION = 'js'
+EXTERNAL_INDICATOR = '://'
 VALID_OUTPUT_TYPES = (CSS_OUTPUT_TYPE, JS_OUTPUT_TYPE)
 
 @register.filter(is_safe=True)
@@ -95,8 +95,11 @@ class TethysGizmoIncludeNode(template.Node):
 
             # Retrieve the gizmo template and render
             t = get_template(template_name)
-            context = context.new(self.options.resolve(context))
-            return t.render(context)
+            c = context.new(self.options.resolve(context))
+
+            # Add the global context parameters
+            c.update({'gizmos_google_maps_key': context['gizmos_google_maps_key']})
+            return t.render(c)
 
         except:
             if settings.TEMPLATE_DEBUG:

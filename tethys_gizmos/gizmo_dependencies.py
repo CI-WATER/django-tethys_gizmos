@@ -1,3 +1,6 @@
+from django.conf import settings
+
+
 def global_dependencies(context):
     """
     Dependencies that are loaded for all tethys gizmos (after gizmo dependencies).
@@ -43,7 +46,6 @@ def editable_google_map(context):
     """
     Dependencies for editable_google_map gizmo.
     """
-
     return ('tethys_gizmos/vendor/farbtastic/farbtastic.css',
             'tethys_gizmos/vendor/farbtastic/farbtastic.js',
             'tethys_gizmos/js/tethys_editable_map.js')
