@@ -45,7 +45,6 @@ enabled gizmo. To set the API key, add the following line to your settings with 
 
     TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY = 'S0m3@pik3y'
 
-
 4. Include the Tethys Gizmos URLconf to your project urls.py with the "gizmos" namespace::
 
     url(r'^gizmos/', include('tethys_gizmos.urls', namespace='gizmos')),
@@ -81,7 +80,7 @@ called "styles", "bodytag", "primary_content", and "scripts". Also include the B
     </html>
 
 
-..note:: The gizmos work best if your Jquery and Bootstrap JavaScript scripts are included in the head of your document as is depicted above.
+.. note:: The gizmos work best if your Jquery and Bootstrap JavaScript scripts are included in the head of your document as is depicted above.
 
 
 Quick Start
@@ -118,15 +117,14 @@ and the options dictionary that you passed to the template from your view as arg
 
     {% gizmo date_picker date_picker_options %}
 
-Finally, *at the end* of your template&mdash;after all of the **gizmo** tags&mdash;insert the **gizmo_dependencies**
+Finally, *at the end* of your template--after all of the **gizmo** tags--insert the **gizmo_dependencies**
 tag. This only needs to be done once for each template that uses gizmos.
 
 ::
     
     {% gizmo_dependencies %}
 
-.. note::  When using Tethys Gizmos in Tethys App development, it is not necessary to include the **gizmo_dependencies**
-tag in the template. The dependencies are already included in the **app_base** template.
+.. note:: When using Tethys Gizmos in Tethys App development, it is not necessary to include the **gizmo_dependencies** tag in the template. The dependencies are already included in the **app_base** template.
 
 All together your template may look something like this::
 
