@@ -13,7 +13,7 @@ def date_picker(context):
     return ('tethys_gizmos/vendor/bootstrap_datepicker/css/datepicker3.css',
             'tethys_gizmos/vendor/bootstrap_datepicker/js/bootstrap_datepicker.js')
 
-def select2_input(context):
+def select_input(context):
     """
     Dependencies for select2_input gizmo.
     """

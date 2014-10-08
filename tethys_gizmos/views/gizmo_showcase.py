@@ -74,20 +74,25 @@ def index(request):
                'error': 'Incorrect, please choose another value.'}
 
     # Select Input
-    select_input = {'display_text': 'Select',
+    select_input2 = {'display_text': 'Select2',
                     'name': 'select1',
-                    'multiple': False,
+                    'multiple': {'on': False },
                     'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
                     'initial': ['Two']}
 
-    select_input_multiple = {'display_text': 'Select Multiple',
+    select_input2_multiple = {'display_text': 'Select2 Multiple',
                              'name': 'select2',
-                             'multiple': True,
+                             'multiple': {'on': True },
                              'options': [('One', '1'), ('Two', '2'), ('Three', '3')]}
 
-    select_input_error = {'display_text': 'Select Disabled',
+    select_input_multiple = {'display_text': 'Select Multiple',
+                             'name': 'select2.1',
+                             'multiple': {'on': True ,'original':True},
+                             'options': [('One', '1'), ('Two', '2'), ('Three', '3')]}
+
+    select_input2_error = {'display_text': 'Select2 Disabled',
                           'name': 'select3',
-                          'multiple': False,
+                          'multiple': {'on': False },
                           'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
                           'disabled': True,
                           'error': 'Here is my error text'}
