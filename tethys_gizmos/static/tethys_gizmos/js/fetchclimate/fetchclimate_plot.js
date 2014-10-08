@@ -91,6 +91,7 @@ if(jQuery('#fetchclimate_plot').length > 0) {
     getPlotData = function() {
       var serverURL = jQuery('#fc_outer_container').attr('data-server-url');
       var   m_all_ajax_requests = [];
+      var ajax_url = jQuery('#fc_outer_container').attr('data-ajax-url');
       //loop through all of the charts added
       var charts = jQuery("#fetchclimate_plot .highcharts-plot").each(function() {
         var chart_HTML = jQuery(this);
@@ -103,7 +104,7 @@ if(jQuery('#fetchclimate_plot').length > 0) {
         var requests = m_date_queries.map(function(dateQuery, series_index) {
           return jQuery.ajax({
               type: "GET",
-              url: "/developer/gizmos/ajax/fetchclimate/single-request/",
+              url: ajax_url,
               dataType: "json",
               data: { 
                       serviceUrl: (serverURL.length>0?serverURL:''),

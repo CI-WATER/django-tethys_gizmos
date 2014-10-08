@@ -2,6 +2,7 @@
 
 <!-- FC outerContainer -->
 <div id="fc_outer_container" class="parent-container" data-date=""
+data-ajax-url="{% url 'gizmos:single_request' %}"
 {% if map %}
  data-map="{{ map|jsonify }}"
 {% endif %}

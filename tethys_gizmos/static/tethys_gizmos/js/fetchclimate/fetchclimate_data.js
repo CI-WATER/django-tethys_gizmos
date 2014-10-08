@@ -54,11 +54,12 @@ if(jQuery('#fetchclimate_plot').length <= 0) {
     //gets data for each request
     getSingleRequestData = function(grid, variable, series_index) {
       var series_indexes_received = [];
+      var ajax_url = jQuery('#fc_outer_container').attr('data-ajax-url');
       //Perform ajax request for each of the date queries
       var requests = m_date_queries.map(function(date_query, series_index) {
         return jQuery.ajax({
             type: "GET",
-            url: "/developer/gizmos/ajax/fetchclimate/single-request/",
+            url: ajax_url,
             dataType: "json",
             data: {
                     serviceUrl: m_service_url,
