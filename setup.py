@@ -12,7 +12,7 @@ requires = ['django',
 
 setup(
     name='django-tethys_gizmos',
-    version='0.1',
+    version='0.1.0',
     packages=['tethys_gizmos'],
     include_package_data=True,
     license='BSD 2-Clause License',

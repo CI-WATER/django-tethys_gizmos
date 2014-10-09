@@ -47,7 +47,7 @@ enabled gizmo. To set the API key, add the following line to your settings with 
 
 4. Include the Tethys Gizmos URLconf to your project urls.py with the "gizmos" namespace::
 
-    url(r'^gizmos/', include('tethys_gizmos.urls', namespace='gizmos')),
+    url(r'^gizmos/', include('tethys_gizmos.urls', namespace='gizmos'))
 
 5. Tethys Gizmos makes extensive use of Twitter Bootstrap and Jquery. These libraries must be included in all templates
 that use gizmos. Because of the prevalent use of these two libraries, we leave it to the developer to decide how to
