@@ -14,7 +14,7 @@ Tethys Gizmos can be installed via pip or by downloading the source. To install 
 
 To install via download::
 
-    git clone https://github.com/swainn/django-tethys_gizmos.git
+    git clone https://github.com/CI-WATER/django-tethys_gizmos.git
     cd django-tethys_gizmos
     python setup.py install
 
