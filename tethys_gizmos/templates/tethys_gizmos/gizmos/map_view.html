@@ -13,18 +13,24 @@
   }
 
   {% if controls and 'ZoomSlider' in controls %}
-    .ol-zoom-extent {
-      top: 269px;
-    }
+  .ol-zoom-extent {
+    top: 269px;
+  }
+  {% endif %}
+
+  {% if controls and 'FullScreen' in controls %}
+  .ol-rotate {
+    top: 40px;
+  }
   {% endif %}
 </style>
 
-<div id="map_view_outer_container">
-	<div id="map_view" style="height: {% if height %}{{ height }}{% else %}520px{% endif %}; width: {% if width %}{{ width }}{% else %}100%{% endif %};"
+<div id="map_view_outer_container" style="height: {% if height %}{{ height }}{% else %}520px{% endif %}; width: {% if width %}{{ width }}{% else %}100%{% endif %};">
+	<div id="map_view"
        {% if controls %}data-controls="{{ controls|jsonify }}"{% endif %}
        {% if interactions %}data-interactions="{{ interactions|jsonify }}"{% endif %}
        {% if layers %}data-layers="{{ layers|jsonify }}"{% endif %}
-       {% if logo %}data-logo="{{ logo|jsonify }}"{% endif %}
+       {% if draw %}data-draw="{{ draw|jsonify }}"{% endif %}
        {% if view %}data-view="{{ view|jsonify }}"{% endif %}
        {% if base_map %}data-base-map="{{ base_map|jsonify }}"{% endif %}></div>
 	<textarea id="map_view_geometry" name="geometry" rows="4" cols="300" hidden></textarea>

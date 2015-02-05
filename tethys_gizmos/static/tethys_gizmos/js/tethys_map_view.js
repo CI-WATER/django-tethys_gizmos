@@ -18,13 +18,14 @@ var TETHYS_MAP_VIEW = (function() {
  	*                      MODULE LEVEL / GLOBAL VARIABLES
  	*************************************************************************/
  	var public_interface,				// Object returned by the module
+      m_default_projection,   // Spherical Mercator projection
       m_map_target,           // Selector for the map container
       m_map;					        // The map
 
 	/************************************************************************
  	*                    PRIVATE FUNCTION DECLARATIONS
  	*************************************************************************/
- 	var open_layers_base_map_init, open_layers_controls_init, open_layers_map_init;
+ 	var ol_base_map_init, ol_controls_init, ol_layers_init, ol_map_init, ol_view_init;
 
 
  	/************************************************************************
@@ -32,7 +33,7 @@ var TETHYS_MAP_VIEW = (function() {
  	*************************************************************************/
 
   // Initialize the background map
-  open_layers_base_map_init = function()
+  ol_base_map_init = function()
   {
     // Constants
     var OPEN_STEET_MAP = 'OpenStreetMap',
@@ -95,27 +96,23 @@ var TETHYS_MAP_VIEW = (function() {
             source: new ol.source.MapQuest(base_map_obj[MAP_QUEST])
           });
         }
-
       }
-
-
-
-      console.log(base_map_json);
     }
 
+    // Add the base map to layers
     m_map.addLayer(base_map_layer);
   };
 
   // Initialize the controls
-  open_layers_controls_init = function()
+  ol_controls_init = function()
   {
     // Constants
-    var ZOOM_SLIDER = 'zoomslider',
-        ROTATE = 'rotate',
-        ZOOM_EXTENT = 'zoomtoextent',
-        FULL_SCREEN = 'fullscreen',
-        MOUSE_POSITION = 'mouseposition',
-        SCALE_LINE = 'scaleline';
+    var ZOOM_SLIDER = 'ZoomSlider',
+        ROTATE = 'Rotate',
+        ZOOM_EXTENT = 'ZoomToExtent',
+        FULL_SCREEN = 'FullScreen',
+        MOUSE_POSITION = 'MousePosition',
+        SCALE_LINE = 'ScaleLine';
 
     var controls_json,
         controls_list,
@@ -131,28 +128,58 @@ var TETHYS_MAP_VIEW = (function() {
       controls_list = JSON.parse(controls_json);
 
       for (var i = 0; i < controls_list.length; i++) {
-        if (controls_list[i].toLowerCase() === ZOOM_SLIDER) {
-          m_map.addControl(new ol.control.ZoomSlider());
-        }
+        var current_control;
 
-        if (controls_list[i].toLowerCase() === ROTATE) {
-          m_map.addControl(new ol.control.Rotate());
-        }
+        current_control = controls_list[i];
 
-        if (controls_list[i].toLowerCase() === ZOOM_EXTENT) {
-          m_map.addControl(new ol.control.ZoomToExtent());
-        }
+        // Handle string case
+        if (typeof current_control === 'string') {
+          if (current_control === ZOOM_SLIDER) {
+            m_map.addControl(new ol.control.ZoomSlider());
+          }
+          else if (current_control === ROTATE) {
+            m_map.addControl(new ol.control.Rotate());
+          }
+          else if (current_control === ZOOM_EXTENT) {
+            m_map.addControl(new ol.control.ZoomToExtent());
+          }
+          else if (current_control === FULL_SCREEN) {
+            m_map.addControl(new ol.control.FullScreen());
+          }
+          else if (current_control === MOUSE_POSITION) {
+            m_map.addControl(new ol.control.MousePosition());
+          }
+          else if (current_control === SCALE_LINE) {
+            m_map.addControl(new ol.control.ScaleLine());
+          }
 
-        if (controls_list[i].toLowerCase() === FULL_SCREEN) {
-          m_map.addControl(new ol.control.FullScreen());
-        }
+        // Handle object case
+        } else if (typeof current_control === 'object') {
+          if (ZOOM_SLIDER in current_control){
+            m_map.addControl(new ol.control.ZoomSlider(current_control[ZOOM_SLIDER]));
+          }
+          else if (ROTATE in current_control){
+            m_map.addControl(new ol.control.Rotate(current_control[ROTATE]));
+          }
+          else if (FULL_SCREEN in current_control){
+            m_map.addControl(new ol.control.FullScreen(current_control[FULL_SCREEN]));
+          }
+          else if (MOUSE_POSITION in current_control){
+            m_map.addControl(new ol.control.MousePosition(current_control[MOUSE_POSITION]));
+          }
+          else if (SCALE_LINE in current_control){
+            m_map.addControl(new ol.control.ScaleLine(current_control[SCALE_LINE]));
+          }
+          else if (ZOOM_EXTENT in current_control){
+            var control_obj = current_control[ZOOM_EXTENT];
 
-        if (controls_list[i].toLowerCase() === MOUSE_POSITION) {
-          m_map.addControl(new ol.control.MousePosition());
-        }
-
-        if (controls_list[i].toLowerCase() === SCALE_LINE) {
-          m_map.addControl(new ol.control.ScaleLine());
+            // Transform coordinates to default CRS
+            if ('projection' in control_obj && 'extent' in control_obj) {
+              control_obj['extent'] = ol.proj.transformExtent(control_obj['extent'], control_obj['projection'], 'EPSG:3857');
+              delete control_obj['projection'];
+            }
+            m_map.addControl(new ol.control.ZoomToExtent(control_obj));
+          }
         }
       }
     }
@@ -161,23 +188,126 @@ var TETHYS_MAP_VIEW = (function() {
 
   };
 
+  // Initialize the layers
+  ol_layers_init = function()
+  {
+    // Constants
+    var GEOJSON = 'GeoJSON',
+        IMAGE_WMS = 'ImageWMS',
+        KML = 'KML',
+        VECTOR = 'Vector',
+        TILED_WMS = 'TiledWMS';
+
+    var layers_json,
+        layers_list;
+
+    // Get layers for data attributes
+    layers_json = $('#' + m_map_target).attr('data-layers');
+
+    if (typeof layers_json !== typeof undefined && layers_json !== false) {
+      layers_list = JSON.parse(layers_json);
+
+      for (var i = 0; i < layers_list.length; i++) {
+        var current_layer,
+            layer;
+
+        current_layer = layers_list[i];
+
+        if (GEOJSON in current_layer) {
+          layer = new ol.layer.Vector({
+            source: ol.source.GeoJSON(current_layer[GEOJSON])
+          });
+
+        }
+        else if (IMAGE_WMS in current_layer) {
+          layer = new ol.layer.Image({
+            source: new ol.source.ImageWMS(current_layer[IMAGE_WMS])
+          });
+
+        }
+        else if (KML in current_layer) {
+          layer = new ol.layer.Vector({
+            source: new ol.source.KML(current_layer[KML])
+          });
+
+        }
+        else if (VECTOR in current_layer) {
+
+        }
+        else if (TILED_WMS in current_layer) {
+          layer = new ol.layer.Tile({
+            source: new ol.source.TileWMS(current_layer[TILED_WMS])
+          });
+        }
+
+        if (typeof layer !== typeof undefined) {
+          m_map.addLayer(layer);
+        }
+      }
+    }
+
+    //layer = new ol.layer.Image({
+    //  source: new ol.source.ImageWMS({
+    //    url: 'http://192.168.59.103:8181/geoserver/wms',
+    //    params: {'LAYERS': 'topp:states'},
+    //    serverType: 'geoserver'
+    //  })
+    //});
+
+    //m_map.addLayer(layer);
+
+  };
+
   // Initialize the map
- 	open_layers_map_init = function()
+ 	ol_map_init = function()
   {
     // Init Map
     m_map = new ol.Map({
       target: m_map_target,
       view: new ol.View({
-        center: ol.proj.transform([37.41, 8.82], 'EPSG:4326', 'EPSG:3857'),
-        zoom: 4
+        center: [0, 0],
+        zoom: 2,
+        minZoom: 2,
+        maxZoom: 18
       })
     });
 
     // Init controls
-    open_layers_controls_init();
+    ol_controls_init();
 
-    // Init background map
-    open_layers_base_map_init();
+    // Init base map
+    ol_base_map_init();
+
+    // Init layers
+    ol_layers_init();
+
+    // Init View
+    ol_view_init();
+
+  };
+
+  // Initialize the map view
+  ol_view_init = function()
+  {
+    // Declarations
+    var view_json;
+
+    // Get view settings from data attribute
+    view_json = $('#' + m_map_target).attr('data-view');
+
+    if (typeof view_json !== typeof undefined && view_json !== false) {
+      var view_obj;
+
+      view_obj = JSON.parse(view_json);
+
+      if ('projection' in view_obj && 'center' in view_obj) {
+        // Transform coordinates to default CRS
+        view_obj['center'] = ol.proj.transform(view_obj['center'], view_obj['projection'], 'EPSG:3857');
+        delete view_obj['projection'];
+      }
+
+      m_map.setView(new ol.View(view_obj));
+    }
 
   };
 
@@ -192,13 +322,8 @@ var TETHYS_MAP_VIEW = (function() {
 	 * functions of the library because of JavaScript function scope.
 	 */
   public_interface = {
-    hello_goodbye: function() {
-      hello_world();
-      goodbye_world();
-    },
-    my_name_is: function(name) {
-      console.log("My Name Is: " + name);
-    }
+    map: m_map,
+    target: m_map_target
   };
 
 	/************************************************************************
@@ -212,7 +337,7 @@ var TETHYS_MAP_VIEW = (function() {
     m_map_target = 'map_view';
 
     // Initialize the map
-    open_layers_map_init();
+    ol_map_init();
 
 	});
 
