@@ -30,8 +30,14 @@ def highcharts_plot_view(context):
     """
     return ('tethys_gizmos/vendor/highcharts/js/highcharts.js',
             'tethys_gizmos/vendor/highcharts/js/highcharts-more.js',
-            'tethys_gizmos/vendor/highcharts/js/modules/exporting.js',
-    )
+            'tethys_gizmos/vendor/highcharts/js/modules/exporting.js')
+
+
+def map_view(context):
+    """
+    Dependencies for map_view gizmo.
+    """
+    return ('tethys_gizmos/js/tethys_map_view.js',)
 
 
 def toggle_switch(context):

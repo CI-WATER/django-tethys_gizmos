@@ -1354,6 +1354,7 @@ message_box = {'name': 'sampleModal',
               <p> Demo cannot be shown on this page because of the demo for the editable google map.
               Click on button below for live demo.</p>
               <a class="btn btn-success" href="{% url 'gizmos:google_map' %}">Live Demo</a>
+
             </div>
             <div class="code">
               <p class="muted">Controller</p>
@@ -1454,17 +1455,25 @@ def get_kml(request):
         <p><strong>NOTE: Do not create more than one map on a page at any given time.</strong></p>
         <div class="example">
             <div class="demo">
-              <p> Demo cannot be shown on this page because of the demo for the editable google map.
-              Click on button below for live demo.</p>
               <a class="btn btn-success" href="{% url 'gizmos:map_view' %}">Live Demo</a>
+              {% gizmo map_view map_view %}
             </div>
             <div class="code">
               <p class="muted">Controller</p>
               <pre><code class="language-python">
-google_map = {'height': '500px',
+map_view = {'map_type': 'google-earth',  # map types: 'google-earth', 'google-map', 'open-layers'
+                'height': '700px',
                 'width': '100%',
-                'kml_service': '/apps/my-app/get-kml',
-                'maps_api_key':'S0mEaPIk3y'}</code></pre>
+                'legend': True,  # true shows legend, false hides it
+                'legend_options': {'addLayers': False},  # options: addLayers,
+
+                # array of links to map layers
+                'layer_data': ['http://tethys.byu.edu/storage/f/2013-11-13T18%3A58%3A10.477Z/soil-poly-v2.kml',
+                ],
+
+                # url to retrieve an object containing an array of layer links
+                'kml_service': reverse('gizmos:get_kml')
+    }</code></pre>
               <p class="muted">KML Service Controller</p>
               <pre><code class="language-python">
 from django.http import JsonResponse

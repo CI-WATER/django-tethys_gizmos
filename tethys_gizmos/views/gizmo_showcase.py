@@ -357,6 +357,20 @@ def index(request):
         'dataEvent': True
     }
 
+    # Map View
+    map_view = {'map_type': 'google-earth',  # map types: 'google-earth', 'google-map', 'open-layers'
+                'height': '500px',
+                'width': '100%',
+                'controls': ['Zoom', 'Rotate', 'Attribution'],
+                'interactions': ['DoubleClickZoom', 'DragAndDrop', 'DragAndDropEvent', 'DragBox', 'DragPan',
+                                 'DragRotate', 'DragRotateAndZoom', 'DragZoom', 'Draw', 'Interaction', 'KeyboardPan',
+                                 'KeyboardZoom', 'Modify', 'MouseWheelZoom', 'PinchZoom', 'Pointer', 'Select'],
+                'layers': [],
+                'logo': '',
+                'view': '',
+                'base_map': ['OpenStreetMap', 'Bing', 'MapQuest']
+    }
+
     # Define the context object
     context = {'single_button': single_button,
                'horizontal_buttons': horizontal_buttons,
@@ -383,6 +397,7 @@ def index(request):
                'editable_google_map': editable_google_map,
                'flash_message': flash_message,
                'fetchclimate_array': fetchclimate_array,
+               'map_view': map_view,
     }
 
     return render(request, 'tethys_gizmos/gizmo_showcase/index.html', context)
@@ -515,18 +530,17 @@ def map_view(request):
     Place to show off the new map view
     """
     map_view = {'map_type': 'google-earth',  # map types: 'google-earth', 'google-map', 'open-layers'
-                'height': '700px',
+                'height': '500px',
                 'width': '100%',
-                'legend': True,  # true shows legend, false hides it
-                'legend_options': {'addLayers': False},  # options: addLayers,
-
-                # array of links to map layers
-                'layer_data': ['http://tethys.byu.edu/storage/f/2013-11-13T18%3A58%3A10.477Z/soil-poly-v2.kml',
-                               # 'http://tethys.byu.edu/storage/f/2013-11-22T18%3A02%3A16.551Z/ele-poly-terrain.kml'
-                ],
-
-                # url to retrieve an object containing an array of layer links
-                'kml_service': reverse('gizmos:get_kml')
+                'controls': ['ZoomSlider', 'Rotate', 'Attribution', 'ZoomToExtent',
+                             'FullScreen', 'MousePosition', 'ScaleLine'],
+                'interactions': ['DoubleClickZoom', 'DragAndDrop', 'DragAndDropEvent', 'DragBox', 'DragPan',
+                                 'DragRotate', 'DragRotateAndZoom', 'DragZoom', 'Draw', 'Interaction', 'KeyboardPan',
+                                 'KeyboardZoom', 'Modify', 'MouseWheelZoom', 'PinchZoom', 'Pointer', 'Select'],
+                'layers': [],
+                'logo': '',
+                'view': '',
+                'base_map': 'MapQuest'
     }
 
     context = {'map_view': map_view}
