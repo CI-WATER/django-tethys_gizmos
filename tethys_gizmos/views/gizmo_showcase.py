@@ -537,61 +537,9 @@ def map_view(request):
                              'FullScreen',
                              {'MousePosition': {'projection': 'EPSG:4326'}},
                              'ScaleLine'],
-                # 'interactions': ['DoubleClickZoom', 'DragAndDrop', 'DragAndDropEvent', 'DragBox', 'DragPan',
-                #                  'DragRotate', 'DragRotateAndZoom', 'DragZoom', 'Draw', 'Interaction', 'KeyboardPan',
-                #                  'KeyboardZoom', 'Modify', 'MouseWheelZoom', 'PinchZoom', 'Pointer', 'Select'],
                 'layers': [{'ImageWMS': {'url': 'http://192.168.59.103:8181/geoserver/wms',
                                          'params': {'LAYERS': 'topp:states'},
                                          'serverType': 'geoserver'}},
-                           # {'TiledWMS': {'url': 'http://192.168.59.103:8181/geoserver/wms',
-                           #               'params': {'LAYERS': 'topp:states', 'TILED': True},
-                           #               'serverType': 'geoserver'}},
-                           #{'KML': {'url': 'http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/a656ecc5-5ddc-415a-ad12-aab50adc4818/download/elepolyterrain.kml'}},
-                           # {'GeoJSON': {'object':  {'type': 'FeatureCollection',
-                           #                          'crs': {'type': 'name', 'properties': {'name': 'EPSG:3857'}},
-                           #                          'features': [
-                           #                            {'type': 'Feature',
-                           #                              'geometry': {
-                           #                                'type': 'Point',
-                           #                                'coordinates': [0, 0]
-                           #                              }
-                           #                            },
-                           #                            {'type': 'Feature',
-                           #                              'geometry': {
-                           #                                'type': 'LineString',
-                           #                                'coordinates': [[4e6, -2e6], [8e6, 2e6]]
-                           #                              }
-                           #                            },
-                           #                            {'type': 'Feature',
-                           #                              'geometry': {
-                           #                                'type': 'Polygon',
-                           #                                'coordinates': [[[-5e6, -1e6], [-4e6, 1e6], [-3e6, -1e6]]]
-                           #                              }
-                           #                            },
-                           #                            {'type': 'Feature',
-                           #                              'geometry': {
-                           #                                'type': 'MultiLineString',
-                           #                                'coordinates': [
-                           #                                  [[-1e6, -7.5e5], [-1e6, 7.5e5]],
-                           #                                  [[1e6, -7.5e5], [1e6, 7.5e5]],
-                           #                                  [[-7.5e5, -1e6], [7.5e5, -1e6]],
-                           #                                  [[-7.5e5, 1e6], [7.5e5, 1e6]]
-                           #                                ]
-                           #                              }
-                           #                            },
-                           #                            {'type': 'Feature',
-                           #                              'geometry': {
-                           #                                'type': 'MultiPolygon',
-                           #                                'coordinates': [
-                           #                                  [[[-5e6, 6e6], [-5e6, 8e6], [-3e6, 8e6], [-3e6, 6e6]]],
-                           #                                  [[[-2e6, 6e6], [-2e6, 8e6], [0, 8e6], [0, 6e6]]],
-                           #                                  [[[1e6, 6e6], [1e6, 8e6], [3e6, 8e6], [3e6, 6e6]]]
-                           #                                ]
-                           #                              }
-                           #                            }
-                           #                          ]}
-                           #              }
-                           # }
                 ],
                 'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 4, 'maxZoom': 18, 'minZoom': 3},
                 'base_map': 'OpenStreetMap',
