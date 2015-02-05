@@ -16,6 +16,7 @@ def date_picker(context):
     return ('tethys_gizmos/vendor/bootstrap_datepicker/css/datepicker3.css',
             'tethys_gizmos/vendor/bootstrap_datepicker/js/bootstrap_datepicker.js')
 
+
 def select_input(context):
     """
     Dependencies for select2_input gizmo.
@@ -55,6 +56,15 @@ def editable_google_map(context):
     return ('tethys_gizmos/vendor/farbtastic/farbtastic.css',
             'tethys_gizmos/vendor/farbtastic/farbtastic.js',
             'tethys_gizmos/js/tethys_editable_map.js')
+
+
+def google_map_view(context):
+    """
+    Dependencies for google_map_view gizmo.
+    """
+    return ('tethys_gizmos/vendor/farbtastic/farbtastic.css',
+            'tethys_gizmos/vendor/farbtastic/farbtastic.js',
+            'tethys_gizmos/js/tethys_google_map_view.js')
 
 
 def google_map(context):

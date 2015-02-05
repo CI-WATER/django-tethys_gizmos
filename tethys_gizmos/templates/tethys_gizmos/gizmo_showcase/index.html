@@ -40,22 +40,19 @@
             <a href="#toggle_switch_docs">Toggle Switch</a>
           </li>
           <li>
+            <a href="#message_box_docs">Message Box</a>
+          </li>
+          <li>
             <a href="#table_view_docs">Table View</a>
           </li>
           <li>
             <a href="#plot_view_docs">Plot View</a>
           </li>
           <li>
-            <a href="#message_box_docs">Message Box</a>
-          </li>
-          <li>
-            <a href="#google_map_docs">Google Map</a>
-          </li>
-          <li>
             <a href="#map_view_docs">Map View</a>
           </li>
           <li>
-            <a href="#editable_google_map_docs">Editable Google Map</a>
+            <a href="#google_map_view_docs">Google Map View</a>
           </li>
           <li>
             <a href="#fetchclimate_docs">FetchClimate</a>
@@ -903,6 +900,93 @@ toggle_switch_disabled = {'display_text': 'Disabled Toggle',
         </table>
       </div>
 
+      {# Message Box -------------------------------------------------------------------------------------------------#}
+      <a id="message_box_docs" class="anchor"></a>
+      <div class="docs-section">
+        <h2>Message Box</h2>
+        <p>Message box gizmos can be used to display messages to users. These are especially useful for alerts and
+        warning messages. The message box gizmo is implemented using Twitter Bootstrap's modal.</p>
+
+        <div class="example">
+          <div class="demo">
+            <a href="#{{ message_box.name }}" role="button" class="btn btn-success" data-toggle="modal">Show Message Box</a>
+            {% gizmo message_box message_box %}
+          </div>
+          <div class="code">
+            <p class="muted">Controller</p>
+            <pre><code class="language-python">
+message_box = {'name': 'sampleModal',
+               'title': 'Message Box Title',
+               'message': 'Congratulations! This is a message box',
+               'dismiss_button': 'Nevermind',
+               'affirmative_button': 'Proceed',
+               'width': 500,
+               'affirmative_attributes': 'href=javascript:void(0);'}</code></pre>
+            <p class="muted">HTML</p>
+            <pre><code class="language-python">
+&lt;!-- Trigger Button --&gt;
+&lt;a href="#{{ message_box.name }}" class="btn btn-success" data-toggle="modal"&gt;
+  Show Message Box
+&lt;/a&gt;
+
+&lt;!-- Message Box --&gt;
+&#123;% gizmo message_box message_box %&#125;</code></pre>
+          </div>
+        </div>
+
+        <h4>Message Box Options</h4>
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th colspan="2">Name</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th colspan="2">Description</th>
+          </tr>
+          <tr>
+            <td colspan="2">name</td>
+            <td>string</td>
+            <td>required</td>
+            <td colspan="2">Unique name for the message box</td>
+          </tr>
+          <tr>
+            <td colspan="2">title</td>
+            <td>string</td>
+            <td>required</td>
+            <td colspan="2">Title that appears at the top of the message box</td>
+          </tr>
+          <tr>
+            <td colspan="2">message</td>
+            <td>string</td>
+            <td>' '</td>
+            <td colspan="2">Message that will appear in the main body of the message box</td>
+          </tr>
+          <tr>
+            <td colspan="2">dismiss_button</td>
+            <td>string</td>
+            <td>'Cancel'</td>
+            <td colspan="2">Title for the dismiss button (a.k.a.: the "Cancel" button)</td>
+          </tr>
+          <tr>
+            <td colspan="2">affirmative_button</td>
+            <td>string</td>
+            <td>'Ok'</td>
+            <td colspan="2">Title for the affirmative action button (a.k.a.: the "OK" button)</td>
+          </tr>
+          <tr>
+            <td colspan="2">affirmative_attributes</td>
+            <td>string</td>
+            <td>None</td>
+            <td colspan="2">Use this to place any html attributes on the affirmative button. (e.g.: 'href="/action" onclick="doSomething();"')</td>
+          </tr>
+          <tr>
+            <td colspan="2">width</td>
+            <td>numeric</td>
+            <td>560</td>
+            <td colspan="2">The width of the message box in pixels</td>
+          </tr>
+        </table>
+      </div>
+
       {# Table View --------------------------------------------------------------------------------------------------#}
       <a id="table_view_docs" class="anchor"></a>
       <div class="docs-section">
@@ -1250,319 +1334,171 @@ timeseries_plot = {'highcharts_object': timeseries_plot_object,
       </p>
       </div>
 
-      {# Message Box -------------------------------------------------------------------------------------------------#}
-      <a id="message_box_docs" class="anchor"></a>
-      <div class="docs-section">
-        <h2>Message Box</h2>
-        <p>Message box gizmos can be used to display messages to users. These are especially useful for alerts and
-        warning messages. The message box gizmo is implemented using Twitter Bootstrap's modal.</p>
 
-        <div class="example">
-          <div class="demo">
-            <a href="#{{ message_box.name }}" role="button" class="btn btn-success" data-toggle="modal">Show Message Box</a>
-            {% gizmo message_box message_box %}
-          </div>
-          <div class="code">
-            <p class="muted">Controller</p>
-            <pre><code class="language-python">
-message_box = {'name': 'sampleModal',
-               'title': 'Message Box Title',
-               'message': 'Congratulations! This is a message box',
-               'dismiss_button': 'Nevermind',
-               'affirmative_button': 'Proceed',
-               'width': 500,
-               'affirmative_attributes': 'href=javascript:void(0);'}</code></pre>
-            <p class="muted">HTML</p>
-            <pre><code class="language-python">
-&lt;!-- Trigger Button --&gt;
-&lt;a href="#{{ message_box.name }}" class="btn btn-success" data-toggle="modal"&gt;
-  Show Message Box
-&lt;/a&gt;
-
-&lt;!-- Message Box --&gt;
-&#123;% gizmo message_box message_box %&#125;</code></pre>
-          </div>
-        </div>
-    
-        <h4>Message Box Options</h4>
-        <table class="table table-striped table-bordered">
-          <tr>
-            <th colspan="2">Name</th>
-            <th>Type</th>
-            <th>Default</th>
-            <th colspan="2">Description</th>
-          </tr>
-          <tr>
-            <td colspan="2">name</td>
-            <td>string</td>
-            <td>required</td>
-            <td colspan="2">Unique name for the message box</td>
-          </tr>
-          <tr>
-            <td colspan="2">title</td>
-            <td>string</td>
-            <td>required</td>
-            <td colspan="2">Title that appears at the top of the message box</td>
-          </tr>
-          <tr>
-            <td colspan="2">message</td>
-            <td>string</td>
-            <td>' '</td>
-            <td colspan="2">Message that will appear in the main body of the message box</td>
-          </tr>
-          <tr>
-            <td colspan="2">dismiss_button</td>
-            <td>string</td>
-            <td>'Cancel'</td>
-            <td colspan="2">Title for the dismiss button (a.k.a.: the "Cancel" button)</td>
-          </tr>
-          <tr>
-            <td colspan="2">affirmative_button</td>
-            <td>string</td>
-            <td>'Ok'</td>
-            <td colspan="2">Title for the affirmative action button (a.k.a.: the "OK" button)</td>
-          </tr>
-          <tr>
-            <td colspan="2">affirmative_attributes</td>
-            <td>string</td>
-            <td>None</td>
-            <td colspan="2">Use this to place any html attributes on the affirmative button. (e.g.: 'href="/action" onclick="doSomething();"')</td>
-          </tr>
-          <tr>
-            <td colspan="2">width</td>
-            <td>numeric</td>
-            <td>560</td>
-            <td colspan="2">The width of the message box in pixels</td>
-          </tr>
-        </table>
-      </div>
-
-      {# Google Map --------------------------------------------------------------------------------------------------#}
-      <a id="google_map_docs" class="anchor"></a>
-      <div class="docs-section">
-        <h2>Google Map</h2>
-        <p>This gizmo can be used to generate map views of spatial data. By default the data will be shown using
-          Google Earth (3D globe). However, Google Earth requires a browser plugin that is not supported on all
-          operating systems or browsers. For systems that don't support the Google Earth plugin, a Google Maps map
-          (2D map) will be generated instead. Note that the link to the data must be publicly accessible to be shown on
-          a Google Map</p>
-        <p><strong>NOTE: Do not create more than one map on a page at any given time.</strong></p>
-        <p><strong>ALSO NOTE: Only Google Earth is able to show KML animations. If the map reverts to Google Maps,
-          animations will not be shown properly.</strong></p>
-        <div class="example">
-            <div class="demo">
-              <p> Demo cannot be shown on this page because of the demo for the editable google map.
-              Click on button below for live demo.</p>
-              <a class="btn btn-success" href="{% url 'gizmos:google_map' %}">Live Demo</a>
-
-            </div>
-            <div class="code">
-              <p class="muted">Controller</p>
-              <pre><code class="language-python">
-google_map = {'height': '500px',
-                'width': '100%',
-                'kml_service': '/apps/my-app/get-kml',
-                'maps_api_key':'S0mEaPIk3y'}</code></pre>
-            <p class="muted">KML Service Controller</p>
-            <pre><code class="language-python">
-from django.http import JsonResponse
-
-def get_kml(request):
-    """
-    This action is used to pass the kml data to the google map.
-    It must return a JSON response with a Python dictionary that
-    has the key 'kml_links'.
-    """
-    kml_links = ['http://www.example.com/soil-poly-v3.kml',
-                 'http://www.example.com/ele-poly-terrain.kml']
-
-    return JsonResponse({'kml_links': kml_links})
-            </code></pre>
-            <p class="muted">HTML</p>
-            <pre><code class="language-python">
-&#123;% gizmo google_map google_map %&#125;</code></pre>
-            </div>
-        </div>
-    
-        <h4>Google Map Options</h4>
-        <table class="table table-striped table-bordered">
-          <tr>
-            <th colspan="2">Name</th>
-            <th>Type</th>
-            <th>Default</th>
-            <th colspan="2">Description</th>
-          </tr>
-          <tr>
-            <td colspan="2">height</td>
-            <td>string</td>
-            <td>'400px'</td>
-            <td colspan="2">Height of the map element. Any valid css unit of length.</td>
-          </tr>
-          <tr>
-            <td colspan="2">width</td>
-            <td>string</td>
-            <td>'400px'</td>
-            <td colspan="2">Width of the map element. Any valid css unit of length.</td>
-          </tr>
-          <tr>
-            <td colspan="2">kml_service</td>
-            <td>string</td>
-            <td>' '</td>
-            <td colspan="2">Url for a web service that will return kml data. Call is made
-                    to this service asyncronously to prevent the UI from locking up
-                    while map data is being retieved. This service must return JSON
-                    object with a 'kml_links' property that contains an array of
-                    urls to publicly accessible kml files.</td>
-          </tr>
-          <tr>
-            <td colspan="2">maps_api_key</td>
-            <td>string</td>
-            <td>' '</td>
-            <td colspan="2">For the Google Maps backup map to be enabled, an API key for Google Maps
-                          must be provided. If the API key is provided in the settings.py via the
-                          TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY option, this parameter is not required.</td>
-          </tr>
-        </table>
-        <h4>Settings</h4>
-        <p>
-          The Map View gizmo uses the Google Maps v3 API as an alternative when the Google Earth Plugin is not supported.
-          The Google Maps API requires an API key to use. This can be set either through the 'maps_api_key' parameter of
-          the gizmos option or it can be set globally in the <b>settings.py</b> file. To set the API key globally, add
-          this parameter to your <b>settings.py</b>:
-        </p>
-        <pre><code class="language-python">TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY = 'S0m3@piK3Y'</code></pre>
-        <p>
-          If you do not provide the API key globally, developers will need to provide their own API keys via the
-          'maps_api_key' option for the gizmo.
-        </p>
-        <div class="alert alert-info" role="alert">
-          <span class="alert-header">Note</span>
-          <p>
-            If your map does not load and the message 'Google Maps Not Available' is shown, it could indicate that the
-            API key is not configured properly.
-          </p>
-        </div>
-      </div>
 
       {# Map View ----------------------------------------------------------------------------------------------------#}
       <a id="map_view_docs" class="anchor"></a>
       <div class="docs-section">
         <h2>Map View</h2>
-        <p>This gizmo can be used to generate map views of spatial data. By default the data will be shown using
-          Google Earth (3D globe). However, Google Earth requires a browser plugin that is not supported in all
-          operating systems or browsers. For systems that don't support the Google Earth plugin, a Google Maps map (2D map) will be generated
-          instead. Note that the link to the data must be publicly accessible to be shown on a Google Map</p>
-        <p><strong>NOTE: Do not create more than one map on a page at any given time.</strong></p>
+        <p>The Map View gizmo can be used to visualize maps of spatial data. Map View is powered by <a href="http://openlayers.org/">OpenLayers 3</a>, an open source pure javascript mapping library.</p>
+        <p><strong>NOTE: Do not create more than one Map View gizmo on a page at any given time.</strong></p>
+        <p>Click <a href="{% url 'gizmos:map_view' %}">here</a> for demo on a separate page.</p>
         <div class="example">
-            <div class="demo">
-              <a class="btn btn-success" href="{% url 'gizmos:map_view' %}">Live Demo</a>
-              {% gizmo map_view map_view %}
-            </div>
-            <div class="code">
-              <p class="muted">Controller</p>
-              <pre><code class="language-python">
-map_view = {'map_type': 'google-earth',  # map types: 'google-earth', 'google-map', 'open-layers'
-                'height': '700px',
-                'width': '100%',
-                'legend': True,  # true shows legend, false hides it
-                'legend_options': {'addLayers': False},  # options: addLayers,
-
-                # array of links to map layers
-                'layer_data': ['http://tethys.byu.edu/storage/f/2013-11-13T18%3A58%3A10.477Z/soil-poly-v2.kml',
-                ],
-
-                # url to retrieve an object containing an array of layer links
-                'kml_service': reverse('gizmos:get_kml')
-    }</code></pre>
-              <p class="muted">KML Service Controller</p>
-              <pre><code class="language-python">
-from django.http import JsonResponse
-
-def get_kml(request):
-    """
-    This action is used to pass the kml data to the google map.
-    It must return a JSON response with a Python dictionary that
-    has the key 'kml_links'.
-    """
-    kml_links = ['http://www.example.com/soil-poly-v3.kml',
-                 'http://www.example.com/ele-poly-terrain.kml']
-
-    return JsonResponse({'kml_links': kml_links})
-              </code></pre>
-              <p class="muted">HTML</p>
-              <pre><code class="language-python">
-&#123;% gizmo google_map google_map %&#125;</code></pre>
-            </div>
+          <div class="demo">
+            {% gizmo map_view map_view %}
+          </div>
+          <div class="code">
+            <p class="muted">Controller</p>
+            <pre><code class="language-python">
+map_view_options = {'height': '400px',
+                    'width': '100%',
+                    'controls': ['ZoomSlider',
+                                 'Rotate',
+                                 'FullScreen',
+                                 'ScaleLine',
+                                 {'ZoomToExtent': {'projection': 'EPSG:4326',
+                                                   'extent': [-135, 22, -55, 54]}},
+                                 {'MousePosition': {'projection': 'EPSG:4326'}},
+                    ],
+                    'layers': [{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
+                                        'params': {'LAYERS': 'topp:states'},
+                                        'serverType': 'geoserver'}
+                                },
+                    ],
+                    'view': {'projection': 'EPSG:4326',
+                             'center': [-100, 40], 'zoom': 3.5,
+                             'maxZoom': 18, 'minZoom': 3},
+                    'base_map': 'OpenStreetMap'
+  }</code></pre>
+            <p class="muted">HTML</p>
+            <pre><code class="language-python">
+  &#123;% gizmo map_view map_view_options %&#125;
+            </code></pre>
+          </div>
         </div>
     
-        <h4>Google Map Options</h4>
+        <h4>Map View Options</h4>
         <table class="table table-striped table-bordered">
-          <tr>
-            <th colspan="2">Name</th>
-            <th>Type</th>
-            <th>Default</th>
-            <th colspan="2">Description</th>
-          </tr>
           <tr>
             <td colspan="2">height</td>
             <td>string</td>
-            <td>'400px'</td>
+            <td>'520px'</td>
             <td colspan="2">Height of the map element. Any valid css unit of length.</td>
           </tr>
           <tr>
             <td colspan="2">width</td>
             <td>string</td>
-            <td>'400px'</td>
+            <td>'100%'</td>
             <td colspan="2">Width of the map element. Any valid css unit of length.</td>
           </tr>
           <tr>
-            <td colspan="2">kml_service</td>
-            <td>string</td>
-            <td>' '</td>
-            <td colspan="2">Url for a web service that will return kml data. Call is made
-                    to this service asyncronously to prevent the UI from locking up
-                    while map data is being retieved. This service must return JSON
-                    object with a 'kml_links' property that contains an array of
-                    urls to publicly accessible kml files.</td>
+            <td colspan="2">basemap</td>
+            <td>string or dict</td>
+            <td>'OpenStreetMap'</td>
+            <td colspan="2">The base map to show on the map which can be either OpenStreetMap, MapQuest, or a Bing map. Valid values for the string option are: 'OpenStreetMap' and 'MapQuest'. If you wish to configure the base map with options, you must use the dictionary form. The dictionary form is required to use a Bing map, because an API key must be passed as an option. See details below.</td>
           </tr>
           <tr>
-            <td colspan="2">maps_api_key</td>
-            <td>string</td>
-            <td>' '</td>
-            <td colspan="2">For the Google Maps backup map to be enabled, an API key for Google Maps
-                          must be provided. If the API key is provided in the settings.py via the
-                          TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY option, this parameter is not required.</td>
+            <td colspan="2">view</td>
+            <td>dictionary</td>
+            <td>Centered, Zoom 2</td>
+            <td colspan="2">The initial view or extent for the map. This is set by specifying a center point and a zoom level where a zoom of 0 is zoomed out. Note that the default projection for OpenLayers is Spherical Mercator (<a href="http://spatialreference.org/ref/sr-org/6864/" target="_blank">EPSG:3857</a>). The dictionary can have keys: <b>center</b>, <b>zoom</b>, <b>projection</b>, <b>minZoom</b>, and <b>maxZoom</b>. If you want to specify the coordinates for the center in a different projection, such as WGS 84 (<a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">EPSG:4326</a>), you must specify the projection. See details below.</td>
+          </tr>
+          <tr>
+            <td colspan="2">controls</td>
+            <td>list</td>
+            <td>Default OpenLayer Controls</td>
+            <td colspan="2">A list of controls to add to the map. The list can be a list of strings or a list of dictionaries. Valid strings are 'ZoomSlider', 'Rotate', 'FullScreen', 'ScaleLine', 'ZoomToExtent', and 'MousePosition'. Use the dictionary form to configure the control using options. See details below.</td>
+          </tr>
+          <tr>
+            <td colspan="2">layers</td>
+            <td>list</td>
+            <td>None</td>
+            <td colspan="2">A list of layer dictionaries where the singular key of each dictionary specifies the type of layer and the value is another dictionary with the options for that layer. Supported layer types are 'WMS', 'TiledWMS', 'GeoJSON', and 'KML'. See notes below details.</td>
           </tr>
         </table>
 
-        <h4>Settings</h4>
-        <p>
-          The Map View gizmo uses the Google Maps v3 API as an alternative when the Google Earth Plugin is not supported.
-          The Google Maps API requires an API key to use. This can be set either through the 'maps_api_key' parameter of
-          the gizmos option or it can be set globally in the <b>settings.py</b> file. To set the API key globally, add
-          this parameter to your <b>settings.py</b>:
+        <h4>Additional Options Dictionary</h4>
+        <p>Many of the options above will accept dictionaries with additional options. These dictionaries should be structured with a single key that is the name of the original option with a value of another dictionary containing the additional options. For example, to provide additional options for the 'ZoomToExtent' control, you would create a dictionary with key 'ZoomToExtent' and value of a dictionary with the additional options like this:
         </p>
-        <pre><code class="language-python">TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY = 'S0m3@piK3Y'</code></pre>
-        <p>
-          If you do not provide the API key globally, developers will need to provide their own API keys via the
-          'maps_api_key' option for the gizmo.
-        </p>
+        <pre><code class="language-python">{'ZoomToExtent': {'projection': 'EPSG:4326', 'extent': [-135, 22, -55, 54]}}</code></pre>
+        <p>Most of the additional options correspond with the options for the matching object in the <a href="http://openlayers.org/en/v3.1.1/apidoc/index.html" target="_blank">OpenLayers API</a>. The following sections provide links to the OpenLayers objects that you can refer to when selecting the options.</p>
+
+        <h6>Base Maps</h6>
+        <p>There are three base maps supported by the Map View gizmo: OpenStreetMap, Bing, and MapQuest. Use the following links to learn about the additional options you can configure the base maps with:</p>
+        <ul>
+          <li>Bing: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.source.BingMaps.html" target="_blank">ol.source.BingMaps</a></li>
+          <li>MapQuest: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.source.MapQuest.html" target="_blank">ol.source.MapQuest</a></li>
+          <li>OpenStreetMap: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.source.OSM.html" target="_blank">ol.source.OSM</a></li>
+        </ul>
+        <h5>Example</h5>
+        <pre><code class="language-python">{'Bing': {'key': 'Ap|k3yheRE', 'imagerySet': 'Aerial'}}</code></pre>
+
+        <h6>Controls</h6>
+        <p>Use the following links to learn about options for the different controls:</p>
+        <ul>
+          <li>FullScreen: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.control.FullScreen.html" target="_blank">ol.control.FullScreen</a></li>
+          <li>MousePosition: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.control.MousePosition.html" target="_blank">ol.control.MousePosition</a></li>
+          <li>Rotate: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.control.Rotate.html" target="_blank">ol.control.Rotate</a></li>
+          <li>ScaleLine: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.control.ScaleLine.html" target="_blank">ol.control.ScaleLine</a></li>
+          <li>ZoomSlider: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.control.ZoomSlider.html" target="_blank">ol.control.ZoomSlider</a></li>
+          <li>ZoomToExtent: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.control.ZoomToExtent.html" target="_blank">ol.control.ZoomToExtent</a></li>
+        </ul>
+
+        <h5>Example</h5>
+        <pre><code class="language-python">{'MousePosition': {'projection': 'EPSG:4326'}</code></pre>
+
+        <h6>View</h6>
+        <p>Use the following link to learn about options for the view:</p>
+        <ul>
+          <li>View: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.View.html" target="_blank">ol.View</a></li>
+        </ul>
+        <h5>Example</h5>
+        <pre><code class="language-python">'view': {'projection': 'EPSG:4326',
+         'center': [-100, 40],
+         'zoom': 3.5,
+         'maxZoom': 18,
+         'minZoom': 3}</code></pre>
+
         <div class="alert alert-info" role="alert">
           <span class="alert-header">Note</span>
           <p>
-            If your map does not load and the message 'Google Maps Not Available' is shown, it could indicate that the
-            API key is not configured properly.
+            The projection options is handled slightly differently in the Map View Gizmo than it is in the OpenLayers API. Rather than setting the projection of the map, it is used to specify the projection fo the coordinates you specify so that they can be transformed into the default projection (<a href="http://spatialreference.org/ref/sr-org/6864/" target="_blank">EPSG:3857</a>).
           </p>
         </div>
+
+        <h6>Layers</h6>
+        <p>Use the options from the OpenLayers API to construct your layers. The links below will direct you to the OpenLayers object that corresponds with the type you specify as the key to the dictionary.</p>
+        <ul>
+          <li>GeoJSON: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.source.GeoJSON.html" target="_blank">ol.source.GeoJSON</a></li>
+          <li>KML: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.source.KML.html" target="_blank">ol.source.KML</a></li>
+          <li>TiledWMS: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.source.TileWMS.html" target="_blank">ol.source.TileWMS</a></li>
+          <li>WMS: <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.source.ImageWMS.html" target="_blank">ol.source.ImageWMS</a></li>
+        </ul>
+
+        <h5>Example</h5>
+        <pre><code class="language-python">{'TiledWMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
+              'params': {'LAYERS': 'topp:states', 'TILED': True},
+              'serverType': 'geoserver'}</code></pre>
+        <h4 id="map_view_javascript_api">Map View JavaScript API</h4>
+        <p>
+          For advanced features, the JavaScript API can be used to interact with the OpenLayers map object that is generated by the Map View JavaScript library.
+        </p>
+
+        <h5>TETHYS_MAP_VIEW.map</h5>
+        <p>This property contains the OpenLayers map object. You can use the <a href="http://openlayers.org/en/v3.1.1/apidoc/ol.Map.html" target="_blank">OpenLayers Map API</a> to perform operations on this object such as adding layers and custom controls.</p>
+        <h5>Example</h5>
+        <pre><code class="language-javascript">var ol_map = TETHYS_MAP_VIEW.map;
+ol_map.addLayer(...);
+ol_map.setView(...);</code></pre>
       </div>
 
-      {# Editable Google Map -----------------------------------------------------------------------------------------#}
-      <a id="editable_google_map_docs" class="anchor"></a>
+      {# Google Map View -----------------------------------------------------------------------------------------#}
+      <a id="google_map_view_docs" class="anchor"></a>
       <div class="docs-section">
-        <h2>Editable Google Map</h2>
+        <h2>Google Map View</h2>
         <p>
-          The editable map gizmo uses Google Maps 3 with the drawing library enabled to allow geospatial user input.
-          An optional background dataset can be specified for reference. Only the shapes drawn by the user are returned (see
+          The Google Map View is similar to Map View, but it is powered by Google Maps 3. It has the drawing library enabled to allow geospatial user input.
+          An optional background dataset can be specified for reference, but only the shapes drawn by the user are returned (see
           <a href="#retrieving_shapes">Retrieving Shapes</a> section).
         </p>
         <p><strong>NOTE: Do not create more than one map on a page at any given time.</strong></p>
@@ -1580,20 +1516,20 @@ def get_kml(request):
 
             <form method="post">
               {% csrf_token %}
-              {% gizmo editable_google_map editable_google_map %}
+              {% gizmo google_map_view google_map_view %}
               <button class="btn btn-primary" type="submit" name="editable_map_submit">Submit</button>
             </form>
           </div>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-editable_map = {'height': '600px',
-                  'width': '100%',
-                 'reference_kml_action': '/apps/my-app/get-kml',
-                  'maps_api_key': 'S0mEaPIk3y',
-                  'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
-                  'initial_drawing_mode': 'POINTS',
-                  'output_format': 'WKT'}
+google_map_view_options = {'height': '600px',
+                           'width': '100%',
+                           'reference_kml_action': '/apps/my-app/get-kml',
+                           'maps_api_key': 'S0mEaPIk3y',
+                           'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
+                           'initial_drawing_mode': 'POINTS',
+                           'output_format': 'WKT'}
             </code></pre>
             <p class="muted">KML Service Controller</p>
             <pre><code class="language-python">
@@ -1612,12 +1548,12 @@ def get_kml(request):
             </code></pre>
             <p class="muted">HTML</p>
             <pre><code class="language-python">
-&#123;% gizmo editable_google_map editable_map %&#125;
+&#123;% gizmo google_map_view google_map_view_options %&#125;
             </code></pre>
           </div>
         </div>
     
-      <h4>Google Editable Map Options</h4>
+      <h4>Google Map View Options</h4>
       <table class="table table-striped table-bordered">
         <tr>
           <th colspan="2">Name</th>
@@ -1704,12 +1640,12 @@ geo_json = {'type':'WKTGeometryCollection',
                           ]
             }
 
-editable_google_map = {'height': '700px',
-                         'width': '100%',
-                         'maps_api_key': 'S0mEaPIk3y',
-                         'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
-                         'initial_drawing_mode': 'POINTS',
-                         'input_overlays': geo_json}</code></pre>
+google_map_view_options = {'height': '700px',
+                           'width': '100%',
+                           'maps_api_key': 'S0mEaPIk3y',
+                           'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
+                           'initial_drawing_mode': 'POINTS',
+                           'input_overlays': geo_json}</code></pre>
             <p class="muted">WktJSON</p>
             <pre><code class="language-python">
 wkt_json = {"type":"GeometryCollection",
@@ -1726,38 +1662,19 @@ wkt_json = {"type":"GeometryCollection",
                           ]
             }
 
-editable_google_map = {'height': '700px',
-                         'width': '100%',
-                         'maps_api_key': 'S0mEaPIk3y',
-                         'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
-                         'initial_drawing_mode': 'POINTS',
-                         'input_overlays': wkt_json}</code></pre>
+google_map_view_options = {'height': '700px',
+                           'width': '100%',
+                           'maps_api_key': 'S0mEaPIk3y',
+                           'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
+                           'initial_drawing_mode': 'POINTS',
+                           'input_overlays': wkt_json}</code></pre>
           </div>
-        </div>
-
-        <h4>Settings</h4>
-        <p>
-          The Google Editable Map uses the Google Maps v3 API, which requires an API key to use. This can be set either
-          through the 'maps_api_key' parameter of the gizmos option or it can be set globally in the <b>settings.py</b>
-          file. To set the API key globally, add this parameter to your <b>settings.py</b>:
-        </p>
-        <pre><code class="language-python">TETHYS_GIZMOS_GOOGLE_MAPS_API_KEY = 'S0m3@piK3Y'</code></pre>
-        <p>
-          If you do not provide the API key globally, developers will need to provide their own API keys via the
-          'maps_api_key' option for the gizmo.
-        </p>
-        <div class="alert alert-info" role="alert">
-          <span class="alert-header">Note</span>
-          <p>
-            If your map does not load and the message 'Google Maps Not Available' is shown, it could indicate that the
-            API key is not configured properly.
-          </p>
         </div>
 
         <h4 id="retrieving_shapes">Retrieving Shapes</h4>
         <p>
           The shapes can be retrieved from the map in two ways. A hidden text field named 'geometry' is updated
-          evertime the map is changed. The text in the text field is a string representation of JSON. The geometry
+          everytime the map is changed. The text in the text field is a string representation of JSON. The geometry
           can be formatted as either GeoJSON or Well Known Text. This can be configured by setting the output_format
           parameter. If the editable map is embedded in a form, the geometry that is drawn on the map will automatically
           be submitted with the rest of the form via the hidden text field.
@@ -1766,33 +1683,33 @@ editable_google_map = {'height': '700px',
           Alternatively, the data can be extracted directly using the JavaScript API (see below).
         </p>
 
-        <h4 id="edit_map_javascript_api">Editable Map JavaScript API</h4>
+        <h4 id="google_map_view_javascript_api">Google Map View JavaScript API</h4>
         <p>
           For advanced features, the JavaScript API can be used to interact with the editable map.
           If you need capabilities beyond the scope of this API, we recommend using the Google Maps
           version 3 API to create your own map.
         </p>
 
-        <h5>TETHYS_EDIT_MAP.getGeoJson()</h5>
+        <h5>TETHYS_GOOGLE_MAP_VIEW.getGeoJson()</h5>
         <p>This method returns the GeoJSON object representing all of the overlays on the map.</p>
 
-        <h5>TETHYS_EDIT_MAP.getGeoJsonString()</h5>
+        <h5>TETHYS_GOOGLE_MAP_VIEW.getGeoJsonString()</h5>
         <p>This method returns a stringified GeoJSON object representing all of the overlays on the map.</p>
 
-        <h5>TETHYS_EDIT_MAP.getWktJson()</h5>
+        <h5>TETHYS_GOOGLE_MAP_VIEW.getWktJson()</h5>
         <p>This method returns a Well Known Text JSON object representing all of the overlays on the map.</p>
 
-        <h5>TETHYS_EDIT_MAP.getWktJsonString()</h5>
+        <h5>TETHYS_GOOGLE_MAP_VIEW.getWktJsonString()</h5>
         <p>This method returns a stringified Well Known Text JSON object representing all of the overlays on the map.</p>
 
-        <h5>TETHYS_EDIT_MAP.swapKmlService(kml_service)</h5>
+        <h5>TETHYS_GOOGLE_MAP_VIEW.swapKmlService(kml_service)</h5>
         <p>Use this method to swap out the current reference kml layers for new ones.</p>
         <ul>
             <li><b>kml_service</b> <em>(string)</em> = url that returns a JSON object with a property called 'kml_link' that is an array of publicly
                 accessible urls to kml or kmz documents</li>
         </ul>
 
-        <h5>TETHYS_EDIT_MAP.swapOverlayService(overlay_service, clear_overlays)</h5>
+        <h5>TETHYS_GOOGLE_MAP_VIEW.swapOverlayService(overlay_service, clear_overlays)</h5>
         <p>Use this method to add new overlays to the map dynaically without reloading the page.</p>
         <ul>
             <li><b>overlay_service</b> <em>(string)</em> = url that returns a JSON object with a property called 'overlay_json' that has a value of a WKT or GeoJSON object in the same

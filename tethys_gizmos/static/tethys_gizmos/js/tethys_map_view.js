@@ -175,7 +175,7 @@ var TETHYS_MAP_VIEW = (function() {
 
             // Transform coordinates to default CRS
             if ('projection' in control_obj && 'extent' in control_obj) {
-              control_obj['extent'] = ol.proj.transformExtent(control_obj['extent'], control_obj['projection'], 'EPSG:3857');
+              control_obj['extent'] = ol.proj.transformExtent(control_obj['extent'], control_obj['projection'], m_default_projection);
               delete control_obj['projection'];
             }
             m_map.addControl(new ol.control.ZoomToExtent(control_obj));
@@ -193,7 +193,7 @@ var TETHYS_MAP_VIEW = (function() {
   {
     // Constants
     var GEOJSON = 'GeoJSON',
-        IMAGE_WMS = 'ImageWMS',
+        IMAGE_WMS = 'WMS',
         KML = 'KML',
         VECTOR = 'Vector',
         TILED_WMS = 'TiledWMS';
@@ -267,8 +267,8 @@ var TETHYS_MAP_VIEW = (function() {
       view: new ol.View({
         center: [0, 0],
         zoom: 2,
-        minZoom: 2,
-        maxZoom: 18
+        minZoom: 0,
+        maxZoom: 28
       })
     });
 
@@ -302,7 +302,7 @@ var TETHYS_MAP_VIEW = (function() {
 
       if ('projection' in view_obj && 'center' in view_obj) {
         // Transform coordinates to default CRS
-        view_obj['center'] = ol.proj.transform(view_obj['center'], view_obj['projection'], 'EPSG:3857');
+        view_obj['center'] = ol.proj.transform(view_obj['center'], view_obj['projection'], m_default_projection);
         delete view_obj['projection'];
       }
 
@@ -335,6 +335,7 @@ var TETHYS_MAP_VIEW = (function() {
 	$(function() {
     // Map container selector
     m_map_target = 'map_view';
+    m_default_projection = 'EPSG:3857';
 
     // Initialize the map
     ol_map_init();

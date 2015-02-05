@@ -25,8 +25,8 @@
   {% endif %}
 </style>
 
-<div id="map_view_outer_container" style="height: {% if height %}{{ height }}{% else %}520px{% endif %}; width: {% if width %}{{ width }}{% else %}100%{% endif %};">
-	<div id="map_view"
+<div id="map_view_outer_container">
+	<div id="map_view" {% if height or width %}style="{% if height %}height: {{ height }};{% endif %}{% if width %}width: {{ width }};{% endif %}"{% endif %}
        {% if controls %}data-controls="{{ controls|jsonify }}"{% endif %}
        {% if interactions %}data-interactions="{{ interactions|jsonify }}"{% endif %}
        {% if layers %}data-layers="{{ layers|jsonify }}"{% endif %}

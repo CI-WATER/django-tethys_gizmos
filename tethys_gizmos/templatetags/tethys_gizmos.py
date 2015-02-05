@@ -96,9 +96,6 @@ class TethysGizmoIncludeNode(template.Node):
             # Retrieve the gizmo template and render
             t = get_template(template_name)
             c = context.new(self.options.resolve(context))
-
-            # Add the global context parameters
-            c.update({'gizmos_google_maps_key': context['gizmos_google_maps_key']})
             return t.render(c)
 
         except:

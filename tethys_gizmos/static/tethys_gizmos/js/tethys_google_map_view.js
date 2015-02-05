@@ -10,7 +10,7 @@
  *                      LIBRARY WRAPPER
  *****************************************************************************/
 
-var TETHYS_EDIT_MAP = (function() {
+var TETHYS_GOOGLE_MAP_VIEW = (function() {
     // Wrap the library in a package function
     "use strict"; // And enable strict mode for this library
     
@@ -1306,8 +1306,7 @@ var TETHYS_EDIT_MAP = (function() {
         } else {
           $('#editable_google_map_loading .centered').html('<h5>Google Maps Not Available</h5>');
         }
-
-      console.log('WARNING: You are using the editable_google_map gizmo. This gizmo has be renamed to google_map_view. Please use the new gizmos instead.');
+        
     });
     
     return public_interface;
@@ -1318,33 +1317,33 @@ var TETHYS_EDIT_MAP = (function() {
  *                      Public Functions
  *****************************************************************************/
 function deleteOverlay(id) {
-    TETHYS_EDIT_MAP.deleteOverlay(id);
+    TETHYS_GOOGLE_MAP_VIEW.deleteOverlay(id);
 }
 
 function getGeoJson() {
-    return TETHYS_EDIT_MAP.getGeoJson();
+    return TETHYS_GOOGLE_MAP_VIEW.getGeoJson();
 }
 
 function getGeoJsonString() {
-    return TETHYS_EDIT_MAP.getGeoJsonString();
+    return TETHYS_GOOGLE_MAP_VIEW.getGeoJsonString();
 }
 
 function getWktJson() {
-    return TETHYS_EDIT_MAP.getWktJson();
+    return TETHYS_GOOGLE_MAP_VIEW.getWktJson();
 }
 
 function getWktJsonString() {
-    return TETHYS_EDIT_MAP.getWktJsonString();
+    return TETHYS_GOOGLE_MAP_VIEW.getWktJsonString();
 }
 
 function setValue(id, value) {
-    TETHYS_EDIT_MAP.setValue(id, value);
+    TETHYS_GOOGLE_MAP_VIEW.setValue(id, value);
 }
 
 function swapKmlService(kml_service) {
-    TETHYS_EDIT_MAP.swapKmlService(kml_service);
+    TETHYS_GOOGLE_MAP_VIEW.swapKmlService(kml_service);
 }
 
 function swapOverlayService(overlay_service, clear_overlays) {
-    TETHYS_EDIT_MAP.swapOverlayService(overlay_service, clear_overlays);
+    TETHYS_GOOGLE_MAP_VIEW.swapOverlayService(overlay_service, clear_overlays);
 }

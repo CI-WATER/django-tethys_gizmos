@@ -185,6 +185,9 @@ var TETHYS_MAP = (function() {
 			var kml_service = $(this).attr('data-kml-service');
 			retrieveKmlData(kml_service);
 		});
+
+    // Deprecation warning
+    console.log('WARNING: You have used the "google_map" gizmo. This gizmo has been deprecated and may not be supported in future releases.')
 	});
 
 	return libraryObject;

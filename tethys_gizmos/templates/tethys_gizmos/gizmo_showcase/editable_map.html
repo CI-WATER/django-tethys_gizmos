@@ -2,7 +2,7 @@
 
 {% load staticfiles tethys_gizmos %}
 
-{% block title %}- Gizmos - Editable Map{% endblock %}
+{% block title %}- Gizmos - Google Map View{% endblock %}
 
 {% block styles %}
 	{{ block.super }}
@@ -17,7 +17,7 @@
 
 {% block primary_content %}
   <div class="gizmo-page-wrapper">
-    <h2>Editable Google Map</h2>
+    <h2>Google Map View</h2>
 
     <!-- Flash Message -->
     {% if flash_message %}
@@ -30,7 +30,7 @@
 
     <form method="post">
       {% csrf_token %}
-      {% gizmo "editable_google_map" editable_google_map %}
+      {% gizmo "google_map_view" google_map_view %}
       <button class="btn btn-primary" type="submit" name="editable_map_submit">Submit</button>
       <a class="btn btn-success" href="javascript:void(0);" data-kml-service="{% url 'gizmos:swap_kml' %}" onclick="swap(this);">Swap Map</a>
       <a class="btn btn-success" href="javascript:void(0);" onclick="swapOverlayService('{% url "gizmos:swap_overlays" %}', true);">Swap Overlays</a>
@@ -51,7 +51,7 @@
       }
 
       // Swap out map using a method from the TETHYS_EDIT_MAP library
-      TETHYS_EDIT_MAP.swapKmlService(kml_service);
+      TETHYS_GOOGLE_MAP_VIEW.swapKmlService(kml_service);
     }
     </script>
   </div>

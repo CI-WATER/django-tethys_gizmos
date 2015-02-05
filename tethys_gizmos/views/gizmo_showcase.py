@@ -322,12 +322,12 @@ def index(request):
                    'affirmative_attributes': 'href=javascript:void(0);'}
 
     # Editable Google Map
-    editable_google_map = {'height': '600px',
-                           'width': '100%',
-                           'reference_kml_action': reverse('gizmos:get_kml'),
-                           'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
-                           'initial_drawing_mode': 'POINTS',
-                           'output_format': 'WKT'}
+    google_map_view = {'height': '600px',
+                       'width': '100%',
+                       'reference_kml_action': reverse('gizmos:get_kml'),
+                       'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
+                       'initial_drawing_mode': 'POINTS',
+                       'output_format': 'WKT'}
 
     flash_message = ''
 
@@ -358,17 +358,21 @@ def index(request):
     }
 
     # Map View
-    map_view = {'map_type': 'google-earth',  # map types: 'google-earth', 'google-map', 'open-layers'
-                'height': '500px',
+    map_view = {'height': '500px',
                 'width': '100%',
-                'controls': ['Zoom', 'Rotate', 'Attribution'],
-                'interactions': ['DoubleClickZoom', 'DragAndDrop', 'DragAndDropEvent', 'DragBox', 'DragPan',
-                                 'DragRotate', 'DragRotateAndZoom', 'DragZoom', 'Draw', 'Interaction', 'KeyboardPan',
-                                 'KeyboardZoom', 'Modify', 'MouseWheelZoom', 'PinchZoom', 'Pointer', 'Select'],
-                'layers': [],
-                'logo': '',
-                'view': '',
-                'base_map': ['OpenStreetMap', 'Bing', 'MapQuest']
+                'controls': ['ZoomSlider',
+                             'Rotate',
+                             {'ZoomToExtent': {'projection': 'EPSG:4326', 'extent': [-135, 22, -55, 54]}},
+                             'FullScreen',
+                             {'MousePosition': {'projection': 'EPSG:4326'}},
+                             'ScaleLine'],
+                'layers': [{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
+                                    'params': {'LAYERS': 'topp:states'},
+                                    'serverType': 'geoserver'}},
+                ],
+                'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 3.5, 'maxZoom': 18, 'minZoom': 3},
+                'base_map': 'OpenStreetMap',
+                'draw': ['Point', 'Line', 'Polygon']
     }
 
     # Define the context object
@@ -394,7 +398,7 @@ def index(request):
                'table_view': table_view,
                'table_view_edit': table_view_edit,
                'message_box': message_box,
-               'editable_google_map': editable_google_map,
+               'google_map_view': google_map_view,
                'flash_message': flash_message,
                'fetchclimate_array': fetchclimate_array,
                'map_view': map_view,
@@ -407,8 +411,7 @@ def get_kml(request):
     """
     This action is used to pass the kml data to the google map. It must return JSON with the key 'kml_link'.
     """
-    #kml_links = [static('tethys_gizmos/kml/elepolyterrain.kml')]
-    kml_links = ['http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/a656ecc5-5ddc-415a-ad12-aab50adc4818/download/elepolyterrain.kml']
+    kml_links = ['http://ciwckan.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/69f8e7df-da87-47cd-90a1-d15dc84e99ba/download/indexclusters.kml']
 
     return JsonResponse({'kml_links': kml_links})
 
@@ -420,8 +423,7 @@ def swap_kml(request):
     for i in range(0, 20000000):
         pass
 
-    #kml_links = [static('tethys_gizmos/kml/littledellcluster.kml')]
-    kml_links = ['http://ciwweb.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/1bb2db00-9944-4084-9ff7-b7897f483088/download/littledellcluster.kml']
+    kml_links = ['http://ciwckan.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/53c7a910-5e00-4af7-803a-e48e0f17a131/download/elevation.kml']
 
     return HttpResponse(json.dumps(kml_links), content_type='application/json')
 
@@ -466,34 +468,34 @@ def editable_map(request):
     """
 
     # Editable Google Map
-    editable_google_map = {'height': '600px',
-                           'width': '100%',
-                           'reference_kml_action': reverse('gizmos:get_kml'),
-                           'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
-                           'initial_drawing_mode': 'POINTS',
-                           'input_overlays': {"type": "GeometryCollection",
-                                              "geometries": [
-                                                  {"type": "Point",
-                                                   "coordinates": [40.629197012613545, -111.5123462677002],
-                                                   "properties": {"id": 1, "value": 1}},
-                                                  {"type": "Polygon",
-                                                   "coordinates": [[40.63193284946615, -111.50153160095215],
-                                                                   [40.617210120505035, -111.50101661682129],
-                                                                   [40.623594711231775, -111.48625373840332],
-                                                                   [40.63193284946615, -111.49123191833496]],
-                                                   "properties": {"id": 2, "value": 2}},
-                                                  {"type": "LineString",
-                                                   "coordinates": [[40.65003865742191, -111.49123191833496],
-                                                                   [40.635319920747456, -111.49088859558105],
-                                                                   [40.64912697157757, -111.48127555847168],
-                                                                   [40.634668574229735, -111.48024559020996]],
-                                                   "properties": {"id": 3, "value": 3}}
-                                              ]},
-                           'color_ramp': {'1': '#ff0000',
-                                          '2': '#ffff00',
-                                          '3': '#00ff00',
-                                          '4': '#0000ff'
-                           }
+    google_map_view = {'height': '600px',
+                       'width': '100%',
+                       'reference_kml_action': reverse('gizmos:get_kml'),
+                       'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
+                       'initial_drawing_mode': 'POINTS',
+                       'input_overlays': {"type": "GeometryCollection",
+                                          "geometries": [
+                                              {"type": "Point",
+                                               "coordinates": [40.629197012613545, -111.5123462677002],
+                                               "properties": {"id": 1, "value": 1}},
+                                              {"type": "Polygon",
+                                               "coordinates": [[40.63193284946615, -111.50153160095215],
+                                                               [40.617210120505035, -111.50101661682129],
+                                                               [40.623594711231775, -111.48625373840332],
+                                                               [40.63193284946615, -111.49123191833496]],
+                                               "properties": {"id": 2, "value": 2}},
+                                              {"type": "LineString",
+                                               "coordinates": [[40.65003865742191, -111.49123191833496],
+                                                               [40.635319920747456, -111.49088859558105],
+                                                               [40.64912697157757, -111.48127555847168],
+                                                               [40.634668574229735, -111.48024559020996]],
+                                               "properties": {"id": 3, "value": 3}}
+                                          ]},
+                       'color_ramp': {'1': '#ff0000',
+                                      '2': '#ffff00',
+                                      '3': '#00ff00',
+                                      '4': '#0000ff'
+                       }
     }
 
     if ('editable_map_submit' in request.POST) and (request.POST['geometry']):
@@ -501,12 +503,12 @@ def editable_map(request):
         # data structures.
         geometry_string = request.POST['geometry']
         geometry_json = json.loads(geometry_string)
-        editable_google_map['input_overlays'] = geometry_json
+        google_map_view['input_overlays'] = geometry_json
 
         # Display the JSON as flash message
         messages.info(request, geometry_string)
 
-    context = {'editable_google_map': editable_google_map}
+    context = {'google_map_view': google_map_view}
 
     return render(request, 'tethys_gizmos/gizmo_showcase/editable_map.html', context)
 
@@ -520,6 +522,8 @@ def google_map(request):
                   'width': '100%',
                   'kml_service': reverse('gizmos:get_kml')}
 
+    messages.warning(request, 'WARNING: The "google_map" gizmo has been deprecated and may lose support in future releases of Tethys Platform.')
+
     context = {'google_map': google_map}
 
     return render(request, 'tethys_gizmos/gizmo_showcase/google_map.html', context)
@@ -529,17 +533,15 @@ def map_view(request):
     """
     Place to show off the new map view
     """
-    map_view = {'height': '500px',
-                'width': '100%',
-                'controls': ['ZoomSlider',
+    map_view = {'controls': ['ZoomSlider',
                              'Rotate',
                              {'ZoomToExtent': {'projection': 'EPSG:4326', 'extent': [-135, 22, -55, 54]}},
                              'FullScreen',
                              {'MousePosition': {'projection': 'EPSG:4326'}},
                              'ScaleLine'],
-                'layers': [{'ImageWMS': {'url': 'http://192.168.59.103:8181/geoserver/wms',
-                                         'params': {'LAYERS': 'topp:states'},
-                                         'serverType': 'geoserver'}},
+                'layers': [{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
+                                    'params': {'LAYERS': 'topp:states'},
+                                    'serverType': 'geoserver'}},
                 ],
                 'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 4, 'maxZoom': 18, 'minZoom': 3},
                 'base_map': 'OpenStreetMap',
