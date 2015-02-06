@@ -1293,9 +1293,9 @@ var TETHYS_GOOGLE_MAP_VIEW = (function() {
                               container: 'body'});
 
             // Bind init and scrap methods to the popovers
-            $(popover).on('shown', initColorPicker);
-            $(popover).on('show', showColorPickerPopover);
-            $(popover).on('hidden', scrapColorPicker);
+            $(popover).on('shown.bs.popover', initColorPicker);
+            $(popover).on('show.bs.popover', showColorPickerPopover);
+            $(popover).on('hidden.bs.popover', scrapColorPicker);
 
             // Setup click off event = close for popovers
             $('body').on('click', clickOffPopover);

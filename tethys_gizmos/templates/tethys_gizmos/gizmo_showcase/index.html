@@ -1098,6 +1098,12 @@ table_view_edit = {'column_names': ('Name', 'Age', 'Job'),
           Plot views can be used to generate interactive plots of tabular data. All of the plots available through this gizmo
           are powered by the <a href="http://www.highcharts.com/" target="_blank">Highcharts</a> JavaScript library.
         </p>
+        <div class="alert alert-warning" role="alert">
+          <span class="alert-header">Caution</span>
+          <p>
+            Highcharts is not free and open source, though it can be used for free under certain conditions. Please familiarize yourself with <a href="http://shop.highsoft.com/highcharts.html" target="_blank">Highcharts JS Licensing</a> before using it.
+          </p>
+        </div>
         <div class="example">
         <div class="demo">
         {% gizmo highcharts_plot_view line_plot_view %}
@@ -1156,7 +1162,7 @@ highcharts_object = {
           'data': [[0, 15], [10, -50], [20, -56.5], [30, -46.5], [40, -22.1],
                    [50, -2.5], [60, -27.7], [70, -55.7], [80, -76.5]]}
       ]}
-  
+
 line_plot_view = {'highcharts_object': highcharts_object,
                   'width': '500px',
                   'height': '500px'}
@@ -1502,6 +1508,12 @@ ol_map.setView(...);</code></pre>
           <a href="#retrieving_shapes">Retrieving Shapes</a> section).
         </p>
         <p><strong>NOTE: Do not create more than one map on a page at any given time.</strong></p>
+        <div class="alert alert-warning" role="alert">
+          <span class="alert-header">Caution</span>
+          <p>
+            Google Maps API is not free and open source and it is only free to use under certain conditions. Please familiarize yourself with <a href="https://developers.google.com/maps/licensing" target="_blank">Google Maps API Licensing</a> before using it.
+          </p>
+        </div>
         <p>Click <a href="{% url 'gizmos:editable_map' %}">here</a> for demo on a separate page.</p>
         <div class="example">
           <div class="demo">
