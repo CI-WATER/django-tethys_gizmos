@@ -7,6 +7,8 @@ from django import template
 from django.template.loader import get_template
 from django.template import TemplateSyntaxError
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.core.serializers.json import DjangoJSONEncoder
+
 from ..gizmo_dependencies import global_dependencies
 
 register = template.Library()
@@ -17,6 +19,18 @@ CSS_EXTENSION = 'css'
 JS_EXTENSION = 'js'
 EXTERNAL_INDICATOR = '://'
 VALID_OUTPUT_TYPES = (CSS_OUTPUT_TYPE, JS_OUTPUT_TYPE)
+
+
+class HighchartsDateEncoder(DjangoJSONEncoder):
+    """
+    Special Json Encoder for Tethys
+    """
+    def default(self, obj):
+        # Highcharts date serializer
+        if isinstance(obj, datetime):
+            return time.mktime(obj.timetuple()) * 1000
+        return super(HighchartsDateEncoder, self).default(obj)
+
 
 @register.filter(is_safe=True)
 def isstring(value):
