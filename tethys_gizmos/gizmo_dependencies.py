@@ -38,7 +38,8 @@ def map_view(context):
     """
     Dependencies for map_view gizmo.
     """
-    return ('tethys_gizmos/js/tethys_map_view.js',)
+    return ('tethys_gizmos/css/tethys_map_view.css',
+            'tethys_gizmos/js/tethys_map_view.js')
 
 
 def toggle_switch(context):

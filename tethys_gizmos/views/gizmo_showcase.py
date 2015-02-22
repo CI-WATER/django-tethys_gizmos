@@ -372,7 +372,8 @@ def index(request):
                 ],
                 'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 3.5, 'maxZoom': 18, 'minZoom': 3},
                 'base_map': 'OpenStreetMap',
-                'draw': ['Point', 'Line', 'Polygon']
+                'draw': ['Point', 'Line', 'Polygon'],
+                'legend': True
     }
 
     # Define the context object
@@ -545,7 +546,10 @@ def map_view(request):
                 ],
                 'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 4, 'maxZoom': 18, 'minZoom': 3},
                 'base_map': 'OpenStreetMap',
-                'draw': ['Point', 'Line', 'Polygon']
+                'draw': ['Point', 'Line', 'Polygon'],
+                'legend': True,
+                'height': '500px',
+                'width': '100%'
     }
 
     context = {'map_view': map_view}

@@ -311,22 +311,7 @@ var TETHYS_MAP_VIEW = (function() {
 
   };
 
-	/************************************************************************
- 	*                        DEFINE PUBLIC INTERFACE
- 	*************************************************************************/
-	/*
-	 * Library object that contains public facing functions of the package.
-	 * This is the object that is returned by the library wrapper function.
-	 * See below.
-	 * NOTE: The functions in the public interface have access to the private
-	 * functions of the library because of JavaScript function scope.
-	 */
-  public_interface = {
-    map: m_map,
-    target: m_map_target
-  };
-
-	/************************************************************************
+  /************************************************************************
  	*                  INITIALIZATION / CONSTRUCTOR
  	*************************************************************************/
 
@@ -341,6 +326,31 @@ var TETHYS_MAP_VIEW = (function() {
     ol_map_init();
 
 	});
+
+	/************************************************************************
+ 	*                        DEFINE PUBLIC INTERFACE
+ 	*************************************************************************/
+	/*
+	 * Library object that contains public facing functions of the package.
+	 * This is the object that is returned by the library wrapper function.
+	 * See below.
+	 * NOTE: The functions in the public interface have access to the private
+	 * functions of the library because of JavaScript function scope.
+	 */
+  var get_map, get_target;
+
+  get_map = function() {
+    return m_map;
+  };
+
+  get_target = function() {
+    return m_map_target;
+  };
+
+  public_interface = {
+    map: get_map,
+    target: get_target
+  };
 
 	return public_interface;
 
