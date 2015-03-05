@@ -1002,6 +1002,10 @@ var TETHYS_GOOGLE_MAP_VIEW = (function() {
      * Library object that contains public facing functions of the package.
      */
     public_interface = {
+        // Expose the map object
+        get_map: function() {
+          return map;
+        },
         // Delete a shape from the map
         deleteOverlay: function(id) {
             // Find the appropriate overlay from the array of overlays
