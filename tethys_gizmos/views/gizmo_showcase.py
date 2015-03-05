@@ -362,10 +362,8 @@ def index(request):
                 'width': '100%',
                 'controls': ['ZoomSlider',
                              'Rotate',
-                             {'ZoomToExtent': {'projection': 'EPSG:4326', 'extent': [-135, 22, -55, 54]}},
                              'FullScreen',
-                             {'MousePosition': {'projection': 'EPSG:4326'}},
-                             'ScaleLine'],
+                             {'MousePosition': {'projection': 'EPSG:4326'}}],
                 'layers': [{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
                                     'params': {'LAYERS': 'topp:states'},
                                     'serverType': 'geoserver'}},
@@ -373,7 +371,7 @@ def index(request):
                 'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 3.5, 'maxZoom': 18, 'minZoom': 3},
                 'base_map': 'OpenStreetMap',
                 'draw': ['Point', 'Line', 'Polygon'],
-                'legend': True
+                'legend': False
     }
 
     # Define the context object
@@ -547,7 +545,7 @@ def map_view(request):
                 'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 4, 'maxZoom': 18, 'minZoom': 3},
                 'base_map': 'OpenStreetMap',
                 'draw': ['Point', 'Line', 'Polygon'],
-                'legend': True,
+                'legend': False,
                 'height': '500px',
                 'width': '100%'
     }
