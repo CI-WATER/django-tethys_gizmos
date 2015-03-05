@@ -1003,7 +1003,7 @@ var TETHYS_GOOGLE_MAP_VIEW = (function() {
      */
     public_interface = {
         // Expose the map object
-        get_map: function() {
+        getMap: function() {
           return map;
         },
         // Delete a shape from the map
