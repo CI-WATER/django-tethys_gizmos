@@ -348,8 +348,8 @@ var TETHYS_MAP_VIEW = (function() {
   };
 
   public_interface = {
-    map: get_map,
-    target: get_target
+    get_map: get_map,
+    get_target: get_target
   };
 
 	return public_interface;
