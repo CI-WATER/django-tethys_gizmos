@@ -5,6 +5,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 
+from tethys_gizmos.gizmo_options import *
+
 
 def index(request):
     """
@@ -41,21 +43,21 @@ def index(request):
                                     ],
                         'vertical': True}
 
-    # Date Picker Data
-    date_picker = {'display_text': 'Date',
-                   'name': 'date1',
-                   'autoclose': True,
-                   'format': 'MM d, yyyy',
-                   'start_date': '2/15/2014',
-                   'start_view': 'decade',
-                   'today_button': True,
-                   'initial': 'February 15, 2014'}
+    # Date Picker Options
+    date_picker = DatePickerOptions(name='date1',
+                                    display_text='Date',
+                                    autoclose=True,
+                                    format='MM d, yyyy',
+                                    start_date='2/15/2014',
+                                    start_view='decade',
+                                    today_button=True,
+                                    initial='February 15, 2014')
 
-    date_picker_error = {'display_text': 'Date',
-                         'name': 'date2',
-                         'initial': '10/2/2013',
-                         'disabled': True,
-                         'error': 'Here is my error text'}
+    date_picker_error = DatePickerOptions(name='data2',
+                                          display_text='Date',
+                                          initial='10/2/2013',
+                                          disabled=True,
+                                          error='Here is my error text.')
 
     # Range Slider Data
     slider1 = {'display_text': 'Slider 1',
