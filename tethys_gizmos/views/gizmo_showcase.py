@@ -12,35 +12,38 @@ def index(request):
     """
     Django view for the gizmo showcase page
     """
-    # Button Group Data
-    single_button = {'buttons': [{'display_text': 'Click Me',
-                                  'name': 'click_me_name',
-                                  'attributes': 'onclick=alert(this.name);',
-                                  'type': 'submit'}
-    ]}
+    # Button Group Options
+    # Click me button
+    click_me_button = ButtonOptions(display_text='Click Me',
+                                    name='click_me_name',
+                                    attributes='onclick=alert(this.name);',
+                                    submit=True)
+    single_button = ButtonGroupOptions(buttons=[click_me_button])
 
-    horizontal_buttons = {'buttons': [{'display_text': 'Add',
-                                       'icon': 'glyphicon glyphicon-plus',
-                                       'style': 'success'},
-                                      {'display_text': 'Delete',
-                                       'icon': 'glyphicon glyphicon-trash',
-                                       'disabled': True,
-                                       'style': 'danger'}
-    ]}
+    # Horizontal Buttons
+    add_button = ButtonOptions(display_text='Add',
+                               icon='glyphicon glyphicon-plus',
+                               style='success')
+    delete_button = ButtonOptions(display_text='Delete',
+                                  icon='glyphicon glyphicon-trash',
+                                  disabled=True,
+                                  style='danger')
+    horizontal_buttons = ButtonGroupOptions(buttons=[add_button, delete_button])
 
-    vertical_buttons = {'buttons': [{'display_text': 'Edit',
-                                     'icon': 'glyphicon glyphicon-wrench',
-                                     'style': 'warning',
-                                     'attributes': 'id=edit_button'},
-                                    {'display_text': 'Info',
-                                     'icon': 'glyphicon glyphicon-question-sign',
-                                     'style': 'info',
-                                     'attributes': 'name=info'},
-                                    {'display_text': 'Apps',
-                                     'icon': 'glyphicon glyphicon-home',
-                                     'href': '/apps',
-                                     'style': 'primary'}
-                                    ],
+    # Vertical Buttons
+    edit_button = ButtonOptions(display_text='Edit',
+                                icon='glyphicon glyphicon-wrench',
+                                style='warning',
+                                attributes='id=edit_button')
+    info_button = ButtonOptions(display_text='Info',
+                                icon='glyphicon glyphicon-question-sign',
+                                style='info',
+                                attributes='name=info')
+    apps_button = ButtonOptions(display_text='Apps',
+                                icon='glyphicon glyphicon-home',
+                                href='/apps',
+                                style='primary')
+    vertical_buttons = {'buttons': [edit_button, info_button, apps_button],
                         'vertical': True}
 
     # Date Picker Options
@@ -77,28 +80,28 @@ def index(request):
 
     # Select Input
     select_input2 = {'display_text': 'Select2',
-                    'name': 'select1',
-                    'multiple': False,
-                    'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
-                    'initial': ['Two']}
+                     'name': 'select1',
+                     'multiple': False,
+                     'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
+                     'initial': ['Two']}
 
     select_input2_multiple = {'display_text': 'Select2 Multiple',
-                             'name': 'select2',
-                             'multiple': True,
-                             'options': [('One', '1'), ('Two', '2'), ('Three', '3')]}
+                              'name': 'select2',
+                              'multiple': True,
+                              'options': [('One', '1'), ('Two', '2'), ('Three', '3')]}
 
     select_input_multiple = {'display_text': 'Select Multiple',
                              'name': 'select2.1',
-                             'multiple': True ,
-                             'original':True,
+                             'multiple': True,
+                             'original': True,
                              'options': [('One', '1'), ('Two', '2'), ('Three', '3')]}
 
     select_input2_error = {'display_text': 'Select2 Disabled',
-                          'name': 'select3',
-                          'multiple': False,
-                          'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
-                          'disabled': True,
-                          'error': 'Here is my error text'}
+                           'name': 'select3',
+                           'multiple': False,
+                           'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
+                           'disabled': True,
+                           'error': 'Here is my error text'}
 
     # Text Input
     text_input = {'display_text': 'Text',
@@ -412,7 +415,8 @@ def get_kml(request):
     """
     This action is used to pass the kml data to the google map. It must return JSON with the key 'kml_link'.
     """
-    kml_links = ['http://ciwckan.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/69f8e7df-da87-47cd-90a1-d15dc84e99ba/download/indexclusters.kml']
+    kml_links = [
+        'http://ciwckan.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/69f8e7df-da87-47cd-90a1-d15dc84e99ba/download/indexclusters.kml']
 
     return JsonResponse({'kml_links': kml_links})
 
@@ -424,7 +428,8 @@ def swap_kml(request):
     for i in range(0, 20000000):
         pass
 
-    kml_links = ['http://ciwckan.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/53c7a910-5e00-4af7-803a-e48e0f17a131/download/elevation.kml']
+    kml_links = [
+        'http://ciwckan.chpc.utah.edu/dataset/00d54047-8581-4dc2-bdc2-b96f5a635455/resource/53c7a910-5e00-4af7-803a-e48e0f17a131/download/elevation.kml']
 
     return HttpResponse(json.dumps(kml_links), content_type='application/json')
 
@@ -442,12 +447,12 @@ def swap_overlays(request):
                                                     [40.63805550673186, -111.48110389709473],
                                                     [40.6413120105605, -111.48539543151855]],
                                     "properties": {"id": 4, "value": 5}, "crs": {"type": "link", "properties": {
-                                    "href": "http://spatialreference.org/ref/epsg/4326/proj4/", "type": "proj4"}}
+                        "href": "http://spatialreference.org/ref/epsg/4326/proj4/", "type": "proj4"}}
                                    },
                                    {"type": "Point",
                                     "coordinates": [40.629587853312174, -111.50959968566895],
                                     "properties": {"id": 5, "value": 6}, "crs": {"type": "link", "properties": {
-                                    "href": "http://spatialreference.org/ref/epsg/4326/proj4/", "type": "proj4"}}
+                                       "href": "http://spatialreference.org/ref/epsg/4326/proj4/", "type": "proj4"}}
                                    },
                                    {"type": "LineString",
                                     "coordinates": [[40.62737305910759, -111.50118827819824],
@@ -455,7 +460,7 @@ def swap_overlays(request):
                                                     [40.61277963772034, -111.48608207702637],
                                                     [40.62802447679272, -111.49157524108887]],
                                     "properties": {"id": 6, "value": 7}, "crs": {"type": "link", "properties": {
-                                    "href": "http://spatialreference.org/ref/epsg/4326/proj4/", "type": "proj4"}}
+                                       "href": "http://spatialreference.org/ref/epsg/4326/proj4/", "type": "proj4"}}
                                    }
                     ]
     }
@@ -523,7 +528,8 @@ def google_map(request):
                   'width': '100%',
                   'kml_service': reverse('gizmos:get_kml')}
 
-    messages.warning(request, 'WARNING: The "google_map" gizmo has been deprecated and may lose support in future releases of Tethys Platform.')
+    messages.warning(request,
+                     'WARNING: The "google_map" gizmo has been deprecated and may lose support in future releases of Tethys Platform.')
 
     context = {'google_map': google_map}
 
@@ -586,7 +592,7 @@ def fetchclimate_map(request):
             'location': [40.246942, -111.647971],
         },
         'plot': {
-            'dimensions': {'height': 350, 'width':500}
+            'dimensions': {'height': 350, 'width': 500}
         }
     }
 

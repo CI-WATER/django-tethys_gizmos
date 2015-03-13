@@ -190,39 +190,40 @@
           </div>
           <div class="code">
             <p class="muted">Controller</p>
-            <pre><code class="language-python">
-single_button = {'buttons': [
-                             {'display_text': 'Click Me',
-                              'name': 'click_me_name',
-                              'attributes': 'onclick=alert(this.name);',
-                              'type': 'submit'}
-                             ]}
+            <pre><code class="language-python">from tethys_gizmos.gizmo_options import ButtonGroupOptions
 
-horizontal_buttons = {'buttons': [
-                {'display_text': 'Add',
-                                 'icon': 'glyphicon glyphicon-plus',
-                                 'style': 'success'},
-                                {'display_text': 'Delete',
-                                 'icon': 'glyphicon glyphicon-trash',
-                                 'disabled': True,
-                                 'style': 'danger'}
-                                ]}
+# Single Button
+click_me_button = ButtonOptions(display_text='Click Me',
+                                name='click_me_name',
+                                attributes='onclick=alert(this.name);',
+                                submit=True)
+single_button = ButtonGroupOptions(buttons=[click_me_button])
 
-vertical_buttons = {'buttons': [
-                               {'display_text': 'Edit',
-                                'icon': 'glyphicon glyphicon-wrench',
-                                'style': 'warning',
-                                'attributes':'id=edit_button'},
-                               {'display_text': 'Info',
-                                'icon': 'glyphicon glyphicon-question-sign',
-                                'style': 'info',
-                                'attributes': 'name=info'},
-                               {'display_text': 'Apps',
-                                'icon': 'glyphicon glyphicon-home',
-                                'href': '/apps',
-                                'style': 'primary'}
-                               ],
-                   'vertical': True}</code></pre>
+# Horizontal Buttons
+add_button = ButtonOptions(display_text='Add',
+                           icon='glyphicon glyphicon-plus',
+                           style='success')
+delete_button = ButtonOptions(display_text='Delete',
+                              icon='glyphicon glyphicon-trash',
+                              disabled=True,
+                              style='danger')
+horizontal_buttons = ButtonGroupOptions(buttons=[add_button, delete_button])
+
+# Vertical Buttons
+edit_button = ButtonOptions(display_text='Edit',
+                            icon='glyphicon glyphicon-wrench',
+                            style='warning',
+                            attributes='id=edit_button')
+info_button = ButtonOptions(display_text='Info',
+                            icon='glyphicon glyphicon-question-sign',
+                            style='info',
+                            attributes='name=info')
+apps_button = ButtonOptions(display_text='Apps',
+                            icon='glyphicon glyphicon-home',
+                            href='/apps',
+                            style='primary')
+vertical_buttons = {'buttons': [edit_button, info_button, apps_button],
+                    'vertical': True}</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
 &#123;% gizmo button_group.html single_button %&#125;
