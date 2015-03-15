@@ -110,6 +110,7 @@
     var draw_polygons = false;
     var draw_points = false;
     var draw_polylines = false;
+    var draw_rectangles = false;
 
     // Set the output format
     var output_format = 'GEOJSON';
@@ -141,6 +142,11 @@
     {% if 'POLYLINES' in drawing_types_enabled %}
     // Enable polyline drawing capabilities
     draw_polylines = true;
+    {% endif %}
+
+    {% if 'BOXES' in drawing_types_enabled %}
+    // Enable rectangle drawing capabilities
+    draw_rectangles = true;
     {% endif %}
 
     {% if initial_drawing_mode in drawing_types_enabled %}
