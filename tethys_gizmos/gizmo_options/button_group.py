@@ -1,6 +1,7 @@
 from .base import TethysGizmoOptions
 
-__all__ = ['ButtonGroupOptions','ButtonOptions']
+__all__ = ['ButtonGroupOptions', 'ButtonOptions']
+
 
 class ButtonGroupOptions(TethysGizmoOptions):
     """
