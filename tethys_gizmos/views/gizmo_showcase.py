@@ -477,8 +477,8 @@ def editable_map(request):
     google_map_view = {'height': '600px',
                        'width': '100%',
                        'reference_kml_action': reverse('gizmos:get_kml'),
-                       'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
-                       'initial_drawing_mode': 'POINTS',
+                       'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES', 'BOXES'],
+                       'initial_drawing_mode': 'BOXES',
                        'input_overlays': {"type": "GeometryCollection",
                                           "geometries": [
                                               {"type": "Point",
@@ -495,13 +495,13 @@ def editable_map(request):
                                                                [40.635319920747456, -111.49088859558105],
                                                                [40.64912697157757, -111.48127555847168],
                                                                [40.634668574229735, -111.48024559020996]],
-                                               "properties": {"id": 3, "value": 3}}
+                                               "properties": {"id": 3, "value": 3}},
+                                              {"type": "BoundingBox",
+                                               "bounds": [-111.54521942138672,40.597792003905454,-111.46625518798828,40.66449372533465],
+                                               "properties":{"id": 4, "value": 4}
+                                               }
                                           ]},
-                       'color_ramp': {'1': '#ff0000',
-                                      '2': '#ffff00',
-                                      '3': '#00ff00',
-                                      '4': '#0000ff'
-                       }
+                       'output_format': 'WKT'
     }
 
     if ('editable_map_submit' in request.POST) and (request.POST['geometry']):
