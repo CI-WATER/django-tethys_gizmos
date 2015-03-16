@@ -802,28 +802,28 @@ text_error_input = TextInput(display_text='Text Error',
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-toggle_switch = {'display_text': 'Defualt Toggle',
-                 'name': 'toggle1'}
+toggle_switch = ToggleSwitch(display_text='Defualt Toggle',
+                             name='toggle1')
 
-toggle_switch_styled = {'display_text': 'Styled Toggle',
-                        'name': 'toggle2',
-                        'on_label': 'Yes',
-                        'off_label': 'No',
-                        'on_style': 'success',
-                        'off_style': 'danger',
-                        'initial': True,
-                        'size': 'large'}
+toggle_switch_styled = ToggleSwitch(display_text='Styled Toggle',
+                                    name='toggle2',
+                                    on_label='Yes',
+                                    off_label='No',
+                                    on_style='success',
+                                    off_style='danger',
+                                    initial=True,
+                                    size='large')
 
-toggle_switch_disabled = {'display_text': 'Disabled Toggle',
-                          'name': 'toggle3',
-                          'on_label': 'On',
-                          'off_label': 'Off',
-                          'on_style': 'success',
-                          'off_style': 'warning',
-                          'size': 'mini',
-                          'initial': False,
-                          'disabled': True,
-                          'error': 'Here is my error text'}</code></pre>
+toggle_switch_disabled = ToggleSwitch(display_text='Disabled Toggle',
+                                      name='toggle3',
+                                      on_label='On',
+                                      off_label='Off',
+                                      on_style='success',
+                                      off_style='warning',
+                                      size='mini',
+                                      initial=False,
+                                      disabled=True,
+                                      error='Here is my error text')</code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">
 &#123;% gizmo toggle_switch toggle_switch %&#125;
