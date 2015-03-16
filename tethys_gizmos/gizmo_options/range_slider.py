@@ -7,8 +7,7 @@ class RangeSlider(TethysGizmoOptions):
     """
     Range Slider
 
-    Sliders can be used to request an input value from a range of possible values. A slider is configured with a
-    dictionary of key-value options. The table below summarizes the options for sliders.
+    Sliders can be used to request an input value from a range of possible values. A slider is configured with a dictionary of key-value options. The table below summarizes the options for sliders.
 
     Attributes:
         display_text(string): Display text for the label that accompanies slider
