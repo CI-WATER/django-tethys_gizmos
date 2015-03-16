@@ -63,58 +63,58 @@ def index(request):
                                           error='Here is my error text.')
 
     # Range Slider Data
-    slider1 = {'display_text': 'Slider 1',
-               'name': 'slider1',
-               'min': 0,
-               'max': 100,
-               'initial': 50,
-               'step': 1}
-    slider2 = {'display_text': 'Slider 2',
-               'name': 'slider2',
-               'min': 0,
-               'max': 1,
-               'initial': 0.5,
-               'step': 0.1,
-               'disabled': True,
-               'error': 'Incorrect, please choose another value.'}
+    slider1 = RangeSlider(display_text='Slider 1',
+                          name='slider1',
+                          min=0,
+                          max=100,
+                          initial=50,
+                          step=1)
+    slider2 = RangeSlider(display_text='Slider 2',
+                          name='slider2',
+                          min=0,
+                          max=1,
+                          initial=0.5,
+                          step=0.1,
+                          disabled=True,
+                          error='Incorrect, please choose another value.')
 
     # Select Input
-    select_input2 = {'display_text': 'Select2',
-                     'name': 'select1',
-                     'multiple': False,
-                     'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
-                     'initial': ['Two']}
+    select_input2 = SelectInput(display_text='Select2',
+                                name='select1',
+                                multiple=False,
+                                options=[('One', '1'), ('Two', '2'), ('Three', '3')],
+                                original=['Two'])
 
-    select_input2_multiple = {'display_text': 'Select2 Multiple',
-                              'name': 'select2',
-                              'multiple': True,
-                              'options': [('One', '1'), ('Two', '2'), ('Three', '3')]}
+    select_input2_multiple = SelectInput(display_text='Select2 Multiple',
+                                         name='select2',
+                                         multiple=True,
+                                         options=[('One', '1'), ('Two', '2'), ('Three', '3')])
 
-    select_input_multiple = {'display_text': 'Select Multiple',
-                             'name': 'select2.1',
-                             'multiple': True,
-                             'original': True,
-                             'options': [('One', '1'), ('Two', '2'), ('Three', '3')]}
+    select_input_multiple = SelectInput(display_text='Select Multiple',
+                                        name='select2.1',
+                                        multiple=True,
+                                        original=True,
+                                        options=[('One', '1'), ('Two', '2'), ('Three', '3')])
 
-    select_input2_error = {'display_text': 'Select2 Disabled',
-                           'name': 'select3',
-                           'multiple': False,
-                           'options': [('One', '1'), ('Two', '2'), ('Three', '3')],
-                           'disabled': True,
-                           'error': 'Here is my error text'}
+    select_input2_error = SelectInput(display_text='Select2 Disabled',
+                                      name='select3',
+                                      multiple=False,
+                                      options=[('One', '1'), ('Two', '2'), ('Three', '3')],
+                                      disabled=True,
+                                      error='Here is my error text')
 
     # Text Input
-    text_input = {'display_text': 'Text',
-                  'name': 'inputAmount',
-                  'placeholder': 'e.g.: 10.00',
-                  'prepend': '$'}
+    text_input = TextInput(display_text='Text',
+                           name='inputAmount',
+                           placeholder='e.g.: 10.00',
+                           prepend='$')
 
-    text_error_input = {'display_text': 'Text Error',
-                        'name': 'inputEmail',
-                        'initial': 'bob@example.com',
-                        'disabled': True,
-                        'icon_append': 'glyphicon glyphicon-envelope',
-                        'error': 'Here is my error text'}
+    text_error_input = TextInput(display_text='Text Error',
+                                 name='inputEmail',
+                                 initial='bob@example.com',
+                                 disabled=True,
+                                 icon_append='glyphicon glyphicon-envelope',
+                                 error='Here is my error text')
 
     # Toggle Switch
     toggle_switch = {'display_text': 'Defualt Toggle',
@@ -497,9 +497,10 @@ def editable_map(request):
                                                                [40.634668574229735, -111.48024559020996]],
                                                "properties": {"id": 3, "value": 3}},
                                               {"type": "BoundingBox",
-                                               "bounds": [-111.54521942138672,40.597792003905454,-111.46625518798828,40.66449372533465],
-                                               "properties":{"id": 4, "value": 4}
-                                               }
+                                               "bounds": [-111.54521942138672, 40.597792003905454, -111.46625518798828,
+                                                          40.66449372533465],
+                                               "properties": {"id": 4, "value": 4}
+                                              }
                                           ]},
                        'output_format': 'WKT'
     }
