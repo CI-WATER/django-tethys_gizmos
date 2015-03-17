@@ -192,9 +192,9 @@ def index(request):
                                                  [50, -2.5], [60, -27.7], [70, -55.7], [80, -76.5]]}
                          ]}
 
-    line_plot_view = {'highcharts_object': highcharts_object,
-                      'width': '500px',
-                      'height': '500px'}
+    line_plot_view = PlotView(highcharts_object=highcharts_object,
+                              width='500px',
+                              height='500px')
 
     # Web Plot
     web_plot_object = {'chart': {
@@ -229,9 +229,9 @@ def index(request):
                                   }
                        ]}
 
-    web_plot = {'highcharts_object': web_plot_object,
-                'width': '500px',
-                'height': '500px'}
+    web_plot = PlotView(highcharts_object=web_plot_object,
+                        width='500px',
+                        height='500px')
 
     # Time series plot
     timeseries_plot_object = {
@@ -291,40 +291,40 @@ def index(request):
                    }]
     }
 
-    timeseries_plot = {'highcharts_object': timeseries_plot_object,
-                       'width': '500px',
-                       'height': '500px'}
+    timeseries_plot = PlotView(highcharts_object=timeseries_plot_object,
+                       width='500px',
+                       height='500px')
 
     # Table View
-    table_view = {'column_names': ('Name', 'Age', 'Job'),
-                  'rows': [('Bill', 30, 'contractor'),
-                           ('Fred', 18, 'programmer'),
-                           ('Bob', 26, 'boss')],
-                  'hover': True,
-                  'striped': False,
-                  'bordered': False,
-                  'condensed': False}
+    table_view = TableView(column_names=('Name', 'Age', 'Job'),
+                           rows=[('Bill', 30, 'contractor'),
+                                 ('Fred', 18, 'programmer'),
+                                 ('Bob', 26, 'boss')],
+                           hover=True,
+                           striped=False,
+                           bordered=False,
+                           condensed=False)
 
-    table_view_edit = {'column_names': ('Name', 'Age', 'Job'),
-                       'rows': [('Bill', 30, 'contractor'),
-                                ('Fred', 18, 'programmer'),
-                                ('Bob', 26, 'boss')],
-                       'hover': True,
-                       'striped': True,
-                       'bordered': False,
-                       'condensed': False,
-                       'editable_columns': (False, 'ageInput', 'jobInput'),
-                       'row_ids': [21, 25, 31]}
+    table_view_edit = TableView(column_names=('Name', 'Age', 'Job'),
+                                rows=[('Bill', 30, 'contractor'),
+                                      ('Fred', 18, 'programmer'),
+                                      ('Bob', 26, 'boss')],
+                                hover=True,
+                                striped=True,
+                                bordered=False,
+                                condensed=False,
+                                editable_columns=(False, 'ageInput', 'jobInput'),
+                                row_ids=[21, 25, 31])
 
 
     # Message Box
-    message_box = {'name': 'sampleModal',
-                   'title': 'Message Box Title',
-                   'message': 'Congratulations! This is a message box.',
-                   'dismiss_button': 'Nevermind',
-                   'affirmative_button': 'Proceed',
-                   'width': 400,
-                   'affirmative_attributes': 'href=javascript:void(0);'}
+    message_box = MessageBox(name='sampleModal',
+                             title='Message Box Title',
+                             message='Congratulations! This is a message box.',
+                             dismiss_button='Nevermind',
+                             affirmative_button='Proceed',
+                             width=400,
+                             affirmative_attributes='href=javascript:void(0);')
 
     # Editable Google Map
     google_map_view = {'height': '600px',
