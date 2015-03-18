@@ -1377,26 +1377,19 @@ timeseries_plot = PlotView(highcharts_object=timeseries_plot_object,
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-map_view_options = {'height': '400px',
-                    'width': '100%',
-                    'controls': ['ZoomSlider',
-                                 'Rotate',
-                                 'FullScreen',
-                                 'ScaleLine',
-                                 {'ZoomToExtent': {'projection': 'EPSG:4326',
-                                                   'extent': [-135, 22, -55, 54]}},
-                                 {'MousePosition': {'projection': 'EPSG:4326'}},
-                    ],
-                    'layers': [{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
-                                        'params': {'LAYERS': 'topp:states'},
-                                        'serverType': 'geoserver'}
-                                },
-                    ],
-                    'view': {'projection': 'EPSG:4326',
-                             'center': [-100, 40], 'zoom': 3.5,
-                             'maxZoom': 18, 'minZoom': 3},
-                    'base_map': 'OpenStreetMap'
-  }</code></pre>
+map_view = MapView(height='500px',
+                   width='100%',
+                   controls=['ZoomSlider',
+                             'Rotate',
+                             'FullScreen',
+                             {'MousePosition': {'projection': 'EPSG:4326'}}],
+                   layers=[{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
+                                    'params': {'LAYERS': 'topp:states'},
+                                    'serverType': 'geoserver'}}],
+                   view={'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 3.5, 'maxZoom': 18, 'minZoom': 3},
+                   basemap='OpenStreetMap',
+                   draw=['Point', 'Line', 'Polygon'],
+                   legend=False)</code></pre>
             <p class="muted">HTML</p>
             <pre><code class="language-python">
   &#123;% gizmo map_view map_view_options %&#125;

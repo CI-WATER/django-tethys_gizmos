@@ -18,7 +18,8 @@ class MapView(TethysGizmoOptions):
     layers(list): A list of layer dictionaries where the singular key of each dictionary specifies the type of layer and the value is another dictionary with the options for that layer. Supported layer types are 'WMS', 'TiledWMS', 'GeoJSON', and 'KML'. See notes below details.
     """
 
-    def __init__(self, height='520px', width='100%', basemap='OpenStreetMap', view=['centered', 'Zoom', 2], controls=[], layers=''):
+    def __init__(self, height='520px', width='100%', basemap='OpenStreetMap', view={'center': [-100, 40], 'zoom': 2},
+                 controls=[], layers='', draw=[], legend=False):
         """
         Constructor
         """
@@ -31,3 +32,5 @@ class MapView(TethysGizmoOptions):
         self.view = view
         self.controls = controls
         self.layers = layers
+        self.draw = draw
+        self.legend = legend
