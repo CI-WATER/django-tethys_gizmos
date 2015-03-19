@@ -292,8 +292,8 @@ def index(request):
     }
 
     timeseries_plot = PlotView(highcharts_object=timeseries_plot_object,
-                       width='500px',
-                       height='500px')
+                               width='500px',
+                               height='500px')
 
     # Table View
     table_view = TableView(column_names=('Name', 'Age', 'Job'),
@@ -363,21 +363,19 @@ def index(request):
     }
 
     # Map View
-    map_view = {'height': '500px',
-                'width': '100%',
-                'controls': ['ZoomSlider',
-                             'Rotate',
-                             'FullScreen',
-                             {'MousePosition': {'projection': 'EPSG:4326'}}],
-                'layers': [{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
-                                    'params': {'LAYERS': 'topp:states'},
-                                    'serverType': 'geoserver'}},
-                ],
-                'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 3.5, 'maxZoom': 18, 'minZoom': 3},
-                'base_map': 'OpenStreetMap',
-                'draw': ['Point', 'Line', 'Polygon'],
-                'legend': False
-    }
+    map_view = MapView(height='500px',
+                       width='100%',
+                       controls=['ZoomSlider',
+                                 'Rotate',
+                                 'FullScreen',
+                                 {'MousePosition': {'projection': 'EPSG:4326'}}],
+                       layers=[{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
+                                        'params': {'LAYERS': 'topp:states'},
+                                        'serverType': 'geoserver'}}],
+                       view={'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 3.5, 'maxZoom': 18, 'minZoom': 3},
+                       basemap='OpenStreetMap',
+                       draw=['Point', 'Line', 'Polygon'],
+                       legend=False)
 
     # Define the context object
     context = {'single_button': single_button,

@@ -8,3 +8,4 @@ from message_box import *
 from table_view import *
 from highcharts_plot_view import *
 from map_view import *
+from google_map import *
