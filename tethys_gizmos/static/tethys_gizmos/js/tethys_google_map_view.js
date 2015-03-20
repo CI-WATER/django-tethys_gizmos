@@ -17,7 +17,7 @@ var TETHYS_GOOGLE_MAP_VIEW = (function() {
   *                              CONSTANTS  
   ************************************************************************/  
   var POINT_TYPE = google.maps.drawing.OverlayType.MARKER;  
-  var POLYGON_TYPE = google.maps.drawing.OverlayType.POLYGON;
+  var POLYGON_TYPE = google.maps.drawing.OverlayType.POLYGONE;
   var POLYLINE_TYPE = google.maps.drawing.OverlayType.POLYLINE;  
   var BOX_TYPE = google.maps.drawing.OverlayType.RECTANGLE;
   var COLOR_RAMP_TYPE = 'color_ramp';

@@ -2,3 +2,6 @@
   position: relative;
   margin: 20px;
 }
+.tethys-map-view-draw-control {
+  top: 7px;
+}

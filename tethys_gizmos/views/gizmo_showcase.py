@@ -551,11 +551,25 @@ def map_view(request):
                 ],
                 'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 4, 'maxZoom': 18, 'minZoom': 3},
                 'base_map': 'OpenStreetMap',
-                'draw': ['Point', 'Line', 'Polygon'],
+                'draw': {'controls': ['Point', 'LineString', 'Polygon'],
+                         # 'output_format': 'WKT'
+                },
                 'legend': False,
                 'height': '500px',
                 'width': '100%'
     }
+
+    # map_view = {'layers': [{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
+    #                                 'params': {'LAYERS': 'topp:states'},
+    #                                 'serverType': 'geoserver'}},
+    #             ],
+    #             'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 4, 'maxZoom': 18, 'minZoom': 3},
+    #             'base_map': 'OpenStreetMap',
+    #             'draw': ['Point', 'LineString', 'Circle', 'LinearRing'],
+    #             'legend': False,
+    #             'height': '500px',
+    #             'width': '100%'
+    # }
 
     context = {'map_view': map_view}
 
