@@ -327,12 +327,12 @@ def index(request):
                              affirmative_attributes='href=javascript:void(0);')
 
     # Editable Google Map
-    google_map_view = {'height': '600px',
-                       'width': '100%',
-                       'reference_kml_action': reverse('gizmos:get_kml'),
-                       'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
-                       'initial_drawing_mode': 'POINTS',
-                       'output_format': 'WKT'}
+    google_map_view = GoogleMapView(height='600px',
+                                    width='100%',
+                                    reference_kml_action=reverse('gizmos:get_kml'),
+                                    drawing_types_enabled=['POLYGONS', 'POINTS', 'POLYLINES'],
+                                    initial_drawing_mode='POINTS',
+                                    output_format='WKT')
 
     flash_message = ''
 
