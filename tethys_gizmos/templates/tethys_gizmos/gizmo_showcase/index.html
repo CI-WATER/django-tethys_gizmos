@@ -222,8 +222,8 @@ apps_button = ButtonOptions(display_text='Apps',
                             icon='glyphicon glyphicon-home',
                             href='/apps',
                             style='primary')
-vertical_buttons = {'buttons': [edit_button, info_button, apps_button],
-                    'vertical': True}</code></pre>
+vertical_buttons = ButtonGroupOptions(buttons=[edit_button, info_button, apps_button],
+                                          vertical=True)</code></pre>
             <p class="muted">HTML</p>
           <pre><code class="language-python">
 &#123;% gizmo button_group.html single_button %&#125;
@@ -1763,26 +1763,32 @@ google_map_view_options = {'height': '700px',
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-  fetchclimate_with_map_plot = {
-                'serverUrl':'http://fetchclimate2.cloudapp.net',
-                'variables': {
-                  'prate':[423,432,426,424],
-                  'elev':[]
-                },
-                'map': {
-                  'css' : {'height': '600px',
-                            'width': '100%',},
-                  'map_data' : {
-                    'api_key': 'S0mEaPIk3y',
-                    'drawing_types_enabled': ['RECTANGLE', 'POINTS'],
-                    'initial_drawing_mode': 'RECTANGLE',
-                    'max_num_grids': 2
-                  }
-                },
-                'plot' : {
-                  'dimensions' : {'height': 350, 'width': 500}
-                }
-              }
+fetchclimate_map = FetchClimateMap(
+            url_parameter=FetchClimateURLParameter(serverUrl='http://fetchclimate2.cloudapp.net'),
+            variable_parameters = FetchClimateVariableParameters(variables={
+                'prate': [423, 432, 426, 424],
+                'elev': []
+            }),
+            map_parameters=FetchClimateMapParameters(
+                css={'height': '600px',
+                     'width': '100%'},
+                map_data=FetchClimateMapData(
+                    drawing_types_enabled=['RECTANGLE', 'POINTS'],
+                    initial_drawing_mode='RECTANGLE',
+                    max_num_grids=2
+                )
+            ),
+            grid_parameters=FetchClimateGridParameters(
+                title='Provo Canyon Watershed',
+                boundingBox=[40.308836, 40.381579, -111.654462, -111.550778],
+                gridResolution=[25, 25]
+            ),
+            point_parameters=FetchClimatePointParameters(
+                title='Clyde Building',
+                location=[40.246942, -111.647971],
+            ),
+            plot_parameters=FetchClimatePlotParameters(dimensions={'width': 500, 'height': 350})
+)
   </code></pre>
             <p class="muted">HTML</p>
             <pre><code class="language-python">
@@ -1796,22 +1802,22 @@ google_map_view_options = {'height': '700px',
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-  fetchclimate_array = {
-                  'serverUrl':'http://fetchclimate2.cloudapp.net',
-                  'variables': {
-                    'prate':[423,432,426,424],
-                    'elev':[]
-                  },
-                  'grid' : {
-                    'name' : 'Provo Canyon Watershed',
-                    'boundingBox' : [40.308836,40.381579,-111.654462,-111.550778],
-                    'gridResolution':[25,25]
-                  },
-                  'point' : {
-                    'name' : 'Clyde Building'
-                    'location':[40.246942,-111.647971]
-                  }
-                }
+  fetchclimate_array = FetchClimateMap(
+                url_parameter=FetchClimateURLParameter(serverUrl='http://fetchclimate2.cloudapp.net'),
+                variable_parameters=FetchClimateVariableParameters(variables={
+                    'prate': [423, 432, 426, 424],
+                    'elev': []
+                }),
+                grid_parameters=FetchClimateGridParameters(
+                    title='Provo Canyon Watershed',
+                    boundingBox=[40.308836, 40.381579, -111.654462, -111.550778],
+                    gridResolution=[25, 25]
+                ),
+                point_parameters=FetchClimatePointParameters(
+                    title='Clyde Building',
+                    location=[40.246942, -111.647971]
+                )
+    )
   </code></pre>
             <p class="muted">HTML</p>
             <pre><code class="language-python">
