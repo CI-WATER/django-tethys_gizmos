@@ -27,3 +27,29 @@ class PlotView(TethysGizmoOptions):
         self.height = height
         self.width = width
         self.attributes = attributes
+
+
+
+class HighchartsObject(TethysGizmoOptions):
+    """
+    Highcharts Object
+
+    Attributes
+    """
+
+    def __init__(self, chart={}, title='', subtitle='', legend={}, xAxis={}, yAxis={}, tooltip={},
+                 series=[]):
+        """
+        Constructor
+        """
+        # Initialize super class
+        super(TethysGizmoOptions, self).__init__()
+
+        self.chart = chart
+        self.title = title
+        self.subtitle = subtitle
+        self.legend = legend
+        self.xAxis = xAxis
+        self.yAxis = yAxis
+        self.tooltip = tooltip
+        self.series = series
