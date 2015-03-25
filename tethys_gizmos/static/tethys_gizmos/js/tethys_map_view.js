@@ -61,7 +61,8 @@ var TETHYS_MAP_VIEW = (function() {
  	var ol_base_map_init, ol_controls_init, ol_drawing_init, ol_layers_init, ol_map_init, ol_view_init, parse_options;
 
   // Drawing Methods
-  var add_drawing_interaction, draw_end_callback, draw_change_callback, switch_drawing_interaction;
+  var add_drawing_interaction, add_modify_interaction, draw_end_callback, draw_change_callback,
+      switch_drawing_interaction;
 
   // Feature Parser Methods
   var geojsonify, wellknowtextify;
@@ -236,10 +237,13 @@ var TETHYS_MAP_VIEW = (function() {
     var VALID_GEOMETRY_TYPES = ['Polygon', 'Point', 'LineString', 'Circle'];
     var INITIAL_FILL_COLOR = 'rgba(255, 255, 255, 0.2)',
         INITIAL_STROKE_COLOR = '#ffcc33',
-        INITIAL_POINT_FILL_COLOR = '#ffcc33';
+        INITIAL_POINT_FILL_COLOR = '#ffcc33',
+        BUTTON_SPACING = 30,
+        BUTTON_OFFSET_UNITS = 'px';
 
-    var controls_added = [];
-    var button_left_offset = 50;
+    var controls_added = [],
+        button_left_offset = 50,
+        initial_drawing_mode = 'Point';
 
     if (is_defined(m_draw_options)) {
       // Initialize the overlay layer
@@ -265,11 +269,26 @@ var TETHYS_MAP_VIEW = (function() {
       m_drawing_layer.setMap(m_map);
 
       // Set initial drawing interaction
-      add_drawing_interaction('Point');
+      if (is_defined(m_draw_options.initial)) {
+        initial_drawing_mode = m_draw_options.initial;
+      }
+
+      add_drawing_interaction(initial_drawing_mode);
       
       // Add drawing controls to the map
       if (is_defined(m_draw_options.controls)) {
+        var modify_control;
         var draw_controls = m_draw_options.controls;
+
+        // Add modify control first
+        modify_control = new DrawingControl({
+          control_type: 'modify',
+          left_offset: button_left_offset.toString() + BUTTON_OFFSET_UNITS,
+          active: false
+        });
+
+        button_left_offset += BUTTON_SPACING;
+        m_map.addControl(modify_control);
 
         for (var i = 0; i < draw_controls.length; i++) {
 
@@ -279,20 +298,27 @@ var TETHYS_MAP_VIEW = (function() {
             var offset_string,
                 new_control;
 
+            var is_initial = false;
+
             // Convert offset to string
-            offset_string = button_left_offset.toString() + 'px';
+            offset_string = button_left_offset.toString() + BUTTON_OFFSET_UNITS;
 
             // Create new control
+            if (current_control_type === initial_drawing_mode) {
+              is_initial = true;
+            }
+
             new_control = new DrawingControl({
               control_type: current_control_type,
-              left_offset: offset_string
+              left_offset: offset_string,
+              active: is_initial
             });
 
             m_map.addControl(new_control);
 
             // Stash and increment
             controls_added.push(current_control_type);
-            button_left_offset += 27;
+            button_left_offset += BUTTON_SPACING;
           }
         }
       }
@@ -461,6 +487,15 @@ var TETHYS_MAP_VIEW = (function() {
     m_map.addInteraction(m_drawing_interaction);
   };
 
+  add_modify_interaction = function() {
+    m_drawing_interaction = new ol.interaction.Modify({
+      features: m_drawing_layer.getFeatures(),
+      deleteCondition: function(event) {
+        return ol.events.condition.shiftKeyOnly(event) && ol.events.condition.singleClick(event);
+      }
+    });
+  };
+
   draw_end_callback = function(event) {
     initialize_feature_properties(event.feature);
     update_field();
@@ -476,7 +511,12 @@ var TETHYS_MAP_VIEW = (function() {
     m_map.removeInteraction(m_drawing_interaction);
 
     // Create new drawing interaction
-    add_drawing_interaction(geometry_type);
+    if (geometry_type !== 'modify') {
+      add_drawing_interaction(geometry_type);
+    } else {
+
+    }
+
   };
 
   /***********************************
@@ -700,22 +740,42 @@ var TETHYS_MAP_VIEW = (function() {
   DrawingControl = function(opt_options) {
     var options,
         button,
+        button_image,
         button_wrapper,
+        icon_class,
         handle_drawing_interaction_switch;
 
     options = opt_options || {};
 
     // Create Button
+    icon_class = 'tethys-map-view-draw-icon ' + options.control_type.toLowerCase();
+
+    if (is_defined(options.active) && options.active === true) {
+      icon_class += ' active';
+    }
+
     button = document.createElement('button');
-    button.innerHTML = 'L';
+    button_image = document.createElement('div');
+    button_image.className = icon_class;
+    button.appendChild(button_image);
     button_wrapper = document.createElement('div');
     button_wrapper.className = 'tethys-map-view-draw-control ol-unselectable ol-control';
     button_wrapper.style.left = options.left_offset;
     button_wrapper.appendChild(button);
 
     // Create action handler
-    handle_drawing_interaction_switch = function() {
+    handle_drawing_interaction_switch = function(event) {
+
+      // Switch Interaction
       switch_drawing_interaction(options.control_type);
+
+      // Reset button active state
+      $('.tethys-map-view-draw-icon').each(function(){
+        $(this).removeClass('active');
+      });
+
+      // Set current button to active state
+      $(event.toElement).addClass('active');
     };
 
     // Bind switch action to click and touch events
