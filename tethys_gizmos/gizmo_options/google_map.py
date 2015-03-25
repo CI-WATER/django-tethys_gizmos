@@ -20,7 +20,7 @@ class GoogleMapView(TethysGizmoOptions):
     input_overlays(PySON): A JavaScript-equivilent Python data structure representing GeoJSON or WktJSON containing the geometry and attributes to be added to the map as overlays (see example below). Only points, lines and polygons are supported.
     """
 
-    def __init__(self, height, width, maps_api_key, reference_kml_action="", drawing_types_enabled=[], initial_drawing_mode="", output_format="GEOJSON", input_overlays=None):
+    def __init__(self, height, width, maps_api_key="", reference_kml_action="", drawing_types_enabled=[], initial_drawing_mode="", output_format='GEOJSON', input_overlays=[None]):
         """
         Constructor
         """

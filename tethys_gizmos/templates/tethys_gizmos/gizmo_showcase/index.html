@@ -1549,13 +1549,12 @@ ol_map.setView(...);</code></pre>
           <div class="code">
             <p class="muted">Controller</p>
             <pre><code class="language-python">
-google_map_view_options = {'height': '600px',
-                           'width': '100%',
-                           'reference_kml_action': '/apps/my-app/get-kml',
-                           'maps_api_key': 'S0mEaPIk3y',
-                           'drawing_types_enabled': ['POLYGONS', 'POINTS', 'POLYLINES'],
-                           'initial_drawing_mode': 'POINTS',
-                           'output_format': 'WKT'}
+google_map_view = GoogleMapView(height='600px',
+                                width='100%',
+                                reference_kml_action=reverse('gizmos:get_kml'),
+                                drawing_types_enabled=['POLYGONS', 'POINTS', 'POLYLINES'],
+                                initial_drawing_mode='POINTS',
+                                output_format='WKT')
             </code></pre>
             <p class="muted">KML Service Controller</p>
             <pre><code class="language-python">
