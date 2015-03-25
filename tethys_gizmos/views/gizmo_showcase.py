@@ -43,8 +43,8 @@ def index(request):
                                 icon='glyphicon glyphicon-home',
                                 href='/apps',
                                 style='primary')
-    vertical_buttons = {'buttons': [edit_button, info_button, apps_button],
-                        'vertical': True}
+    vertical_buttons = ButtonGroupOptions(buttons=[edit_button, info_button, apps_button],
+                                          vertical=True)
 
     # Date Picker Options
     date_picker = DatePickerOptions(name='date1',
@@ -344,23 +344,22 @@ def index(request):
         flash_message = geometry_string
 
     # Fetchclimate
-    fetchclimate_array = {
-        'serverUrl': 'http://fetchclimate2.cloudapp.net',
-        'variables': {
+    fetchclimate_array = FetchClimateMap(
+        url_parameter=FetchClimateURLParameter(serverUrl='http://fetchclimate2.cloudapp.net'),
+        variable_parameters=FetchClimateVariableParameters(variables={
             'prate': [423, 432, 426, 424],
             'elev': []
-        },
-        'grid': {
-            'title': 'Provo Canyon Watershed',
-            'boundingBox': [40.308836, 40.381579, -111.654462, -111.550778],
-            'gridResolution': [25, 25]
-        },
-        'point': {
-            'title': 'Clyde Building',
-            'location': [40.246942, -111.647971],
-        },
-        'dataEvent': True
-    }
+        }),
+        grid_parameters=FetchClimateGridParameters(
+            title='Provo Canyon Watershed',
+            boundingBox=[40.308836, 40.381579, -111.654462, -111.550778],
+            gridResolution=[25, 25]
+        ),
+        point_parameters=FetchClimatePointParameters(
+            title='Clyde Building',
+            location=[40.246942, -111.647971]
+        )
+    )
 
     # Map View
     map_view = MapView(height='500px',
@@ -581,34 +580,32 @@ def fetchclimate_map(request):
     """
     Place to show off the new map view
     """
-    fetchclimate_map = {
-        'serverUrl': 'http://fetchclimate2.cloudapp.net',
-        'variables': {
+    fetchclimate_map = FetchClimateMap(
+        url_parameter=FetchClimateURLParameter(serverUrl='http://fetchclimate2.cloudapp.net'),
+        variable_parameters=FetchClimateVariableParameters(variables={
             'prate': [423, 432, 426, 424],
             'elev': []
-        },
-        'map': {
-            'css': {'height': '600px',
-                    'width': '100%'},
-            'map_data': {
-                'drawing_types_enabled': ['RECTANGLE', 'POINTS'],
-                'initial_drawing_mode': 'RECTANGLE',
-                'max_num_grids': 2
-            }
-        },
-        'grid': {
-            'title': 'Provo Canyon Watershed',
-            'boundingBox': [40.308836, 40.381579, -111.654462, -111.550778],
-            'gridResolution': [25, 25]
-        },
-        'point': {
-            'title': 'Clyde Building',
-            'location': [40.246942, -111.647971],
-        },
-        'plot': {
-            'dimensions': {'height': 350, 'width': 500}
-        }
-    }
+        }),
+        map_parameters=FetchClimateMapParameters(
+            css={'height': '600px',
+                 'width': '100%'},
+            map_data=FetchClimateMapData(
+                drawing_types_enabled=['RECTANGLE', 'POINTS'],
+                initial_drawing_mode='RECTANGLE',
+                max_num_grids=2
+            )
+        ),
+        grid_parameters=FetchClimateGridParameters(
+            title='Provo Canyon Watershed',
+            boundingBox=[40.308836, 40.381579, -111.654462, -111.550778],
+            gridResolution=[25, 25]
+        ),
+        point_parameters=FetchClimatePointParameters(
+            title='Clyde Building',
+            location=[40.246942, -111.647971],
+        ),
+        plot_parameters=FetchClimatePlotParameters(dimensions={'width': 500, 'height': 350})
+    )
 
     context = {'fetchclimate_map': fetchclimate_map}
 
