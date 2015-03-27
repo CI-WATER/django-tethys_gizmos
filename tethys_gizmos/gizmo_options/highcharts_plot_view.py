@@ -1,6 +1,6 @@
 from .base import TethysGizmoOptions
 
-__all__ = ['PlotView', 'HighChartsObject']
+__all__ = ['PlotView', 'HighChartsObjectBase', 'HighChartsLinePlot']
 
 
 class PlotView(TethysGizmoOptions):
@@ -29,35 +29,29 @@ class PlotView(TethysGizmoOptions):
         self.attributes = attributes
 
 
-class HighChartsObject(TethysGizmoOptions):
+class HighChartsObjectBase(TethysGizmoOptions):
     """
     HighCharts Object
 
     Attributes
     """
 
-    def __init__(self, chart={}, title='', subtitle='', legend={}, xAxis={}, yAxis={}, tooltip={},
-                 series=[], **kwargs):
+    def __init__(self, chart={}, title='', subtitle='', **kwargs):
         """
         Constructor
         """
         # Initialize super class
-        super(TethysGizmoOptions, self).__init__()
+        super(HighChartsObjectBase, self).__init__()
 
         self.chart = chart
         self.title = title
         self.subtitle = subtitle
-        self.legend = legend
-        self.xAxis = xAxis
-        self.yAxis = yAxis
-        self.tooltip = tooltip
-        self.series = series
         #add any other attributes the user wants
         for key, value in kwargs.iteritems():
             setattr(self, key, value)
 
 
-class HighChartsLinePlot(TethysGizmoOptions):
+class HighChartsLinePlot(HighChartsObjectBase):
     """
     Line Plot
 
@@ -66,11 +60,25 @@ class HighChartsLinePlot(TethysGizmoOptions):
     Attributes
     """
 
-    def __init__(self,chart={'type': 'line'}, title='', subtitle='', legend={}, xAxis={}, yAxis={}, tooltip={},
-                 series=[]):
+    def __init__(self, line_plot_data, title='', subtitle='', **kwargs):
         """
         Constructor
+
+        Args:
+          line_plot_data(dict, required): Dictionary of data series where keys are the name of the series and value is a 2-dim. list.
         """
+
+        self.series = []
+
+        for name, data in line_plot_data.iteritems():
+
+            self.series.append({
+                             'name': name,
+                             'color': '#0066ff',
+                             'marker': {'enabled': False},
+                             'data': data
+            })
+
         # Initialize super class
-        super(HighChartsObject, self).__init__(chart=chart, title=title, subtitle=subtitle, legend=legend,
-                                               xAxis=xAxis, yAxis=yAxis, tooltip=tooltip, series=series)
+        super(HighChartsLinePlot, self).__init__(chart={'type': 'line'}, title=title, subtitle=subtitle, **kwargs)
+
