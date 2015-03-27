@@ -49,3 +49,9 @@
 .tethys-map-view-draw-control .tethys-map-view-draw-icon.modify.active {
   background-position: 0 -176px;
 }
+.tethys-map-view-draw-control .tethys-map-view-draw-icon.drag {
+  background-position: 0 -192px;
+}
+.tethys-map-view-draw-control .tethys-map-view-draw-icon.drag.active {
+  background-position: 0 -208px;
+}

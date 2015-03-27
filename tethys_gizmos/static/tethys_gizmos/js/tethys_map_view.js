@@ -36,6 +36,9 @@ var TETHYS_MAP_VIEW = (function() {
   var public_interface,				                              // Object returned by the module
       m_drawing_layer,                                      // Layer for drawing overlays
       m_drawing_interaction,                                // Drawing interaction used for drawing
+      m_drag_feature_interaction,                           // Drag feature interaction
+      m_modify_interaction,                                 // Modify interaction used for modifying features
+      m_select_interaction,                                 // Select interaction for modify action
       m_map;					                                      // The map
 
   // Selectors
@@ -61,8 +64,8 @@ var TETHYS_MAP_VIEW = (function() {
  	var ol_base_map_init, ol_controls_init, ol_drawing_init, ol_layers_init, ol_map_init, ol_view_init, parse_options;
 
   // Drawing Methods
-  var add_drawing_interaction, add_modify_interaction, draw_end_callback, draw_change_callback,
-      switch_drawing_interaction;
+  var add_drawing_interaction, add_drag_feature_interaction, add_modify_interaction, draw_end_callback,
+      draw_change_callback, switch_interaction;
 
   // Feature Parser Methods
   var geojsonify, wellknowtextify;
@@ -79,7 +82,7 @@ var TETHYS_MAP_VIEW = (function() {
   var is_defined, in_array;
 
   // Class Declarations
-  var DrawingControl;
+  var DrawingControl, DragFeatureInteraction;
 
  	/************************************************************************
  	*                    PRIVATE FUNCTION IMPLEMENTATIONS
@@ -277,7 +280,7 @@ var TETHYS_MAP_VIEW = (function() {
       
       // Add drawing controls to the map
       if (is_defined(m_draw_options.controls)) {
-        var modify_control;
+        var modify_control, drag_feature_control;
         var draw_controls = m_draw_options.controls;
 
         // Add modify control first
@@ -289,6 +292,16 @@ var TETHYS_MAP_VIEW = (function() {
 
         button_left_offset += BUTTON_SPACING;
         m_map.addControl(modify_control);
+
+        // Add drag feature control next
+        drag_feature_control = new DrawingControl({
+          control_type: 'drag',
+          left_offset: button_left_offset.toString() + BUTTON_OFFSET_UNITS,
+          active: false
+        });
+
+        button_left_offset += BUTTON_SPACING;
+        m_map.addControl(drag_feature_control);
 
         for (var i = 0; i < draw_controls.length; i++) {
 
@@ -487,36 +500,65 @@ var TETHYS_MAP_VIEW = (function() {
     m_map.addInteraction(m_drawing_interaction);
   };
 
+  add_drag_feature_interaction = function() {
+    // Add Drag feature interaction
+    m_drag_feature_interaction = new DragFeatureInteraction();
+    m_map.addInteraction(m_drag_feature_interaction);
+  };
+
   add_modify_interaction = function() {
-    m_drawing_interaction = new ol.interaction.Modify({
-      features: m_drawing_layer.getFeatures(),
+    // Modify interaction works in conjunction with a selection interaction
+    var selected_features = null;
+
+    // Create select interaction
+    m_select_interaction = new ol.interaction.Select();
+    m_map.addInteraction(m_select_interaction);
+
+    // Get selected features
+    selected_features = m_select_interaction.getFeatures();
+
+    // Create modify interaction
+    m_modify_interaction = new ol.interaction.Modify({
+      features: selected_features,
       deleteCondition: function(event) {
         return ol.events.condition.shiftKeyOnly(event) && ol.events.condition.singleClick(event);
       }
     });
+    m_map.addInteraction(m_modify_interaction);
   };
 
   draw_end_callback = function(event) {
+    // Initialize the feature properties
     initialize_feature_properties(event.feature);
+
+    // Bind change event
+    event.feature.on('change', draw_change_callback);
+
+    // Update the field
     update_field();
   };
 
   draw_change_callback = function(overlay) {
     console.log('CHANGE: ', this, overlay);
+    update_field();
   };
 
-  switch_drawing_interaction = function(geometry_type)
+  switch_interaction = function(interaction_type)
   {
-    // Remove drawing interaction
+    // Remove all interactions
     m_map.removeInteraction(m_drawing_interaction);
+    m_map.removeInteraction(m_select_interaction);
+    m_map.removeInteraction(m_modify_interaction);
+    m_map.removeInteraction(m_modify_interaction);
 
-    // Create new drawing interaction
-    if (geometry_type !== 'modify') {
-      add_drawing_interaction(geometry_type);
+    // Set appropriate drawing interaction
+    if (interaction_type === 'modify') {
+      add_modify_interaction();
+    } else if (interaction_type === 'drag') {
+      add_drag_feature_interaction();
     } else {
-
+      add_drawing_interaction(interaction_type);
     }
-
   };
 
   /***********************************
@@ -767,7 +809,7 @@ var TETHYS_MAP_VIEW = (function() {
     handle_drawing_interaction_switch = function(event) {
 
       // Switch Interaction
-      switch_drawing_interaction(options.control_type);
+      switch_interaction(options.control_type);
 
       // Reset button active state
       $('.tethys-map-view-draw-icon').each(function(){
@@ -788,8 +830,90 @@ var TETHYS_MAP_VIEW = (function() {
       target: options.target
     });
   };
-
   ol.inherits(DrawingControl, ol.control.Control);
+
+  // Custom interaction for dragging and moving features
+  // Credits: http://openlayers.org/en/v3.3.0/examples/drag-features.html?q=drag
+  DragFeatureInteraction = function() {
+    ol.interaction.Pointer.call(this, {
+      handleDownEvent: DragFeatureInteraction.prototype.handleDownEvent,
+      handleDragEvent: DragFeatureInteraction.prototype.handleDragEvent,
+      handleMoveEvent: DragFeatureInteraction.prototype.handleMoveEvent,
+      handleUpEvent: DragFeatureInteraction.prototype.handleUpEvent
+    });
+
+    this.coordinate_ = null;
+    this.cursor_ = 'pointer';
+    this.feature_ = null;
+    this.previousCursor_ = undefined;
+
+  };
+  ol.inherits(DragFeatureInteraction, ol.interaction.Pointer);
+
+  // Trigger a drag feature
+  DragFeatureInteraction.prototype.handleDownEvent = function(event) {
+    var map = event.map;
+
+    var feature = map.forEachFeatureAtPixel(event.pixel,
+        function(feature, layer) {
+          return feature;
+        });
+
+    if (feature) {
+      this.coordinate_ = event.coordinate;
+      this.feature_ = feature;
+    }
+
+    return !!feature;
+  };
+  
+  // Handle drag feature
+  DragFeatureInteraction.prototype.handleDragEvent = function(event) {
+    var map = event.map;
+
+    var feature = map.forEachFeatureAtPixel(event.pixel,
+        function(feature, layer) {
+          return feature;
+        });
+
+    var deltaX = event.coordinate[0] - this.coordinate_[0];
+    var deltaY = event.coordinate[1] - this.coordinate_[1];
+
+    var geometry = /** @type {ol.geom.SimpleGeometry} */
+        (this.feature_.getGeometry());
+    geometry.translate(deltaX, deltaY);
+
+    this.coordinate_[0] = event.coordinate[0];
+    this.coordinate_[1] = event.coordinate[1];
+  };
+
+  // Handle map movement
+  DragFeatureInteraction.prototype.handleMoveEvent = function(event) {
+    if (this.cursor_) {
+      var map = event.map;
+      var feature = map.forEachFeatureAtPixel(event.pixel,
+          function(feature, layer) {
+            return feature;
+          });
+      var element = event.map.getTargetElement();
+      if (feature) {
+        if (element.style.cursor != this.cursor_) {
+          this.previousCursor_ = element.style.cursor;
+          element.style.cursor = this.cursor_;
+        }
+      } else if (this.previousCursor_ !== undefined) {
+        element.style.cursor = this.previousCursor_;
+        this.previousCursor_ = undefined;
+      }
+    }
+  };
+
+  // Un-trigger drag feature
+  DragFeatureInteraction.prototype.handleUpEvent = function(event) {
+    this.coordinate_ = null;
+    this.feature_ = null;
+    return false;
+  };
 
 
   /************************************************************************
