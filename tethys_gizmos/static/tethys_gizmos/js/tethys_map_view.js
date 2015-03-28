@@ -238,7 +238,7 @@ var TETHYS_MAP_VIEW = (function() {
   ol_drawing_init = function()
   {
     // Constants
-    var VALID_GEOMETRY_TYPES = ['Polygon', 'Point', 'LineString', 'Circle', 'Box'];
+    var VALID_GEOMETRY_TYPES = ['Polygon', 'Point', 'LineString', 'Box'];
     var INITIAL_FILL_COLOR = 'rgba(255, 255, 255, 0.2)',
         INITIAL_STROKE_COLOR = '#ffcc33',
         INITIAL_POINT_FILL_COLOR = '#ffcc33',
