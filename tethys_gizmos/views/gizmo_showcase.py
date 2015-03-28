@@ -550,8 +550,8 @@ def map_view(request):
                 ],
                 'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 4, 'maxZoom': 18, 'minZoom': 3},
                 'base_map': 'OpenStreetMap',
-                'draw': {'controls': ['Point', 'LineString', 'Polygon'],
-                         # 'initial': 'Polygon'
+                'draw': {'controls': ['Point', 'LineString', 'Polygon', 'Box', 'Modify', 'Move', 'Circle'],
+                         'initial': 'Box'
                          # 'output_format': 'WKT'
                 },
                 'legend': False,
