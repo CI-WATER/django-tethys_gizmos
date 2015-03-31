@@ -1114,61 +1114,61 @@ table_view_edit = TableView(column_names=('Name', 'Age', 'Job'),
         <div class="code">
           <p class="muted">Controller</p>
           <pre><code class="language-python">
-highcharts_object = {
-    'chart': {
-          'type': 'spline'
-      },
-      'title': {
-          'text': 'Plot Title'
-      },
-      'subtitle': {
-          'text': 'Plot Subtitle'
-      },
-      'legend': {
-          'layout': 'vertical',
-          'align': 'right',
-          'verticalAlign': 'middle',
-          'borderWidth': 0
-      },
-      'xAxis': {
-          'title': {
-              'enabled': True,
-              'text': 'Altitude (km)'
-          },
-          'labels': {
-              'formatter': 'function () { return this.value + " km"; }'
-          }
-      },
-      'yAxis': {
-          'title': {
-              'enabled': True,
-              'text': 'Temperature (*C)'
-          },
-          'labels': {
-              'formatter': 'function () { return this.value + " *C"; }'
-          }
-      },
-      'tooltip': {
-          'headerFormat': '<b>{series.name}</b><br/>',
-          'pointFormat': '{point.x} km: {point.y}*C'
-       },
-      'series': [{
-          'name': 'Air Temp',
-          'color': '#0066ff',
-          'dashStyle': 'ShortDash',
-          'marker' : {'enabled': False},
-          'data': [[0, 5], [10, -70], [20, -86.5], [30, -66.5], [40, -32.1],
-                   [50, -12.5], [60, -47.7], [70, -85.7], [80, -106.5]]
-          },{
-          'name': 'Water Temp',
-          'color': '#ff6600',
-          'data': [[0, 15], [10, -50], [20, -56.5], [30, -46.5], [40, -22.1],
-                   [50, -2.5], [60, -27.7], [70, -55.7], [80, -76.5]]}
-      ]}
+highcharts_object = HighChartsLinePlot(title='Plot Title',
+                                       subtitle='Plot Subtitle',
+                                       legend={
+                                           'layout': 'vertical',
+                                           'align': 'right',
+                                           'verticalAlign': 'middle',
+                                           'borderWidth': 0
+                                       },
+                                       xAxis={
+                                           'title': {'enabled': True,
+                                                     'text': 'Altitude (km)'
+                                           },
+                                           'labels': {
+                                               'formatter': 'function () { return this.value + " km"; }'
+                                           }
+                                       },
+                                       yAxis={
+                                           'title': {
+                                               'enabled': True,
+                                               'text': 'Temperature (*C)'
+                                           },
+                                           'labels': {'formatter': 'function () { return this.value + " *C"; }'}
+                                       },
+                                       tooltip={'headerFormat': '<b>{series.name}</b><br/>',
+                                                'pointFormat': '{point.x} km: {point.y}*C'
+                                       },
+                                       series=[
+                                           {
+                                               'name': 'Air Temp',
+                                               'color': '#0066ff',
+                                               'marker': {'enabled': False},
+                                               'data': [
+                                                   [0, 5], [10, -70],
+                                                   [20, -86.5], [30, -66.5],
+                                                   [40, -32.1],
+                                                   [50, -12.5], [60, -47.7],
+                                                   [70, -85.7], [80, -106.5]
+                                               ]
+                                           },
+                                           {
+                                               'name': 'Water Temp',
+                                               'color': '#ff6600',
+                                               'data': [[0, 15], [10, -50],
+                                                        [20, -56.5], [30, -46.5],
+                                                        [40, -22.1],
+                                                        [50, -2.5], [60, -27.7],
+                                                        [70, -55.7], [80, -76.5]
+                                               ]
+                                           }
+                                       ]
+)
 
-line_plot_view = PlotView(highcharts_object=highcharts_object,
-                          width='500px',
-                          height='500px')
+    line_plot_view = PlotView(highcharts_object=highcharts_object,
+                              width='500px',
+                              height='500px')
           </code></pre>
           <p class="muted">HTML</p>
         <pre><code class="language-python">

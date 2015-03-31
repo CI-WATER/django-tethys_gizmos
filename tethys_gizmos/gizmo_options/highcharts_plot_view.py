@@ -46,7 +46,7 @@ class HighChartsObjectBase(TethysGizmoOptions):
         self.chart = chart
         self.title = title
         self.subtitle = subtitle
-        #add any other attributes the user wants
+        # add any other attributes the user wants
         for key, value in kwargs.iteritems():
             setattr(self, key, value)
 
@@ -60,25 +60,12 @@ class HighChartsLinePlot(HighChartsObjectBase):
     Attributes
     """
 
-    def __init__(self, line_plot_data, title='', subtitle='', **kwargs):
+    def __init__(self, chart={'type': 'spline'}, series=[], title='', subtitle='',  **kwargs):
         """
         Constructor
 
         Args:
           line_plot_data(dict, required): Dictionary of data series where keys are the name of the series and value is a 2-dim. list.
         """
-
-        self.series = []
-
-        for name, data in line_plot_data.iteritems():
-
-            self.series.append({
-                             'name': name,
-                             'color': '#0066ff',
-                             'marker': {'enabled': False},
-                             'data': data
-            })
-
         # Initialize super class
-        super(HighChartsLinePlot, self).__init__(chart={'type': 'line'}, title=title, subtitle=subtitle, **kwargs)
-
+        super(HighChartsLinePlot, self).__init__(chart=chart, title=title, subtitle=subtitle, series=series, **kwargs)
