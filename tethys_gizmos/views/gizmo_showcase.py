@@ -350,19 +350,35 @@ def index(request):
     )
 
     # Map View
-    map_view = MapView(height='500px',
-                       width='100%',
-                       controls=['ZoomSlider',
-                                 'Rotate',
-                                 'FullScreen',
-                                 {'MousePosition': {'projection': 'EPSG:4326'}}],
-                       layers=[{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
-                                        'params': {'LAYERS': 'topp:states'},
-                                        'serverType': 'geoserver'}}],
-                       view={'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 3.5, 'maxZoom': 18, 'minZoom': 3},
-                       basemap='OpenStreetMap',
-                       draw=['Point', 'Line', 'Polygon'],
-                       legend=False)
+    view_options = MapViewViewOptions(
+        projection='EPSG:4326',
+        center=[-100, 40],
+        zoom=3.5,
+        maxZoom=18,
+        minZoom=3
+    )
+
+    drawing_options = MapViewDrawOptions(
+        controls=['Modify', 'Move', 'Point', 'LineString', 'Polygon', 'Box'],
+        initial='Point',
+        output_format='WKT'
+    )
+
+    map_view_options = MapViewOptions(
+        height='500px',
+        width='100%',
+        controls=['ZoomSlider',
+                 'Rotate',
+                 'FullScreen',
+                 {'MousePosition': {'projection': 'EPSG:4326'}}],
+        layers=[{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
+                        'params': {'LAYERS': 'topp:states'},
+                        'serverType': 'geoserver'}}],
+        view=view_options,
+        basemap='OpenStreetMap',
+        draw=drawing_options,
+        legend=False
+    )
 
     # Define the context object
     context = {'single_button': single_button,
@@ -390,7 +406,7 @@ def index(request):
                'google_map_view': google_map_view,
                'flash_message': flash_message,
                'fetchclimate_array': fetchclimate_array,
-               'map_view': map_view,
+               'map_view_options': map_view_options,
     }
 
     return render(request, 'tethys_gizmos/gizmo_showcase/index.html', context)
@@ -526,23 +542,36 @@ def map_view(request):
     """
     Place to show off the new map view
     """
-    map_view = {'controls': ['ZoomSlider',
-                             'Rotate',
-                             {'ZoomToExtent': {'projection': 'EPSG:4326', 'extent': [-135, 22, -55, 54]}},
-                             'FullScreen',
-                             {'MousePosition': {'projection': 'EPSG:4326'}},
-                             'ScaleLine'],
-                'layers': [{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
-                                    'params': {'LAYERS': 'topp:states'},
-                                    'serverType': 'geoserver'}},
-                ],
-                'view': {'projection': 'EPSG:4326', 'center': [-100, 40], 'zoom': 4, 'maxZoom': 18, 'minZoom': 3},
-                'base_map': 'OpenStreetMap',
-                'draw': ['Point', 'Line', 'Polygon'],
-                'legend': False,
-                'height': '500px',
-                'width': '100%'
-    }
+
+    view_options = MapViewViewOptions(
+        projection='EPSG:4326',
+        center=[-100, 40],
+        zoom=3.5,
+        maxZoom=18,
+        minZoom=3
+    )
+
+    drawing_options = MapViewDrawOptions(
+        controls=['Modify', 'Move', 'Point', 'LineString', 'Polygon', 'Box'],
+        initial='Point',
+        output_format='WKT'
+    )
+
+    map_view = MapViewOptions(
+        height='500px',
+        width='100%',
+        controls=['ZoomSlider',
+                 'Rotate',
+                 'FullScreen',
+                 {'MousePosition': {'projection': 'EPSG:4326'}}],
+        layers=[{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
+                        'params': {'LAYERS': 'topp:states'},
+                        'serverType': 'geoserver'}}],
+        view=view_options,
+        basemap='OpenStreetMap',
+        draw=drawing_options,
+        legend=False
+    )
 
     context = {'map_view': map_view}
 

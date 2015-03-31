@@ -4,6 +4,7 @@ __all__ = ['FetchClimateMap', 'FetchClimateURLParameter', 'FetchClimateMapData',
            'FetchClimatePlotParameters', 'FetchClimateVariableParameters', 'FetchClimateGridParameters',
            'FetchClimatePointParameters']
 
+
 class FetchClimateURLParameter(TethysGizmoOptions):
     """
     URL Parameter
@@ -53,6 +54,7 @@ class FetchClimateMapData(TethysGizmoOptions):
         self.max_num_grids = max_num_grids
         self.max_num_points = max_num_points
 
+
 class FetchClimateMapParameters(TethysGizmoOptions):
     """
     Map Parameters
@@ -73,6 +75,7 @@ class FetchClimateMapParameters(TethysGizmoOptions):
 
         self.css = css
         self.map_data = map_data
+
 
 class FetchClimatePlotParameters(TethysGizmoOptions):
     """
@@ -162,6 +165,7 @@ class FetchClimatePointParameters(TethysGizmoOptions):
 
         self.title = title
         self.location = location
+
 
 class FetchClimateMap(TethysGizmoOptions):
     """
