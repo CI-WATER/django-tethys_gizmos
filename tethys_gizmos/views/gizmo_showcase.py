@@ -141,8 +141,8 @@ def index(request):
                                           error='Here is my error text')
 
     # Plot Views
-    highcharts_object = HighChartsLinePlot(title='Plot Title',
-                                           subtitle='Plot Subtitle',
+    highcharts_object = HighChartsLinePlot(title={'text': 'Plot Title'},
+                                           subtitle={'text': 'Plot Subtitle'},
                                            legend={
                                                'layout': 'vertical',
                                                'align': 'right',
@@ -198,37 +198,33 @@ def index(request):
                               height='500px')
 
     # Web Plot
-    web_plot_object = {'chart': {
-        'polar': True,
-        'type': 'line'
-    },
-                       'title': {
-                           'text': 'Polar Chart'
-                       },
-                       'pane': {
-                           'size': '80%'
-                       },
-                       'xAxis': {
-                           'categories': ['Infiltration', 'Soil Moisture', 'Precipitation', 'Evaporation',
-                                          'Roughness', 'Runoff', 'Permeability', 'Vegetation'],
-                           'tickmarkPlacement': 'on',
-                           'lineWidth': 0
-                       },
-                       'yAxis': {
-                           'gridLineInterpolation': 'polygon',
-                           'lineWidth': 0,
-                           'min': 0
-                       },
-                       'series': [{
-                                      'name': 'Park City',
-                                      'data': [0.2, 0.5, 0.1, 0.8, 0.2, 0.6, 0.8, 0.3],
-                                      'pointPlacement': 'on'
-                                  }, {
-                                      'name': 'Little Dell',
-                                      'data': [0.8, 0.3, 0.2, 0.5, 0.1, 0.8, 0.2, 0.6],
-                                      'pointPlacement': 'on'
-                                  }
-                       ]}
+    web_plot_object = HighChartsPolarPlot(title={'text': 'Polar Chart'},
+                                          pane={
+                                              'size': '80%'
+                                          },
+                                          xAxis={
+                                              'categories': ['Infiltration', 'Soil Moisture', 'Precipitation',
+                                                             'Evaporation',
+                                                             'Roughness', 'Runoff', 'Permeability', 'Vegetation'],
+                                              'tickmarkPlacement': 'on',
+                                              'lineWidth': 0
+                                          },
+                                          yAxis={
+                                              'gridLineInterpolation': 'polygon',
+                                              'lineWidth': 0,
+                                              'min': 0
+                                          },
+                                          series=[{
+                                                      'name': 'Park City',
+                                                      'data': [0.2, 0.5, 0.1, 0.8, 0.2, 0.6, 0.8, 0.3],
+                                                      'pointPlacement': 'on'
+                                                  }, {
+                                                      'name': 'Little Dell',
+                                                      'data': [0.8, 0.3, 0.2, 0.5, 0.1, 0.8, 0.2, 0.6],
+                                                      'pointPlacement': 'on'
+                                                  }
+                                          ]
+    )
 
     web_plot = PlotView(highcharts_object=web_plot_object,
                         width='500px',
@@ -381,12 +377,12 @@ def index(request):
         height='500px',
         width='100%',
         controls=['ZoomSlider',
-                 'Rotate',
-                 'FullScreen',
-                 {'MousePosition': {'projection': 'EPSG:4326'}}],
+                  'Rotate',
+                  'FullScreen',
+                  {'MousePosition': {'projection': 'EPSG:4326'}}],
         layers=[{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
-                        'params': {'LAYERS': 'topp:states'},
-                        'serverType': 'geoserver'}}],
+                         'params': {'LAYERS': 'topp:states'},
+                         'serverType': 'geoserver'}}],
         view=view_options,
         basemap='OpenStreetMap',
         draw=drawing_options,
@@ -574,12 +570,12 @@ def map_view(request):
         height='500px',
         width='100%',
         controls=['ZoomSlider',
-                 'Rotate',
-                 'FullScreen',
-                 {'MousePosition': {'projection': 'EPSG:4326'}}],
+                  'Rotate',
+                  'FullScreen',
+                  {'MousePosition': {'projection': 'EPSG:4326'}}],
         layers=[{'WMS': {'url': 'http://demo.opengeo.org/geoserver/wms',
-                        'params': {'LAYERS': 'topp:states'},
-                        'serverType': 'geoserver'}}],
+                         'params': {'LAYERS': 'topp:states'},
+                         'serverType': 'geoserver'}}],
         view=view_options,
         basemap='OpenStreetMap',
         draw=drawing_options,

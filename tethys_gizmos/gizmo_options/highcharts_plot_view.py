@@ -1,6 +1,7 @@
 from .base import TethysGizmoOptions
 
-__all__ = ['PlotView', 'HighChartsObjectBase', 'HighChartsLinePlot']
+__all__ = ['PlotView', 'HighChartsObjectBase', 'HighChartsLinePlot', 'HighChartsPolarPlot', 'HighChartsScatterPlot',
+           'HighChartsPiePlot']
 
 
 class PlotView(TethysGizmoOptions):
@@ -65,7 +66,63 @@ class HighChartsLinePlot(HighChartsObjectBase):
         Constructor
 
         Args:
-          line_plot_data(dict, required): Dictionary of data series where keys are the name of the series and value is a 2-dim. list.
         """
         # Initialize super class
         super(HighChartsLinePlot, self).__init__(chart=chart, title=title, subtitle=subtitle, series=series, **kwargs)
+
+
+class HighChartsPolarPlot(HighChartsObjectBase):
+    """
+    Polar or Spider Plot
+
+    Displays as a polar plot.
+
+    Attributes
+    """
+
+    def __init__(self, chart={'polar': True, 'type': 'line'}, series=[], title='', subtitle='', **kwargs):
+        """
+        Constructor
+
+        Args:
+        """
+        # Initialize super class
+        super(HighChartsPolarPlot, self).__init__(chart=chart, title=title, subtitle=subtitle, series=series, **kwargs)
+
+
+class HighChartsScatterPlot(HighChartsObjectBase):
+    """
+    Scatter Plot
+
+    Displays as a scatter plot.
+
+    Attributes
+    """
+
+    def __init__(self, chart={'scatter': True, 'type': 'line'}, series=[], title='', subtitle='', **kwargs):
+        """
+        Constructor
+
+        Args:
+        """
+        # Initialize super class
+        super(HighChartsScatterPlot, self).__init__(chart=chart, title=title, subtitle=subtitle, series=series, **kwargs)
+
+
+class HighChartsPiePlot(HighChartsObjectBase):
+    """
+    Pie Plot
+
+    Displays as a pie chart.
+
+    Attributes
+    """
+
+    def __init__(self, chart={'polar': True, 'type': 'pie'}, series=[], title='', subtitle='', **kwargs):
+        """
+        Constructor
+
+        Args:
+        """
+        # Initialize super class
+        super(HighChartsPiePlot, self).__init__(chart=chart, title=title, subtitle=subtitle, series=series, **kwargs)
