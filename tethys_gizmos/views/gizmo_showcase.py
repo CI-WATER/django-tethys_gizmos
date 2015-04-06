@@ -14,11 +14,11 @@ def index(request):
     """
     # Button Group Options
     # Click me button
-    click_me_button = ButtonOptions(display_text='Click Me',
-                                    name='click_me_name',
-                                    attributes='onclick=alert(this.name);',
-                                    submit=True)
-    single_button = ButtonGroupOptions(buttons=[click_me_button])
+    button_options = ButtonOptions(display_text='Click Me',
+                                   name='click_me_name',
+                                   attributes='onclick=alert(this.name);',
+                                   submit=True)
+    single_button = ButtonGroupOptions(buttons=[button_options])
 
     # Horizontal Buttons
     add_button = ButtonOptions(display_text='Add',
